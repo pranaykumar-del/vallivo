@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app'
 import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: 'AIzaSyCb-KET-o87R4SfnmtFHNSsy1bYIApf4I8',
+  authDomain: 'vallivo-1c875.firebaseapp.com',
+  projectId: 'vallivo-1c875',
+  storageBucket: 'vallivo-1c875.firebasestorage.app',
+  messagingSenderId: '90533768902',
+  appId: '1:90533768902:web:074e5a4f16945c3c19f1c7',
 }
 
 if (!firebaseConfig.projectId) {
