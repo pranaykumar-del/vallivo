@@ -1,4 +1,54 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { subscribeNewsletter } from '../lib/supabase'
+
+function NewsletterForm() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('idle')
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!email) return
+    setStatus('loading')
+    try {
+      await subscribeNewsletter(email)
+      setStatus('success')
+      setEmail('')
+    } catch (err) {
+      console.error(err)
+      setStatus('error')
+    }
+  }
+
+  if (status === 'success') {
+    return <p className="font-body text-sm text-gold">You're on the list. Welcome to the ritual.</p>
+  }
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit} className="flex border-b border-cream/20 focus-within:border-gold transition-colors">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Your email address"
+          required
+          className="flex-1 bg-transparent py-2.5 font-body text-sm text-cream placeholder-cream/30 focus:outline-none"
+        />
+        <button
+          type="submit"
+          disabled={status === 'loading'}
+          className="text-[10px] tracking-widest text-gold uppercase font-body whitespace-nowrap pl-3 disabled:opacity-50"
+        >
+          {status === 'loading' ? '...' : 'Join'}
+        </button>
+      </form>
+      {status === 'error' && (
+        <p className="text-red-400 text-xs font-body mt-2">Something went wrong. Please try again.</p>
+      )}
+    </div>
+  )
+}
 
 export default function Footer() {
   return (
@@ -8,9 +58,11 @@ export default function Footer() {
           <div>
             <div className="font-display text-2xl text-cream tracking-widest mb-1">VALLIVO</div>
             <div className="text-[9px] tracking-widest2 text-gold/60 uppercase font-body mb-5">Premium Wellness Teas</div>
-            <p className="font-body text-cream/40 text-sm leading-relaxed">
+            <p className="font-body text-cream/40 text-sm leading-relaxed mb-6">
               Premium wellness teas.<br />Rituals are not routines.
             </p>
+            <div className="text-[10px] tracking-widest text-gold/60 uppercase font-body mb-3">Join the Ritual</div>
+            <NewsletterForm />
           </div>
 
           <div>

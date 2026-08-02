@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { products, DEFAULT_BAGS } from '../lib/products'
 import { useCart } from '../lib/CartContext'
+import MediaImage from './MediaImage'
 
 const cardVariants = {
   hidden: { opacity: 0, y: 48 },
@@ -47,11 +48,10 @@ export default function Product() {
             >
               <Link to={`/product/${p.slug}`} className="block">
                 <div className="relative h-80 overflow-hidden bg-ink">
-                  <img
+                  <MediaImage
                     src={p.img}
                     alt={p.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => { e.target.style.display = 'none' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                   <span className="absolute top-4 right-4 text-[9px] tracking-widest px-2.5 py-1 bg-gold/90 text-navy uppercase font-body">

@@ -1,4 +1,11 @@
 import { motion } from 'framer-motion'
+import MediaImage from './MediaImage'
+
+const STATS = [
+  { value: '3', label: 'Valleys We Source From' },
+  { value: '0', label: 'Artificial Flavors' },
+  { value: '5', label: 'Rituals For Every Hour' },
+]
 
 export default function Story() {
   return (
@@ -18,17 +25,29 @@ export default function Story() {
             </h2>
             <div className="gold-line w-20 mb-8" />
             <p className="font-body text-cream/50 text-base leading-relaxed mb-6">
-              Vallivo blends functional botanicals with a premium tea ritual:
-              elegant boxes, individually wrapped pyramid bags, and ingredients
-              selected for the way each day actually feels.
+              We started in the high valleys, where the air is thinner and the
+              harvests are smaller but better. Every Vallivo blend is built
+              around botanicals sourced from growers we know by name, then
+              individually wrapped into pyramid bags so each cup tastes like
+              the day it was packed.
             </p>
             <p className="font-body text-cream/50 text-base leading-relaxed mb-10">
               From Focus Flow to Glow Ritual, every blend is made to return you
               to yourself without making wellness feel clinical.
             </p>
-            <a href="#order"
+
+            <div className="grid grid-cols-3 gap-6 mb-10">
+              {STATS.map((s) => (
+                <div key={s.label}>
+                  <div className="font-display text-3xl md:text-4xl text-gold mb-1">{s.value}</div>
+                  <div className="text-[10px] tracking-wide text-cream/40 font-body leading-tight uppercase">{s.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <a href="/#product"
               className="inline-flex items-center gap-3 text-xs tracking-widest text-gold uppercase font-body border-b border-gold/40 pb-1 hover:border-gold transition-colors">
-              Begin Your Ritual ->
+              Begin Your Ritual -&gt;
             </a>
           </motion.div>
 
@@ -40,7 +59,7 @@ export default function Story() {
             transition={{ duration: 0.8, delay: 0.15 }}
           >
             <div className="aspect-[3/4] overflow-hidden relative bg-black">
-              <img
+              <MediaImage
                 src="/images/vallivo-collection.png"
                 alt="Vallivo wellness tea collection"
                 className="w-full h-full object-cover"

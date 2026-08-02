@@ -5,9 +5,9 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useCart } from '../lib/CartContext'
 
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
 export default function OrderForm({ items, total, onSuccess }) {
   const { clearCart } = useCart()
@@ -21,15 +21,14 @@ export default function OrderForm({ items, total, onSuccess }) {
     if (!form.name || !form.phone || !form.address || !form.email) return
     setStatus('loading')
     try {
-      for (const item of items) {
-        await placeOrder({ ...form, product: item.name, quantity: item.quantity })
-      }
+      const { orderId } = await placeOrder({ ...form, items, total })
 
-      if (!EMAILJS_SERVICE_ID.startsWith('YOUR_')) {
-        await emailjs.send(
+      if (EMAILJS_SERVICE_ID) {
+        emailjs.send(
           EMAILJS_SERVICE_ID,
           EMAILJS_TEMPLATE_ID,
           {
+            order_id: orderId,
             to_name: form.name,
             to_email: form.email,
             phone: form.phone,
@@ -38,7 +37,7 @@ export default function OrderForm({ items, total, onSuccess }) {
             total: `Rs.${total}`,
           },
           EMAILJS_PUBLIC_KEY
-        )
+        ).catch((err) => console.error('Email failed:', err))
       }
 
       setStatus('success')

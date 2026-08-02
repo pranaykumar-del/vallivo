@@ -27,7 +27,7 @@ export default function Navbar() {
     { label: 'Collection', href: '/#product' },
     { label: 'Rituals', href: '/#experience' },
     { label: 'About', href: '/#story' },
-    { label: 'Gifting', href: '/cart' },
+    { label: 'Reviews', href: '/#reviews' },
   ]
 
   return (

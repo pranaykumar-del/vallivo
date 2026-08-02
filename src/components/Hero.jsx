@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import TrustBar from './TrustBar'
 
 const PARTICLES = Array.from({ length: 26 }, (_, i) => ({
   left: `${(i * 37) % 100}%`,
@@ -21,7 +22,12 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-ink px-6 pt-32 pb-24">
-      <div className="absolute inset-0 bg-[linear-gradient(160deg,#060a10_0%,#091426_50%,#0d1520_100%)]" />
+      <img
+        src="/images/vallivo-lineup.png"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover opacity-[0.22]"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(160deg,#060a10_0%,#091426_50%,#0d1520_100%)] opacity-95" />
       <div className="absolute top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[radial-gradient(ellipse,rgba(199,156,83,0.08)_0%,transparent_70%)]" />
 
       <div className="absolute inset-0 pointer-events-none">
@@ -101,6 +107,30 @@ export default function Hero() {
             className="px-8 py-3.5 border border-cream/30 text-cream font-body text-xs tracking-widest uppercase hover:border-gold hover:text-gold transition-colors duration-300">
             Find Your Ritual
           </a>
+        </motion.div>
+
+        <motion.div
+          className="flex items-center justify-center gap-2 mt-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.8 }}
+        >
+          <div className="flex gap-0.5">
+            {[...Array(5)].map((_, i) => (
+              <svg key={i} viewBox="0 0 20 20" className="w-3 h-3 fill-gold">
+                <path d="M10 1.5l2.59 5.62 6.18.6-4.67 4.21 1.34 6.07L10 14.9l-5.44 3.1 1.34-6.07-4.67-4.21 6.18-.6L10 1.5z" />
+              </svg>
+            ))}
+          </div>
+          <span className="text-xs text-cream/50 font-body tracking-wide">4.9/5 &middot; loved by 1,200+ ritual seekers</span>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+        >
+          <TrustBar className="mt-10 max-w-md mx-auto" />
         </motion.div>
       </motion.div>
 

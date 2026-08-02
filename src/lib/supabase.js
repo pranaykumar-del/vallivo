@@ -17,14 +17,25 @@ if (!firebaseConfig.projectId) {
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
-export async function placeOrder({ name, phone, address, quantity, product = 'Focus Flow Tea', email }) {
+export async function placeOrder({ name, phone, address, email, items, total }) {
+  const orderId = crypto.randomUUID()
   const docRef = await addDoc(collection(db, 'orders'), {
+    orderId,
     name: name.trim(),
     phone: phone.trim(),
     address: address.trim(),
     email: email?.trim() || '',
-    quantity: Number(quantity),
-    product,
+    items: items.map((i) => ({ product: i.name, quantity: i.quantity })),
+    total: Number(total),
+    status: 'pending',
+    created_at: serverTimestamp(),
+  })
+  return { docRef, orderId }
+}
+
+export async function subscribeNewsletter(email) {
+  const docRef = await addDoc(collection(db, 'subscribers'), {
+    email: email.trim().toLowerCase(),
     created_at: serverTimestamp(),
   })
   return docRef

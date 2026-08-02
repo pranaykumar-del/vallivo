@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { useCart } from '../lib/CartContext'
 import { calcPrice, BAG_STEP } from '../lib/products'
 import OrderForm from '../components/OrderForm'
+import MediaImage from '../components/MediaImage'
+import TrustBar from '../components/TrustBar'
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, totalPrice } = useCart()
@@ -48,11 +50,10 @@ export default function CartPage() {
                 {items.map((item) => (
                   <div key={item.slug} className="flex gap-4 border-b border-cream/10 pb-6">
                     <Link to={`/product/${item.slug}`} className="w-24 h-24 bg-navy-dark shrink-0 overflow-hidden">
-                      <img
+                      <MediaImage
                         src={item.img}
                         alt={item.name}
                         className="w-full h-full object-cover"
-                        onError={(e) => { e.target.style.display = 'none' }}
                       />
                     </Link>
                     <div className="flex-1 flex flex-col justify-between">
@@ -108,7 +109,10 @@ export default function CartPage() {
             )}
           </div>
 
-          <OrderForm items={items} total={totalPrice} onSuccess={() => setOrderPlaced(true)} />
+          <div>
+            <OrderForm items={items} total={totalPrice} onSuccess={() => setOrderPlaced(true)} />
+            <TrustBar className="mt-10" />
+          </div>
         </div>
       </div>
     </section>

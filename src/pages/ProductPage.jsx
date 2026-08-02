@@ -3,6 +3,9 @@ import { useParams, useNavigate, Navigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { products, getProductBySlug, calcPrice, BAG_STEP, DEFAULT_BAGS } from '../lib/products'
 import { useCart } from '../lib/CartContext'
+import MediaImage from '../components/MediaImage'
+import TrustBar from '../components/TrustBar'
+import ProductCarousel from '../components/ProductCarousel'
 
 export default function ProductPage() {
   const { slug } = useParams()
@@ -42,17 +45,8 @@ export default function ProductPage() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="relative h-[420px] lg:h-[560px] bg-navy-dark overflow-hidden"
           >
-            <img
-              src={product.img}
-              alt={product.name}
-              className="w-full h-full object-cover"
-              onError={(e) => { e.target.style.display = 'none' }}
-            />
-            <span className="absolute top-5 right-5 text-[9px] tracking-widest px-2.5 py-1 bg-gold/90 text-navy uppercase font-body">
-              {product.tag}
-            </span>
+            <ProductCarousel product={product} key={product.slug} />
           </motion.div>
 
           <motion.div
@@ -119,6 +113,8 @@ export default function ProductPage() {
                 Buy Now
               </button>
             </div>
+
+            <TrustBar className="mt-10" />
           </motion.div>
         </div>
 
@@ -131,11 +127,10 @@ export default function ProductPage() {
             {others.map((p) => (
               <Link key={p.slug} to={`/product/${p.slug}`} className="group relative overflow-hidden card-hover block">
                 <div className="relative h-56 bg-navy-dark overflow-hidden">
-                  <img
+                  <MediaImage
                     src={p.img}
                     alt={p.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => { e.target.style.display = 'none' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                   <div className="absolute bottom-0 left-0 p-4">

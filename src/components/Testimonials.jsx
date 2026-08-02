@@ -8,9 +8,17 @@ const reviews = [
   { name: 'Vikram N.', city: 'Chennai', text: 'Gifted this to a friend and they asked for the link immediately. The box presentation is excellent.' },
 ]
 
+function Star() {
+  return (
+    <svg viewBox="0 0 20 20" className="w-4 h-4 fill-gold">
+      <path d="M10 1.5l2.59 5.62 6.18.6-4.67 4.21 1.34 6.07L10 14.9l-5.44 3.1 1.34-6.07-4.67-4.21 6.18-.6L10 1.5z" />
+    </svg>
+  )
+}
+
 export default function Testimonials() {
   return (
-    <section className="py-24 bg-ink overflow-hidden">
+    <section id="reviews" className="py-24 bg-ink overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-14">
         <motion.div
           className="flex items-end justify-between"
@@ -42,7 +50,7 @@ export default function Testimonials() {
           >
             <div className="flex gap-0.5 mb-6">
               {[...Array(5)].map((_, j) => (
-                <span key={j} className="text-gold text-sm">*</span>
+                <Star key={j} />
               ))}
             </div>
             <p className="font-display text-cream text-lg italic leading-relaxed mb-8">

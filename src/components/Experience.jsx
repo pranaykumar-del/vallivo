@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import MediaImage from './MediaImage'
 
 const moments = [
   {
@@ -55,7 +56,7 @@ export default function Experience() {
               transition={{ delay: i * 0.15, duration: 0.65 }}
             >
               <div className="h-80 overflow-hidden relative">
-                <img
+                <MediaImage
                   src={m.img}
                   alt={m.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
