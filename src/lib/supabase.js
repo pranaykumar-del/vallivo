@@ -15,11 +15,14 @@ if (!firebaseConfig.projectId) {
 }
 
 const app = initializeApp(firebaseConfig)
-const db = getFirestore(app)
+const db = getFirestore(app, 'default')
 
 export async function placeOrder({ name, phone, address, email, items, total }) {
   const orderId = crypto.randomUUID()
-  const docRef = await addDoc(collection(db, 'orders'), {
+  const timeout = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Firestore timeout — database may not be set up')), 10000)
+  )
+  const write = addDoc(collection(db, 'orders'), {
     orderId,
     name: name.trim(),
     phone: phone.trim(),
@@ -30,6 +33,7 @@ export async function placeOrder({ name, phone, address, email, items, total }) 
     status: 'pending',
     created_at: serverTimestamp(),
   })
+  const docRef = await Promise.race([write, timeout])
   return { docRef, orderId }
 }
 
