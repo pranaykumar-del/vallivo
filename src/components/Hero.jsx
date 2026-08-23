@@ -70,7 +70,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}
         >
-          Premium Wellness Teas
+          Lifestyle Tea
         </motion.p>
 
         <motion.h1
@@ -79,8 +79,8 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 1 }}
         >
-          RITUAL.<br />
-          <span className="text-gold italic">ELEVATED.</span>
+          An upgrade,<br />
+          <span className="text-gold italic">not a habit.</span>
         </motion.h1>
 
         <motion.p
@@ -89,8 +89,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 1 }}
         >
-          Thoughtfully crafted wellness teas for every state of being.<br />
-          Made with functional botanicals and intentional rituals.
+          Every upgrade in life feels the same — better fit, better feel, better you. Your ride. Your wardrobe. Your coffee order. Vallivo brings that same upgrade to your cup. Not health tea. Not another wellness fad. Just the upgrade of you — reflected in what you drink.
         </motion.p>
 
         <motion.div
@@ -101,7 +100,7 @@ export default function Hero() {
         >
           <a href="#product"
             className="px-8 py-3.5 bg-gold text-navy font-body text-xs tracking-widest uppercase hover:bg-gold-light transition-colors duration-300 font-medium">
-            Explore Collection
+            Shop the Upgrade →
           </a>
           <a href="#experience"
             className="px-8 py-3.5 border border-cream/30 text-cream font-body text-xs tracking-widest uppercase hover:border-gold hover:text-gold transition-colors duration-300">

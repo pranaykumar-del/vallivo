@@ -57,7 +57,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-12 mb-14">
           <div>
             <div className="font-display text-2xl text-cream tracking-widest mb-1">VALLIVO</div>
-            <div className="text-[9px] tracking-widest2 text-gold/60 uppercase font-body mb-5">Premium Wellness Teas</div>
+            <div className="text-[9px] tracking-widest2 text-gold/60 uppercase font-body mb-5">Lifestyle Tea</div>
             <p className="font-body text-cream/40 text-sm leading-relaxed mb-6">
               Premium wellness teas.<br />Rituals are not routines.
             </p>

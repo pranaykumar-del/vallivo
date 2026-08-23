@@ -64,6 +64,26 @@ export default function Testimonials() {
           </motion.div>
         ))}
       </div>
+
+      <motion.div
+        className="max-w-7xl mx-auto px-6 lg:px-12 mt-24 text-center"
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+      >
+        <div className="gold-line w-20 mx-auto mb-10" />
+        <h2 className="font-display text-4xl md:text-5xl text-cream mb-8 leading-[1.15]">
+          Some upgrades you drive.<br />
+          <em className="text-gold not-italic">Some you wear. This one, you sip.</em>
+        </h2>
+        <a
+          href="/#product"
+          className="inline-block px-10 py-4 bg-gold text-navy font-body text-xs tracking-widest uppercase hover:bg-gold-light transition-colors duration-300 font-medium"
+        >
+          Explore Vallivo →
+        </a>
+      </motion.div>
     </section>
   )
 }

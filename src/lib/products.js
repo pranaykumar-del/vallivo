@@ -7,9 +7,9 @@ export const products = [
     price: 'Rs.499',
     priceValue: 499,
     img: '/images/glow-ritual.png',
-    desc: 'Rose, hibiscus, rosehip, white tea, and strawberry for a floral evening ritual.',
+    desc: 'Not for people chasing a fix. For people who've already decided they deserve to glow.',
     longDesc:
-      'A floral evening blend designed to help skin and spirit unwind together. Rose and hibiscus bring antioxidants, rosehip adds a gentle vitamin C lift, and white tea rounds it out with a soft, sweet finish.',
+      'Rosette isn\'t for people chasing a fix. It\'s for people who\'ve already decided they deserve to glow — and brought that decision to their cup too.',
     ingredients: ['Rose', 'Hibiscus', 'Rosehip', 'White Tea', 'Strawberry'],
   },
   {
@@ -20,9 +20,9 @@ export const products = [
     price: 'Rs.499',
     priceValue: 499,
     img: '/images/sleep-ritual.png',
-    desc: 'Chamomile, lavender, passionflower, spearmint, and lemongrass for a calm night ritual.',
+    desc: 'Not a fix for bad sleep. What people who've upgraded everything else finally bring to the end of their day.',
     longDesc:
-      'A caffeine-free nightcap blend to ease the body into rest. Chamomile and lavender calm the mind, passionflower supports deeper sleep, and spearmint with lemongrass keeps every sip light and soothing.',
+      'Nightfall isn\'t a fix for bad sleep. It\'s what people who\'ve upgraded everything else finally bring to the end of their day too.',
     ingredients: ['Chamomile', 'Lavender', 'Passionflower', 'Spearmint', 'Lemongrass'],
   },
   {
@@ -33,9 +33,9 @@ export const products = [
     price: 'Rs.499',
     priceValue: 499,
     img: '/images/gut-reset.png',
-    desc: 'Peppermint, fennel, ginger, lemongrass, and licorice root for inner balance.',
+    desc: 'Not about correcting something broken. The upgrade that happens quietly, from the inside.',
     longDesc:
-      'A daily digestive reset blend that brings lightness after meals. Peppermint and fennel ease bloating, ginger adds warmth, and licorice root rounds the cup with a naturally sweet finish.',
+      'Fennette isn\'t about correcting something broken. It\'s about the upgrade that happens quietly, from the inside — for people who\'ve already leveled up everywhere else.',
     ingredients: ['Peppermint', 'Fennel', 'Ginger', 'Lemongrass', 'Licorice Root'],
   },
   {
@@ -59,9 +59,9 @@ export const products = [
     price: 'Rs.499',
     priceValue: 499,
     img: '/images/focus-flow.png',
-    desc: 'Sencha, tulsi, spearmint, lemon peel, and butterfly pea flower for clean focus.',
+    desc: 'Not for people looking to calm down. For people who've already decided they move differently now.',
     longDesc:
-      'A clean-energy morning blend for clear, sustained focus. Sencha offers gentle caffeine, tulsi supports calm alertness, and lemon peel with butterfly pea flower gives the cup a bright, vivid character.',
+      'Serenette isn\'t for people looking to calm down. It\'s for people who\'ve already decided they move differently now — steadier, sharper, unbothered.',
     ingredients: ['Sencha', 'Tulsi', 'Spearmint', 'Lemon Peel', 'Butterfly Pea Flower'],
   },
 ]

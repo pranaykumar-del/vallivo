@@ -20,20 +20,18 @@ export default function Story() {
           >
             <p className="text-xs tracking-widest2 text-gold uppercase font-body mb-6">Our Story</p>
             <h2 className="font-display text-4xl md:text-5xl text-cream leading-[1.15] mb-8">
-              Vallivo is not just tea.<br />
-              <em className="text-gold not-italic">It is a daily ritual.</em>
+              You don't stay<br />
+              <em className="text-gold not-italic">on the bike.</em>
             </h2>
             <div className="gold-line w-20 mb-8" />
             <p className="font-body text-cream/50 text-base leading-relaxed mb-6">
-              We started in the high valleys, where the air is thinner and the
-              harvests are smaller but better. Every Vallivo blend is built
-              around botanicals sourced from growers we know by name, then
-              individually wrapped into pyramid bags so each cup tastes like
-              the day it was packed.
+              Somewhere along the way, you upgraded. Better car. Better clothes.
+              Better everything. It wasn't about fixing what was wrong — it was
+              about choosing what fits who you've become.
             </p>
             <p className="font-body text-cream/50 text-base leading-relaxed mb-10">
-              From Focus Flow to Glow Ritual, every blend is made to return you
-              to yourself without making wellness feel clinical.
+              Vallivo is that same choice, in a cup. Not a remedy. Not a routine.
+              Just the version of tea that matches the version of you now.
             </p>
 
             <div className="grid grid-cols-3 gap-6 mb-10">
