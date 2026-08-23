@@ -23,9 +23,9 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center text-center overflow-hidden bg-ink px-6 pt-32 pb-24">
       <img
-        src="/images/vallivo-lineup.png"
+        src="/images/vallivo-hero.png"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover opacity-[0.22]"
+        className="absolute inset-0 w-full h-full object-cover opacity-[0.55]"
       />
       <div className="absolute inset-0 bg-[linear-gradient(160deg,#060a10_0%,#091426_50%,#0d1520_100%)] opacity-95" />
       <div className="absolute top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[radial-gradient(ellipse,rgba(199,156,83,0.08)_0%,transparent_70%)]" />
