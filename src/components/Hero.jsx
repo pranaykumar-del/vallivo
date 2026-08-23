@@ -20,17 +20,17 @@ export default function Hero() {
       {/* Dark overlay on left side only */}
       <div className="absolute inset-0 bg-ink" />
 
-      {/* Right side photo */}
-      <div className="absolute right-0 top-0 w-full md:w-[55%] h-full">
+      {/* Right side photo — show only the right half of the image (the woman) */}
+      <div className="absolute right-0 top-0 w-full md:w-[52%] h-full">
         <img
           src="/images/vallivo-hero.png"
           alt="Vallivo lifestyle tea"
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-right"
         />
-        {/* Gradient fade left edge into dark */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/60 to-transparent" />
-        {/* Gradient fade bottom */}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
+        {/* Strong gradient fade from dark on left edge */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink from-10% via-ink/70 via-40% to-transparent" />
+        {/* Bottom fade */}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-ink/30" />
       </div>
 
       {/* Particles (left side only) */}
