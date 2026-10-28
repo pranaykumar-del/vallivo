@@ -49,6 +49,50 @@ const starterReviews = [
     verified: true,
     media: [],
   },
+  {
+    id: 'starter-5',
+    name: 'Meera L.',
+    city: 'Hyderabad',
+    product: 'Nightfall',
+    rating: 5,
+    text: 'Nightfall is my evening ritual now. Soft, floral, and the box feels like something you’d gift.',
+    date: '22 Sep 2026',
+    verified: true,
+    media: [{ type: 'image', url: '/images/nightfall.jpg' }],
+  },
+  {
+    id: 'starter-6',
+    name: 'Kabir V.',
+    city: 'Chennai',
+    product: 'Fennette',
+    rating: 5,
+    text: 'Ordered Fennette twice. Clean taste, no bitterness — exactly the everyday cup I wanted.',
+    date: '15 Sep 2026',
+    verified: true,
+    media: [],
+  },
+  {
+    id: 'starter-7',
+    name: 'Ananya R.',
+    city: 'Jaipur',
+    product: 'Rosette',
+    rating: 5,
+    text: 'Rosette is bright and floral without being sweet. Packaging alone makes it feel special.',
+    date: '08 Sep 2026',
+    verified: true,
+    media: [{ type: 'image', url: '/images/rosette.jpg' }],
+  },
+  {
+    id: 'starter-8',
+    name: 'Dev P.',
+    city: 'Ahmedabad',
+    product: 'Serenette',
+    rating: 4,
+    text: 'Serenette is a quieter kind of luxury. Steeps beautifully and looks elegant on the counter.',
+    date: '01 Sep 2026',
+    verified: true,
+    media: [],
+  },
 ]
 
 function Stars({ value, interactive = false, onChange }) {
@@ -224,7 +268,7 @@ export function ReviewForm({ onClose }) {
   )
 }
 
-const PAGE_SIZE = 6
+const PAGE_SIZE = 5
 
 export default function ReviewsPage() {
   const [reviews, setReviews] = useState(starterReviews)

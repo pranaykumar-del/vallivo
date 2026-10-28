@@ -5,12 +5,18 @@ import { ReviewForm } from '../pages/ReviewsPage'
 
 const ease = [0.22, 1, 0.36, 1]
 
-const reviews = [
+const allReviews = [
   { name: 'Aarav S.', city: 'Bangalore', rating: 5, text: 'Fennette feels clean and light. Beautifully packed — an easy everyday upgrade.' },
   { name: 'Priya M.', city: 'Mumbai', rating: 5, text: 'The packaging feels like a luxury gift. Serenette is soft, calm, and easy to drink daily.' },
   { name: 'Rohan K.', city: 'Delhi', rating: 5, text: 'Rosette and Nightfall are now permanent in my kitchen. Quiet luxury in a cup.' },
   { name: 'Sneha T.', city: 'Pune', rating: 4, text: 'Premium without feeling complicated. The canisters look stunning on the shelf.' },
+  { name: 'Meera L.', city: 'Hyderabad', rating: 5, text: 'Nightfall is my evening ritual now. Soft, floral, and the box feels like something you’d gift.' },
+  { name: 'Kabir V.', city: 'Chennai', rating: 5, text: 'Ordered Fennette twice. Clean taste, no bitterness — exactly the everyday cup I wanted.' },
+  { name: 'Ananya R.', city: 'Jaipur', rating: 5, text: 'Rosette is bright and floral without being sweet. Packaging alone makes it feel special.' },
+  { name: 'Dev P.', city: 'Ahmedabad', rating: 4, text: 'Serenette is a quieter kind of luxury. Steeps beautifully and looks elegant on the counter.' },
 ]
+
+const reviews = allReviews.slice(0, 5)
 
 function Stars({ value }) {
   return (
