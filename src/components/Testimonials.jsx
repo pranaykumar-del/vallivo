@@ -14,9 +14,9 @@ const reviews = [
 
 function Stars({ value }) {
   return (
-    <div className="flex gap-0.5 mb-4" aria-label={`${value} out of 5 stars`}>
+    <div className="flex gap-0.5 mb-3" aria-label={`${value} out of 5 stars`}>
       {[1, 2, 3, 4, 5].map((star) => (
-        <span key={star} className={`text-sm ${star <= value ? 'text-gold' : 'text-forest/15'}`}>★</span>
+        <span key={star} className={`text-[13px] ${star <= value ? 'text-gold' : 'text-forest/15'}`}>★</span>
       ))}
     </div>
   )
@@ -25,13 +25,20 @@ function Stars({ value }) {
 export default function Testimonials() {
   const [formOpen, setFormOpen] = useState(false)
   const [page, setPage] = useState(0)
-  const total = reviews.length
+  const [direction, setDirection] = useState(0)
+
+  const goTo = (next) => {
+    if (next === page) return
+    setDirection(next > page ? 1 : -1)
+    setPage(next)
+  }
+
+  const prev = () => goTo((page - 1 + reviews.length) % reviews.length)
+  const next = () => goTo((page + 1) % reviews.length)
   const review = reviews[page]
 
-  const go = (next) => setPage((current) => (current + next + total) % total)
-
   return (
-    <section id="reviews" className="py-24 bg-cream overflow-hidden">
+    <section id="reviews" className="py-24 bg-[#F7F9F5] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-12">
         <motion.div
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-7"
@@ -70,31 +77,32 @@ export default function Testimonials() {
 
       {!formOpen && (
         <div className="max-w-md mx-auto px-6">
-          <div className="relative flex items-center gap-3 sm:gap-4">
+          <div className="relative flex items-center gap-3 sm:gap-5">
             <button
               type="button"
-              onClick={() => go(-1)}
-              className="flex-none w-9 h-9 border border-forest/15 text-forest/50 hover:text-forest hover:border-forest/35 transition-colors font-body text-lg leading-none"
+              onClick={prev}
+              className="flex-none w-9 h-9 border border-forest/15 text-forest/45 hover:text-forest hover:border-forest/35 transition-colors flex items-center justify-center text-lg"
               aria-label="Previous review"
             >
               ‹
             </button>
 
-            <div className="relative flex-1 min-h-[280px]">
-              <AnimatePresence mode="wait">
+            <div className="relative flex-1 min-h-[220px]">
+              <AnimatePresence mode="wait" custom={direction}>
                 <motion.article
                   key={review.name}
-                  className="absolute inset-0 bg-cream-soft border border-forest/10 px-6 py-7 flex flex-col"
-                  initial={{ opacity: 0, x: 28 }}
+                  custom={direction}
+                  className="absolute inset-0 bg-white border border-[#D8E6D4] px-6 py-6 flex flex-col"
+                  initial={{ opacity: 0, x: direction >= 0 ? 28 : -28 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -28 }}
+                  exit={{ opacity: 0, x: direction >= 0 ? -28 : 28 }}
                   transition={{ duration: 0.35, ease }}
                 >
                   <Stars value={review.rating} />
-                  <p className="font-display text-base sm:text-lg italic text-forest leading-relaxed flex-1">
+                  <p className="font-display text-[1.05rem] italic text-forest leading-relaxed flex-1">
                     “{review.text}”
                   </p>
-                  <div className="gold-line w-8 mb-4 mt-5" />
+                  <div className="gold-line w-8 mt-5 mb-3" />
                   <div className="font-body text-sm text-forest font-medium">{review.name}</div>
                   <div className="font-body text-[10px] tracking-[0.18em] uppercase text-forest/55 mt-0.5">
                     {review.city}
@@ -105,24 +113,24 @@ export default function Testimonials() {
 
             <button
               type="button"
-              onClick={() => go(1)}
-              className="flex-none w-9 h-9 border border-forest/15 text-forest/50 hover:text-forest hover:border-forest/35 transition-colors font-body text-lg leading-none"
+              onClick={next}
+              className="flex-none w-9 h-9 border border-forest/15 text-forest/45 hover:text-forest hover:border-forest/35 transition-colors flex items-center justify-center text-lg"
               aria-label="Next review"
             >
               ›
             </button>
           </div>
 
-          <div className="flex justify-center items-center gap-2 mt-7" role="tablist" aria-label="Review pages">
+          <div className="flex justify-center gap-2 mt-7" role="tablist" aria-label="Review pages">
             {reviews.map((item, index) => (
               <button
                 key={item.name}
                 type="button"
                 role="tab"
                 aria-selected={index === page}
-                aria-label={`Review ${index + 1} of ${total}`}
-                onClick={() => setPage(index)}
-                className={`h-1.5 rounded-full transition-all ${
+                aria-label={`Review ${index + 1}`}
+                onClick={() => goTo(index)}
+                className={`h-1.5 transition-all ${
                   index === page ? 'w-6 bg-forest' : 'w-1.5 bg-forest/20 hover:bg-forest/40'
                 }`}
               />
