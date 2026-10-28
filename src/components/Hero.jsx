@@ -14,8 +14,8 @@ export default function Hero() {
           decoding="async"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-cream/40 to-cream/85" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.35)_10%,transparent_70%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-mint/45 via-cream/50 to-cream/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(193,249,226,0.28)_10%,transparent_70%)]" />
       </div>
 
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center pt-24 pb-20">

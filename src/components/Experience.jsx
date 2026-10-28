@@ -26,7 +26,7 @@ const steps = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-24 md:py-32 bg-[#F7F9F5]">
+    <section id="experience" className="py-24 md:py-32 bg-mint">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <motion.div
           className="text-center mb-12 md:mb-14"

@@ -31,7 +31,7 @@ export default function Testimonials() {
   const go = (next) => setPage((current) => (current + next + total) % total)
 
   return (
-    <section id="reviews" className="py-24 bg-[#F7F9F5] overflow-hidden">
+    <section id="reviews" className="py-24 bg-mint overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-12">
         <motion.div
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-7"
@@ -84,7 +84,7 @@ export default function Testimonials() {
               <AnimatePresence mode="wait">
                 <motion.article
                   key={review.name}
-                  className="absolute inset-0 bg-white border border-[#D8E6D4] px-6 py-7 flex flex-col"
+                  className="absolute inset-0 bg-cream-soft border border-forest/10 px-6 py-7 flex flex-col"
                   initial={{ opacity: 0, x: 28 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -28 }}

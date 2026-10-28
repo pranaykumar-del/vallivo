@@ -4,11 +4,12 @@
 
 @layer base {
   :root {
-    --cream: #F4F7F1;
-    --cream-soft: #FAFCF8;
-    --forest: #143024;
-    --forest-soft: #2F5A42;
-    --gold: #C9A24A;
+    --cream: #F9E7C4;
+    --cream-soft: #FBF3E3;
+    --mint: #C1F9E2;
+    --forest: #0F2A1E;
+    --forest-soft: #1F4A34;
+    --gold: #C4A15A;
   }
 
   * { box-sizing: border-box; }
@@ -28,10 +29,10 @@
     color: var(--forest);
   }
 
-  ::selection { background: #C9A24A; color: #FAFCF8; }
+  ::selection { background: #0F2A1E; color: #C1F9E2; }
   ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-track { background: #F4F7F1; }
-  ::-webkit-scrollbar-thumb { background: #C9A24A; }
+  ::-webkit-scrollbar-track { background: #F9E7C4; }
+  ::-webkit-scrollbar-thumb { background: #0F2A1E; }
 }
 
 @layer utilities {
@@ -40,7 +41,7 @@
 
   .gold-line {
     height: 1.5px;
-    background: linear-gradient(90deg, transparent, #C9A24A, transparent);
+    background: linear-gradient(90deg, transparent, #C4A15A, transparent);
   }
 
   .label-rule {
@@ -53,15 +54,15 @@
     content: '';
     width: 28px;
     height: 1.5px;
-    background: #C9A24A;
+    background: #C4A15A;
     opacity: 0.9;
   }
 
   .cream-veil {
     background:
-      radial-gradient(ellipse 80% 60% at 0% 0%, rgba(46, 107, 58, 0.1), transparent 55%),
-      radial-gradient(ellipse 70% 50% at 100% 100%, rgba(201, 162, 74, 0.12), transparent 50%),
-      #FAFCF8;
+      radial-gradient(ellipse 80% 60% at 0% 0%, rgba(193, 249, 226, 0.55), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 100% 100%, rgba(196, 161, 90, 0.18), transparent 50%),
+      #FBF3E3;
   }
 
   .lift {
@@ -69,7 +70,7 @@
   }
   .lift:hover {
     transform: translateY(-5px);
-    box-shadow: 0 22px 44px rgba(20, 48, 36, 0.1);
+    box-shadow: 0 22px 44px rgba(15, 42, 30, 0.12);
   }
 }
 
