@@ -38,7 +38,7 @@ export default function Testimonials() {
   const review = reviews[page]
 
   return (
-    <section id="reviews" className="py-24 bg-[#F7F9F5] overflow-hidden">
+    <section id="reviews" className="py-24 bg-cream-soft overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-12">
         <motion.div
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-7"
@@ -92,7 +92,7 @@ export default function Testimonials() {
                 <motion.article
                   key={review.name}
                   custom={direction}
-                  className="absolute inset-0 bg-white border border-[#D8E6D4] px-6 py-6 flex flex-col"
+                  className="absolute inset-0 bg-cream border border-gold/25 px-6 py-6 flex flex-col"
                   initial={{ opacity: 0, x: direction >= 0 ? 28 : -28 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: direction >= 0 ? -28 : 28 }}
