@@ -53,7 +53,7 @@ export default function Product() {
             >
               <Link to={`/product/${p.slug}`} className="block">
                 <motion.div
-                  className="relative aspect-[3/4] overflow-hidden mb-5 bg-cream-soft"
+                  className="relative aspect-[3/4] overflow-hidden mb-5 bg-[#F7F9F5]"
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.4, ease }}
                 >
