@@ -224,10 +224,13 @@ export function ReviewForm({ onClose }) {
   )
 }
 
+const PAGE_SIZE = 6
+
 export default function ReviewsPage() {
   const [reviews, setReviews] = useState(starterReviews)
   const [filter, setFilter] = useState('All')
   const [formOpen, setFormOpen] = useState(false)
+  const [page, setPage] = useState(0)
 
   useEffect(() => {
     let active = true
@@ -239,8 +242,15 @@ export default function ReviewsPage() {
     return () => { active = false }
   }, [])
 
+  useEffect(() => {
+    setPage(0)
+  }, [filter])
+
   const productNames = ['All', ...products.map((product) => product.name)]
   const visibleReviews = filter === 'All' ? reviews : reviews.filter((review) => review.product === filter)
+  const pageCount = Math.max(1, Math.ceil(visibleReviews.length / PAGE_SIZE))
+  const safePage = Math.min(page, pageCount - 1)
+  const pagedReviews = visibleReviews.slice(safePage * PAGE_SIZE, safePage * PAGE_SIZE + PAGE_SIZE)
   const average = reviews.reduce((total, review) => total + Number(review.rating), 0) / reviews.length
 
   return (
@@ -274,13 +284,54 @@ export default function ReviewsPage() {
         )}
 
         {!formOpen && (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {visibleReviews.map((review, index) => (
-              <motion.div key={review.id} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: Math.min(index * 0.05, 0.2) }}>
-                <ReviewCard review={review} />
-              </motion.div>
-            ))}
-          </div>
+          <>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {pagedReviews.map((review, index) => (
+                <motion.div key={review.id} initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * 0.05, 0.2) }}>
+                  <ReviewCard review={review} />
+                </motion.div>
+              ))}
+            </div>
+
+            {visibleReviews.length > PAGE_SIZE && (
+              <div className="flex items-center justify-center gap-3 mt-12">
+                <button
+                  type="button"
+                  disabled={safePage === 0}
+                  onClick={() => setPage((p) => Math.max(0, p - 1))}
+                  className="w-9 h-9 border border-forest/15 text-forest/50 hover:text-forest hover:border-forest/35 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  aria-label="Previous page"
+                >
+                  ‹
+                </button>
+                {Array.from({ length: pageCount }, (_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => setPage(index)}
+                    className={`min-w-9 h-9 px-2 border text-[10px] tracking-[0.12em] uppercase font-body transition-colors ${
+                      index === safePage
+                        ? 'bg-forest border-forest text-cream'
+                        : 'border-forest/15 text-forest/50 hover:border-forest/35'
+                    }`}
+                    aria-label={`Page ${index + 1}`}
+                    aria-current={index === safePage ? 'page' : undefined}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+                <button
+                  type="button"
+                  disabled={safePage >= pageCount - 1}
+                  onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
+                  className="w-9 h-9 border border-forest/15 text-forest/50 hover:text-forest hover:border-forest/35 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+                  aria-label="Next page"
+                >
+                  ›
+                </button>
+              </div>
+            )}
+          </>
         )}
 
         {!formOpen && visibleReviews.length === 0 && (

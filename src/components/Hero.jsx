@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 
-const letters = 'VALLIVO'.split('')
 const ease = [0.22, 1, 0.36, 1]
 
 export default function Hero() {
@@ -20,36 +19,42 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center pt-24 pb-20">
-        <h1
-          className="font-display text-forest font-semibold leading-none tracking-[0.12em] mb-6 select-none drop-shadow-[0_2px_24px_rgba(255,255,255,0.55)]"
+        <motion.h1
+          className="font-display text-forest font-semibold leading-none tracking-[0.08em] sm:tracking-[0.12em] mb-6 select-none drop-shadow-[0_2px_24px_rgba(255,255,255,0.55)] text-[clamp(3.25rem,14vw,9.5rem)]"
           aria-label="VALLIVO"
+          initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.9, ease, delay: 0.08 }}
         >
-          <span className="inline-flex justify-center flex-wrap text-[clamp(3.25rem,14vw,9.5rem)] tracking-[0.08em] sm:tracking-[0.12em]">
-            {letters.map((letter, i) => (
-              <motion.span
-                key={`${letter}-${i}`}
-                className="inline-block"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 + i * 0.04, duration: 0.35, ease }}
-              >
-                {letter}
-              </motion.span>
-            ))}
-          </span>
-        </h1>
+          VALLIVO
+        </motion.h1>
 
-        <div className="gold-line w-24 mx-auto mb-6" />
+        <motion.div
+          className="gold-line w-24 mx-auto mb-6"
+          initial={{ opacity: 0, scaleX: 0.4 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.7, ease, delay: 0.35 }}
+        />
 
-        <p className="font-display text-2xl sm:text-3xl md:text-4xl italic text-forest mb-6">
+        <motion.p
+          className="font-display text-2xl sm:text-3xl md:text-4xl italic text-forest mb-6"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.75, ease, delay: 0.42 }}
+        >
           Elevate Your Everyday.
-        </p>
+        </motion.p>
 
-        <div className="flex justify-center">
+        <motion.div
+          className="flex justify-center"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease, delay: 0.55 }}
+        >
           <p className="label-rule font-body text-[11px] tracking-[0.36em] uppercase text-forest/75 font-medium">
             Lifestyle Tea
           </p>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
