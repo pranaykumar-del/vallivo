@@ -14,13 +14,13 @@ export default function Hero() {
           decoding="async"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-leaf/55 via-forest/70 to-forest/95" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(61,129,86,0.35)_0%,transparent_65%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-forest-soft/55 via-forest/50 to-forest/88" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(61,107,82,0.35)_8%,transparent_68%)]" />
       </div>
 
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center pt-24 pb-20">
         <motion.h1
-          className="font-display text-cream font-semibold leading-none tracking-[0.08em] sm:tracking-[0.12em] mb-6 select-none drop-shadow-[0_2px_28px_rgba(15,42,30,0.45)] text-[clamp(3.25rem,14vw,9.5rem)]"
+          className="font-display text-cream font-semibold leading-none tracking-[0.08em] sm:tracking-[0.12em] mb-6 select-none drop-shadow-[0_4px_28px_rgba(8,26,18,0.35)] text-[clamp(3.25rem,14vw,9.5rem)]"
           aria-label="VALLIVO"
           initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}

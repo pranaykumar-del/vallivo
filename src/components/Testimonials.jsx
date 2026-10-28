@@ -31,7 +31,7 @@ export default function Testimonials() {
   const go = (next) => setPage((current) => (current + next + total) % total)
 
   return (
-    <section id="reviews" className="py-24 bg-forest overflow-hidden">
+    <section id="reviews" className="py-24 bg-cream overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 mb-12">
         <motion.div
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-7"
@@ -41,13 +41,13 @@ export default function Testimonials() {
           transition={{ duration: 0.65, ease }}
         >
           <div>
-            <p className="text-[11px] tracking-[0.32em] uppercase text-gold font-body mb-3 font-medium">Reviews</p>
-            <h2 className="font-display text-4xl md:text-5xl text-cream font-semibold">What they say</h2>
+            <p className="text-[11px] tracking-[0.32em] uppercase text-fennette font-body mb-3 font-medium">Reviews</p>
+            <h2 className="font-display text-4xl md:text-5xl text-forest font-semibold">What they say</h2>
           </div>
           <button
             type="button"
             onClick={() => setFormOpen((open) => !open)}
-            className="self-start sm:self-auto px-7 py-3 bg-cream text-forest text-[10px] tracking-[0.2em] uppercase font-body hover:bg-cream-soft transition-colors"
+            className="self-start sm:self-auto px-7 py-3 bg-forest text-cream text-[10px] tracking-[0.2em] uppercase font-body hover:bg-forest-soft transition-colors"
           >
             {formOpen ? 'Close form' : 'Write a review'}
           </button>
@@ -74,7 +74,7 @@ export default function Testimonials() {
             <button
               type="button"
               onClick={() => go(-1)}
-              className="flex-none w-9 h-9 border border-cream/25 text-cream/60 hover:text-cream hover:border-cream/50 transition-colors font-body text-lg leading-none"
+              className="flex-none w-9 h-9 border border-forest/15 text-forest/50 hover:text-forest hover:border-forest/35 transition-colors font-body text-lg leading-none"
               aria-label="Previous review"
             >
               ‹
@@ -84,7 +84,7 @@ export default function Testimonials() {
               <AnimatePresence mode="wait">
                 <motion.article
                   key={review.name}
-                  className="absolute inset-0 bg-cream border border-cream/20 px-6 py-7 flex flex-col"
+                  className="absolute inset-0 bg-cream-soft border border-forest/10 px-6 py-7 flex flex-col"
                   initial={{ opacity: 0, x: 28 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -28 }}
@@ -106,7 +106,7 @@ export default function Testimonials() {
             <button
               type="button"
               onClick={() => go(1)}
-              className="flex-none w-9 h-9 border border-cream/25 text-cream/60 hover:text-cream hover:border-cream/50 transition-colors font-body text-lg leading-none"
+              className="flex-none w-9 h-9 border border-forest/15 text-forest/50 hover:text-forest hover:border-forest/35 transition-colors font-body text-lg leading-none"
               aria-label="Next review"
             >
               ›
@@ -123,7 +123,7 @@ export default function Testimonials() {
                 aria-label={`Review ${index + 1} of ${total}`}
                 onClick={() => setPage(index)}
                 className={`h-1.5 rounded-full transition-all ${
-                  index === page ? 'w-6 bg-cream' : 'w-1.5 bg-cream/25 hover:bg-cream/45'
+                  index === page ? 'w-6 bg-forest' : 'w-1.5 bg-forest/20 hover:bg-forest/40'
                 }`}
               />
             ))}
@@ -135,7 +135,7 @@ export default function Testimonials() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12 mt-10 text-center">
           <Link
             to="/reviews"
-            className="inline-flex items-center gap-3 text-[10px] tracking-[0.22em] uppercase font-body text-cream/55 hover:text-cream transition-colors"
+            className="inline-flex items-center gap-3 text-[10px] tracking-[0.22em] uppercase font-body text-forest/55 hover:text-forest transition-colors"
           >
             Read all reviews <span aria-hidden="true">→</span>
           </Link>

@@ -34,9 +34,9 @@ export default function Navbar() {
     <motion.header
       className="fixed top-0 inset-x-0 z-40 transition-all duration-500"
       style={{
-        background: scrolled ? 'rgba(249,231,196,0.94)' : 'transparent',
+        background: scrolled ? 'rgba(248,245,239,0.94)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(196,161,90,0.28)' : '1px solid transparent',
+        borderBottom: scrolled ? '1px solid rgba(184,149,74,0.22)' : '1px solid transparent',
       }}
       initial={{ y: -64 }}
       animate={{ y: 0 }}
@@ -69,9 +69,7 @@ export default function Navbar() {
         <div className="flex items-center gap-5">
           <Link
             to="/cart"
-            className={`relative transition-colors ${
-              scrolled ? 'text-forest/55 hover:text-forest' : 'text-cream/70 hover:text-cream'
-            }`}
+            className={`relative transition-colors ${scrolled ? 'text-forest/55 hover:text-forest' : 'text-cream/70 hover:text-cream'}`}
             aria-label="Cart"
           >
             <CartIcon />
