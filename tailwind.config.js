@@ -10,15 +10,15 @@ export default {
           dark: '#EFD9A8',
           deep: '#E4C88A',
         },
-        mint: {
-          DEFAULT: '#C1F9E2',
-          soft: '#E8FCF3',
-          deep: '#9AECC9',
+        leaf: {
+          DEFAULT: '#2F6B45',
+          soft: '#3D8156',
+          deep: '#1E4A30',
         },
         forest: {
           DEFAULT: '#0F2A1E',
           deep: '#081A12',
-          soft: '#1F4A34',
+          soft: '#1A3D2A',
           mist: '#3D6B52',
         },
         gold: {

@@ -6,9 +6,9 @@
   :root {
     --cream: #F9E7C4;
     --cream-soft: #FBF3E3;
-    --mint: #C1F9E2;
+    --leaf: #2F6B45;
     --forest: #0F2A1E;
-    --forest-soft: #1F4A34;
+    --forest-soft: #1A3D2A;
     --gold: #C4A15A;
   }
 
@@ -29,7 +29,7 @@
     color: var(--forest);
   }
 
-  ::selection { background: #0F2A1E; color: #C1F9E2; }
+  ::selection { background: #0F2A1E; color: #F9E7C4; }
   ::-webkit-scrollbar { width: 3px; }
   ::-webkit-scrollbar-track { background: #F9E7C4; }
   ::-webkit-scrollbar-thumb { background: #0F2A1E; }
@@ -60,8 +60,8 @@
 
   .cream-veil {
     background:
-      radial-gradient(ellipse 80% 60% at 0% 0%, rgba(193, 249, 226, 0.55), transparent 55%),
-      radial-gradient(ellipse 70% 50% at 100% 100%, rgba(196, 161, 90, 0.18), transparent 50%),
+      radial-gradient(ellipse 80% 60% at 0% 0%, rgba(47, 107, 69, 0.12), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 100% 100%, rgba(196, 161, 90, 0.16), transparent 50%),
       #FBF3E3;
   }
 

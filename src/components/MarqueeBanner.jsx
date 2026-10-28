@@ -13,7 +13,7 @@ export default function MarqueeBanner() {
           <span
             key={i}
             className={`whitespace-nowrap px-4 font-body text-[11px] tracking-[0.2em] uppercase font-medium ${
-              item === '·' ? 'text-mint' : 'text-cream'
+              item === '·' ? 'text-gold' : 'text-cream'
             }`}
           >
             {item}

@@ -4,7 +4,7 @@ const ease = [0.22, 1, 0.36, 1]
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-cream">
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-forest">
       <div className="absolute inset-0">
         <img
           src="/images/valleys-bg.jpg"
@@ -14,13 +14,13 @@ export default function Hero() {
           decoding="async"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-mint/45 via-cream/50 to-cream/90" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(193,249,226,0.28)_10%,transparent_70%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-leaf/55 via-forest/70 to-forest/95" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(61,129,86,0.35)_0%,transparent_65%)]" />
       </div>
 
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center pt-24 pb-20">
         <motion.h1
-          className="font-display text-forest font-semibold leading-none tracking-[0.08em] sm:tracking-[0.12em] mb-6 select-none drop-shadow-[0_2px_24px_rgba(255,255,255,0.55)] text-[clamp(3.25rem,14vw,9.5rem)]"
+          className="font-display text-cream font-semibold leading-none tracking-[0.08em] sm:tracking-[0.12em] mb-6 select-none drop-shadow-[0_2px_28px_rgba(15,42,30,0.45)] text-[clamp(3.25rem,14vw,9.5rem)]"
           aria-label="VALLIVO"
           initial={{ opacity: 0, y: 28, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -37,7 +37,7 @@ export default function Hero() {
         />
 
         <motion.p
-          className="font-display text-2xl sm:text-3xl md:text-4xl italic text-forest mb-6"
+          className="font-display text-2xl sm:text-3xl md:text-4xl italic text-cream mb-6"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease, delay: 0.42 }}
@@ -51,7 +51,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease, delay: 0.55 }}
         >
-          <p className="label-rule font-body text-[11px] tracking-[0.36em] uppercase text-forest/75 font-medium">
+          <p className="label-rule font-body text-[11px] tracking-[0.36em] uppercase text-cream/80 font-medium">
             Lifestyle Tea
           </p>
         </motion.div>

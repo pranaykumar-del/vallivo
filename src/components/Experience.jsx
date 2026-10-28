@@ -26,7 +26,7 @@ const steps = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-24 md:py-32 bg-mint">
+    <section id="experience" className="py-24 md:py-32 bg-cream">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <motion.div
           className="text-center mb-12 md:mb-14"
@@ -52,7 +52,7 @@ export default function Experience() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.05, duration: 0.3, ease }}
             >
-              <div className="aspect-[4/3] overflow-hidden mb-5 bg-white">
+              <div className="aspect-[4/3] overflow-hidden mb-5 bg-cream-soft">
                 <MediaImage
                   src={s.img}
                   alt={s.title}

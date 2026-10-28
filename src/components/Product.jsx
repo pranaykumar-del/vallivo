@@ -18,7 +18,7 @@ export default function Product() {
   }
 
   return (
-    <section id="product" className="py-24 md:py-32 bg-white">
+    <section id="product" className="py-24 md:py-32 bg-cream">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <motion.div
           className="text-center mb-14 md:mb-16"
@@ -53,7 +53,7 @@ export default function Product() {
             >
               <Link to={`/product/${p.slug}`} className="block">
                 <motion.div
-                  className="relative aspect-[3/4] overflow-hidden mb-5 bg-mint-soft"
+                  className="relative aspect-[3/4] overflow-hidden mb-5 bg-cream-dark"
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.4, ease }}
                 >
