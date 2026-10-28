@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp } from 'firebase/firestore'
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -16,6 +17,7 @@ if (!firebaseConfig.projectId) {
 
 const app = initializeApp(firebaseConfig)
 const db = getFirestore(app, 'default')
+const storage = getStorage(app)
 
 export async function placeOrder({ name, phone, address, email, items, total }) {
   const orderId = crypto.randomUUID()
@@ -43,4 +45,46 @@ export async function subscribeNewsletter(email) {
     created_at: serverTimestamp(),
   })
   return docRef
+}
+
+export async function getReviews() {
+  const approvedReviews = query(collection(db, 'reviews'), where('status', '==', 'approved'))
+  const snapshot = await getDocs(approvedReviews)
+
+  return snapshot.docs
+    .map((review) => ({ id: review.id, ...review.data() }))
+    .sort((a, b) => {
+      const aTime = a.created_at?.toMillis?.() || 0
+      const bTime = b.created_at?.toMillis?.() || 0
+      return bTime - aTime
+    })
+}
+
+export async function submitReview({ name, city, product, rating, text, files }) {
+  const reviewId = crypto.randomUUID()
+  const media = []
+
+  for (const [index, file] of files.entries()) {
+    const extension = file.name.split('.').pop()?.toLowerCase() || 'file'
+    const fileRef = ref(storage, `reviews/${reviewId}/${index}-${crypto.randomUUID()}.${extension}`)
+    await uploadBytes(fileRef, file, { contentType: file.type })
+    media.push({
+      url: await getDownloadURL(fileRef),
+      type: file.type.startsWith('video/') ? 'video' : 'image',
+    })
+  }
+
+  const docRef = await addDoc(collection(db, 'reviews'), {
+    reviewId,
+    name: name.trim(),
+    city: city.trim(),
+    product,
+    rating: Number(rating),
+    text: text.trim(),
+    media,
+    status: 'pending',
+    created_at: serverTimestamp(),
+  })
+
+  return { docRef, reviewId }
 }

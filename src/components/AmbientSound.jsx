@@ -53,13 +53,13 @@ export default function AmbientSound() {
     <button
       onClick={toggle}
       title={active ? 'Mute ambient sound' : 'Play ambient sound'}
-      className="fixed bottom-24 right-6 z-50 w-12 h-12 rounded-full bg-navy flex items-center justify-center shadow-lg"
-      style={{ boxShadow: '0 4px 24px rgba(30,58,95,0.25)' }}
+      className="fixed bottom-24 right-6 z-50 w-12 h-12 rounded-full bg-forest flex items-center justify-center shadow-lg"
+      style={{ boxShadow: '0 4px 24px rgba(31,51,40,0.2)' }}
     >
       {active && (
         <span className="pulse-ring absolute inset-0 rounded-full border border-gold/60" />
       )}
-      <span className="relative text-gold text-lg">
+      <span className="relative text-cream text-lg">
         {active ? '♪' : '♩'}
       </span>
     </button>

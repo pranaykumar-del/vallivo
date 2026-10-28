@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate, Navigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { products, getProductBySlug, calcPrice, BAG_STEP, DEFAULT_BAGS } from '../lib/products'
+import { products, getProductBySlug, calcPrice, UNIT_STEP, DEFAULT_QTY, UNIT_GRAMS } from '../lib/products'
 import { useCart } from '../lib/CartContext'
 import MediaImage from '../components/MediaImage'
 import TrustBar from '../components/TrustBar'
@@ -11,7 +11,7 @@ export default function ProductPage() {
   const { slug } = useParams()
   const navigate = useNavigate()
   const { addItem } = useCart()
-  const [quantity, setQuantity] = useState(DEFAULT_BAGS)
+  const [quantity, setQuantity] = useState(DEFAULT_QTY)
   const [added, setAdded] = useState(false)
 
   const product = getProductBySlug(slug)
@@ -31,13 +31,13 @@ export default function ProductPage() {
   }
 
   return (
-    <section className="bg-ink pt-32 pb-24 px-6">
+    <section className="bg-cream pt-32 pb-24 px-6">
       <div className="max-w-7xl mx-auto">
         <Link
           to="/#product"
-          className="text-[10px] tracking-widest text-gold/60 uppercase font-body hover:text-gold transition-colors"
+          className="text-[10px] tracking-widest text-forest/40 uppercase font-body hover:text-forest transition-colors"
         >
-          &larr; Back to Collection
+          ← Back to Collection
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-16 mt-8 items-start">
@@ -54,61 +54,78 @@ export default function ProductPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <p className="text-xs tracking-widest2 text-gold uppercase font-body mb-4">{product.sub}</p>
-            <h1 className="font-display text-4xl md:text-5xl text-cream mb-4">{product.name}</h1>
-            <div className="gold-line w-20 mb-6" />
-            <p className="font-body text-cream/60 text-sm leading-relaxed mb-8">{product.longDesc}</p>
+            <p className="rule-line text-[10px] tracking-widest2 uppercase font-body mb-4 max-w-[10rem]" style={{ color: product.accent }}>
+              Lifestyle Tea
+            </p>
+            <h1 className="font-display text-5xl md:text-6xl tracking-wide mb-2" style={{ color: product.accent }}>
+              {product.name}
+            </h1>
+            <p className="font-body text-xs tracking-widest uppercase text-forest/45 mb-6">{product.sub}</p>
+            <div className="gold-line w-16 mb-6" />
+            <p className="font-body text-forest/60 text-sm leading-relaxed mb-8">{product.longDesc}</p>
 
             <div className="mb-8">
-              <div className="text-[10px] tracking-widest text-cream/40 uppercase font-body mb-3">Ingredients</div>
+              <div className="text-[10px] tracking-widest text-forest/35 uppercase font-body mb-3">Ingredients</div>
               <div className="flex flex-wrap gap-2">
                 {product.ingredients.map((ing) => (
-                  <span key={ing} className="text-xs font-body text-cream/70 border border-gold/20 px-3 py-1.5">
+                  <span
+                    key={ing}
+                    className="text-xs font-body text-forest/70 border px-3 py-1.5 bg-cream-soft"
+                    style={{ borderColor: `${product.accent}30` }}
+                  >
                     {ing}
                   </span>
                 ))}
               </div>
             </div>
 
-            <div className="font-display text-3xl text-gold mb-8">
-              {product.price} <span className="text-cream/40 text-sm font-body">/ 100 pyramid bags</span>
+            <div className="flex flex-wrap gap-4 mb-8">
+              {product.badges.map((b) => (
+                <span key={b} className="text-[10px] tracking-widest uppercase font-body text-forest/45 border border-gold/30 px-3 py-1.5">
+                  {b}
+                </span>
+              ))}
+            </div>
+
+            <div className="font-display text-3xl text-forest mb-8">
+              {product.price} <span className="text-forest/35 text-sm font-body">/ {product.unitLabel || `${UNIT_GRAMS}g`}</span>
             </div>
 
             <div className="flex items-center gap-6 mb-8">
-              <div className="flex items-center border border-cream/20">
+              <div className="flex items-center border border-forest/15">
                 <button
                   type="button"
-                  onClick={() => setQuantity((q) => Math.max(BAG_STEP, q - BAG_STEP))}
-                  className="w-10 h-10 text-cream hover:text-gold transition-colors"
+                  onClick={() => setQuantity((q) => Math.max(UNIT_STEP, q - UNIT_STEP))}
+                  className="w-10 h-10 text-forest hover:text-gold-dark transition-colors"
                   aria-label="Decrease quantity"
                 >
                   -
                 </button>
-                <span className="w-20 text-center text-sm font-body text-cream">{quantity} bags</span>
+                <span className="w-24 text-center text-sm font-body text-forest">{quantity * UNIT_GRAMS}g</span>
                 <button
                   type="button"
-                  onClick={() => setQuantity((q) => q + BAG_STEP)}
-                  className="w-10 h-10 text-cream hover:text-gold transition-colors"
+                  onClick={() => setQuantity((q) => q + UNIT_STEP)}
+                  className="w-10 h-10 text-forest hover:text-gold-dark transition-colors"
                   aria-label="Increase quantity"
                 >
                   +
                 </button>
               </div>
-              <span className="font-display text-xl text-cream">Rs.{calcPrice(product.priceValue, quantity)}</span>
+              <span className="font-display text-xl text-forest">Rs.{calcPrice(product.priceValue, quantity)}</span>
             </div>
 
             <div className="flex flex-wrap gap-4">
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="px-8 py-3.5 border border-gold text-gold font-body text-xs tracking-widest uppercase hover:bg-gold hover:text-navy transition-colors duration-300 font-medium"
+                className="px-8 py-3.5 border border-forest text-forest font-body text-xs tracking-widest uppercase hover:bg-forest hover:text-cream transition-colors duration-300"
               >
                 {added ? 'Added to Cart' : 'Add to Cart'}
               </button>
               <button
                 type="button"
                 onClick={handleBuyNow}
-                className="px-8 py-3.5 bg-gold text-navy font-body text-xs tracking-widest uppercase hover:bg-gold-light transition-colors duration-300 font-medium"
+                className="px-8 py-3.5 bg-forest text-cream font-body text-xs tracking-widest uppercase hover:bg-forest-soft transition-colors duration-300"
               >
                 Buy Now
               </button>
@@ -120,24 +137,21 @@ export default function ProductPage() {
 
         <div className="mt-28">
           <div className="text-center mb-12">
-            <p className="text-xs tracking-widest2 text-gold/70 uppercase font-body mb-4">More Rituals</p>
-            <h2 className="font-display text-3xl md:text-4xl text-cream">You May Also Like</h2>
+            <p className="text-xs tracking-widest2 text-gold-dark uppercase font-body mb-4">More Blends</p>
+            <h2 className="font-display text-3xl md:text-4xl text-forest">You May Also Like</h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-3 gap-6">
             {others.map((p) => (
-              <Link key={p.slug} to={`/product/${p.slug}`} className="group relative overflow-hidden card-hover block">
-                <div className="relative h-56 bg-navy-dark overflow-hidden">
+              <Link key={p.slug} to={`/product/${p.slug}`} className="group block product-lift">
+                <div className="relative aspect-[3/4] overflow-hidden mb-4" style={{ backgroundColor: p.soft }}>
                   <MediaImage
                     src={p.img}
                     alt={p.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                  <div className="absolute bottom-0 left-0 p-4">
-                    <div className="font-display text-base text-white">{p.name}</div>
-                    <div className="text-[9px] tracking-widest text-white/60 uppercase font-body mt-1">{p.price}</div>
-                  </div>
                 </div>
+                <div className="font-display text-2xl" style={{ color: p.accent }}>{p.name}</div>
+                <div className="text-[10px] tracking-widest text-forest/40 uppercase font-body mt-1">{p.price}</div>
               </Link>
             ))}
           </div>

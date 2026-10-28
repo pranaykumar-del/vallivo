@@ -1,86 +1,68 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import MediaImage from './MediaImage'
 
-const moments = [
+const ease = [0.22, 1, 0.36, 1]
+
+const steps = [
   {
-    time: '07:00',
-    title: 'Focus Flow',
-    desc: 'Sencha, tulsi, spearmint, lemon peel, and butterfly pea flower for clear mornings.',
-    img: '/images/focus-flow.png',
-    icon: '01',
-    slug: 'focus-flow',
+    n: '01',
+    title: 'Add the leaves',
+    desc: 'Spoon loose Serenette leaves into a clean glass pot or infuser.',
+    img: '/images/brew-step-1.jpg',
   },
   {
-    time: '13:00',
-    title: 'Gut Reset',
-    desc: 'Peppermint, fennel, ginger, lemongrass, and licorice root for a lighter reset.',
-    img: '/images/gut-reset.png',
-    icon: '02',
-    slug: 'gut-reset',
+    n: '02',
+    title: 'Steep gently',
+    desc: 'Pour hot water at about 90°C. Steep 3–4 minutes until the liquor turns soft violet.',
+    img: '/images/brew-step-2.jpg',
   },
   {
-    time: '19:00',
-    title: 'Glow Ritual',
-    desc: 'Rose, hibiscus, rosehip, white tea, and strawberry for a floral close to the day.',
-    img: '/images/glow-ritual.png',
-    icon: '03',
-    slug: 'glow-ritual',
+    n: '03',
+    title: 'Sip & settle',
+    desc: 'Pour into your cup, breathe in, and sip slowly. Calm, clear, unhurried.',
+    img: '/images/brew-step-3.jpg',
   },
 ]
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-32 bg-black">
+    <section id="experience" className="py-24 md:py-32 bg-[#F7F9F5]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 32 }}
+          className="text-center mb-12 md:mb-14"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.6, ease }}
         >
-          <p className="text-xs tracking-widest2 text-gold/70 uppercase font-body mb-4">The Experience</p>
-          <h2 className="font-display text-4xl md:text-5xl text-cream mb-6">Find Your Ritual</h2>
-          <div className="gold-line w-20 mx-auto" />
+          <p className="text-[11px] tracking-[0.32em] uppercase text-serenette font-body mb-4 font-medium">The Ritual</p>
+          <h2 className="font-display text-4xl md:text-5xl text-forest font-semibold mb-3">How to make it</h2>
+          <p className="font-body text-sm md:text-[15px] text-forest/70 max-w-md mx-auto">
+            Three simple steps with loose leaf.
+          </p>
+          <div className="gold-line w-14 mx-auto mt-7" />
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {moments.map((m, i) => (
-            <motion.div
-              key={m.title}
-              className="group relative overflow-hidden card-hover"
-              initial={{ opacity: 0, y: 40 }}
+        <div className="grid md:grid-cols-3 gap-8 md:gap-10">
+          {steps.map((s, i) => (
+            <motion.article
+              key={s.n}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.15, duration: 0.65 }}
+              transition={{ delay: i * 0.05, duration: 0.3, ease }}
             >
-              <div className="h-80 overflow-hidden relative">
+              <div className="aspect-[4/3] overflow-hidden mb-5 bg-white">
                 <MediaImage
-                  src={m.img}
-                  alt={m.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  src={s.img}
+                  alt={s.title}
+                  className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-black/45 group-hover:bg-black/20 transition-colors duration-500" />
-
-                <div className="absolute top-5 left-5 w-10 h-10 border border-gold/40 flex items-center justify-center">
-                  <span className="text-gold text-[10px] tracking-widest">{m.icon}</span>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <span className="text-[10px] tracking-widest text-gold/70 uppercase font-body">{m.time}</span>
-                  <h3 className="font-display text-2xl text-cream mt-1 mb-1">{m.title}</h3>
-                  <p className="font-body text-sm text-cream/60 leading-relaxed">{m.desc}</p>
-                </div>
               </div>
-
-              <div className="bg-navy-dark px-6 py-4 flex items-center justify-between border-t border-gold/10">
-                <div className="h-px bg-gold/30 flex-1 mr-4 transition-all duration-500 group-hover:bg-gold/60" />
-                <Link to={`/product/${m.slug}`} className="text-[10px] tracking-widest text-gold uppercase font-body whitespace-nowrap">
-                  Make it yours -&gt;
-                </Link>
-              </div>
-            </motion.div>
+              <p className="font-body text-[11px] tracking-[0.28em] uppercase text-serenette mb-2 font-medium">{s.n}</p>
+              <h3 className="font-display text-2xl text-forest font-semibold mb-2">{s.title}</h3>
+              <p className="font-body text-sm text-forest/75 leading-relaxed">{s.desc}</p>
+            </motion.article>
           ))}
         </div>
       </div>

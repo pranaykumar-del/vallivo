@@ -158,7 +158,7 @@ Both the order form fallback and the floating button use this number.
 - [ ] Fill in `.env` with real Supabase keys
 - [ ] Run `supabase_schema.sql` in your Supabase project
 - [ ] Set `VITE_WHATSAPP_NUMBER` to your real WhatsApp Business number
-- [ ] Update `hello@vallivo.in` in Footer.jsx with your real email
+- [x] Website domain set to `www.vallivo.com`
 - [ ] Update Instagram handle in Footer.jsx
 - [ ] Test order form end-to-end (check Supabase Table Editor)
 - [ ] Build and deploy to Vercel / Netlify

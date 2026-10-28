@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { calcPrice, DEFAULT_BAGS } from './products'
+import { calcPrice, DEFAULT_QTY } from './products'
 
 const CartContext = createContext(null)
-const STORAGE_KEY = 'vallivo_cart'
+const STORAGE_KEY = 'vallivo_cart_v3'
 
 function loadCart() {
   try {
@@ -22,7 +22,7 @@ export function CartProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
   }, [items])
 
-  const addItem = (product, quantity = DEFAULT_BAGS) => {
+  const addItem = (product, quantity = DEFAULT_QTY) => {
     setItems((current) => {
       const existing = current.find((i) => i.slug === product.slug)
       if (existing) {
@@ -37,6 +37,7 @@ export function CartProvider({ children }) {
           name: product.name,
           sub: product.sub,
           pricePer100: product.priceValue,
+          unitLabel: product.unitLabel || '50g',
           img: product.img,
           quantity,
         },

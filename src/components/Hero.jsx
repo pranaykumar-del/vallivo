@@ -1,149 +1,56 @@
-import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import TrustBar from './TrustBar'
 
-const PARTICLES = Array.from({ length: 16 }, (_, i) => ({
-  left: `${(i * 37) % 50}%`,
-  top: `${(i * 53) % 100}%`,
-  size: i % 3 === 0 ? 3 : 2,
-  duration: 8 + (i % 7) * 1.2,
-  delay: i * 0.35,
-  drift: -18 - (i % 5) * 6,
-}))
+const letters = 'VALLIVO'.split('')
+const ease = [0.22, 1, 0.36, 1]
 
 export default function Hero() {
-  const [ready, setReady] = useState(false)
-  useEffect(() => { setTimeout(() => setReady(true), 100) }, [])
-
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-ink">
-      {/* Dark overlay on left side only */}
-      <div className="absolute inset-0 bg-ink" />
-
-      {/* Right side photo — show only the right half of the image (the woman) */}
-      <div className="absolute right-0 top-0 w-full md:w-[52%] h-full">
+    <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-cream">
+      <div className="absolute inset-0">
         <img
-          src="/images/vallivo-hero.png"
-          alt="Vallivo lifestyle tea"
-          className="w-full h-full object-cover object-right"
+          src="/images/valleys-bg.jpg"
+          alt=""
+          className="w-full h-full object-cover"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
         />
-        {/* Strong gradient fade from dark on left edge */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink from-10% via-ink/70 via-40% to-transparent" />
-        {/* Bottom fade */}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-ink/30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-cream/40 to-cream/85" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.35)_10%,transparent_70%)]" />
       </div>
 
-      {/* Particles (left side only) */}
-      <div className="absolute inset-0 pointer-events-none">
-        {PARTICLES.map((p, i) => (
-          <span
-            key={i}
-            className="particle absolute rounded-full bg-gold"
-            style={{
-              left: p.left,
-              top: p.top,
-              width: p.size,
-              height: p.size,
-              '--duration': `${p.duration}s`,
-              '--delay': `${p.delay}s`,
-              '--drift': `${p.drift}px`,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Left side content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-24">
-        <motion.div
-          className="max-w-xl"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: ready ? 1 : 0, y: ready ? 0 : 30 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center pt-24 pb-20">
+        <h1
+          className="font-display text-forest font-semibold leading-none tracking-[0.12em] mb-6 select-none drop-shadow-[0_2px_24px_rgba(255,255,255,0.55)]"
+          aria-label="VALLIVO"
         >
-          <motion.p
-            className="inline-block text-xs tracking-widest2 text-gold/80 uppercase font-body mb-6 pb-2 border-b border-gold/30"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
+          <span className="inline-flex justify-center flex-wrap text-[clamp(3.25rem,14vw,9.5rem)] tracking-[0.08em] sm:tracking-[0.12em]">
+            {letters.map((letter, i) => (
+              <motion.span
+                key={`${letter}-${i}`}
+                className="inline-block"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 + i * 0.04, duration: 0.35, ease }}
+              >
+                {letter}
+              </motion.span>
+            ))}
+          </span>
+        </h1>
+
+        <div className="gold-line w-24 mx-auto mb-6" />
+
+        <p className="font-display text-2xl sm:text-3xl md:text-4xl italic text-forest mb-6">
+          Elevate Your Everyday.
+        </p>
+
+        <div className="flex justify-center">
+          <p className="label-rule font-body text-[11px] tracking-[0.36em] uppercase text-forest/75 font-medium">
             Lifestyle Tea
-          </motion.p>
-
-          <motion.h1
-            className="font-display text-6xl sm:text-7xl md:text-8xl text-cream leading-[1.05] mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 1 }}
-          >
-            An upgrade,<br />
-            <span className="text-gold italic">not a habit.</span>
-          </motion.h1>
-
-          <motion.p
-            className="font-body text-cream/55 text-sm md:text-base leading-[1.8] mb-10"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 1 }}
-          >
-            Every upgrade in life feels the same — better fit, better feel, better you. Your ride. Your wardrobe. Your coffee order. Vallivo brings that same upgrade to your cup. Not health tea. Not another wellness fad. Just the upgrade of you — reflected in what you drink.
-          </motion.p>
-
-          <motion.div
-            className="flex flex-wrap items-center gap-4"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.8 }}
-          >
-            <a href="#product"
-              className="px-8 py-3.5 bg-gold text-navy font-body text-xs tracking-widest uppercase hover:bg-gold-light transition-colors duration-300 font-medium">
-              Shop the Upgrade →
-            </a>
-            <a href="#experience"
-              className="px-8 py-3.5 border border-cream/30 text-cream font-body text-xs tracking-widest uppercase hover:border-gold hover:text-gold transition-colors duration-300">
-              Find Your Ritual
-            </a>
-          </motion.div>
-
-          <motion.div
-            className="flex items-center gap-2 mt-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
-          >
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <svg key={i} viewBox="0 0 20 20" className="w-3 h-3 fill-gold">
-                  <path d="M10 1.5l2.59 5.62 6.18.6-4.67 4.21 1.34 6.07L10 14.9l-5.44 3.1 1.34-6.07-4.67-4.21 6.18-.6L10 1.5z" />
-                </svg>
-              ))}
-            </div>
-            <span className="text-xs text-cream/50 font-body tracking-wide">4.9/5 &middot; loved by 1,200+ ritual seekers</span>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-          >
-            <TrustBar className="mt-10" />
-          </motion.div>
-        </motion.div>
+          </p>
+        </div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 0.7 }}
-      >
-        <span className="text-[9px] tracking-widest text-gold/40 uppercase font-body">Scroll</span>
-        <motion.div
-          className="w-px h-10 bg-gradient-to-b from-gold/40 to-transparent"
-          animate={{ scaleY: [1, 0.4, 1] }}
-          transition={{ duration: 1.8, repeat: Infinity }}
-        />
-      </motion.div>
     </section>
   )
 }

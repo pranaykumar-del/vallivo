@@ -14,103 +14,70 @@ function NewsletterForm() {
       await subscribeNewsletter(email)
       setStatus('success')
       setEmail('')
-    } catch (err) {
-      console.error(err)
+    } catch {
       setStatus('error')
     }
   }
 
   if (status === 'success') {
-    return <p className="font-body text-sm text-gold">You're on the list. Welcome to the ritual.</p>
+    return <p className="font-body text-sm text-gold-light">You're on the list.</p>
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="flex border-b border-cream/20 focus-within:border-gold transition-colors">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Your email address"
-          required
-          className="flex-1 bg-transparent py-2.5 font-body text-sm text-cream placeholder-cream/30 focus:outline-none"
-        />
-        <button
-          type="submit"
-          disabled={status === 'loading'}
-          className="text-[10px] tracking-widest text-gold uppercase font-body whitespace-nowrap pl-3 disabled:opacity-50"
-        >
-          {status === 'loading' ? '...' : 'Join'}
-        </button>
-      </form>
-      {status === 'error' && (
-        <p className="text-red-400 text-xs font-body mt-2">Something went wrong. Please try again.</p>
-      )}
-    </div>
+    <form onSubmit={handleSubmit} className="flex border-b border-cream/20 focus-within:border-gold transition-colors">
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Your email"
+        required
+        className="flex-1 bg-transparent py-2.5 font-body text-sm text-cream placeholder-cream/30 focus:outline-none"
+      />
+      <button type="submit" disabled={status === 'loading'} className="text-[10px] tracking-[0.2em] text-gold uppercase font-body pl-3">
+        {status === 'loading' ? '…' : 'Join'}
+      </button>
+    </form>
   )
 }
 
 export default function Footer() {
   return (
-    <footer className="bg-black py-16 border-t border-gold/10">
+    <footer className="bg-forest-deep py-14">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid md:grid-cols-3 gap-12 mb-14">
+        <div className="grid md:grid-cols-3 gap-12 mb-12">
           <div>
-            <div className="font-display text-2xl text-cream tracking-widest mb-1">VALLIVO</div>
-            <div className="text-[9px] tracking-widest2 text-gold/60 uppercase font-body mb-5">Lifestyle Tea</div>
-            <p className="font-body text-cream/40 text-sm leading-relaxed mb-6">
-              Premium wellness teas.<br />Rituals are not routines.
-            </p>
-            <div className="text-[10px] tracking-widest text-gold/60 uppercase font-body mb-3">Join the Ritual</div>
+            <div className="font-display text-2xl tracking-[0.2em] text-cream mb-2">VALLIVO</div>
+            <p className="label-rule text-[9px] tracking-[0.28em] text-gold/60 uppercase font-body mb-5">Lifestyle Tea</p>
+            <p className="font-body text-cream/40 text-sm leading-relaxed mb-5">Elevate Your Everyday.</p>
             <NewsletterForm />
           </div>
-
           <div>
-            <div className="text-[10px] tracking-widest text-gold/60 uppercase font-body mb-5">Navigate</div>
+            <div className="text-[10px] tracking-[0.22em] text-gold/55 uppercase font-body mb-5">Navigate</div>
             <div className="flex flex-col gap-3">
               {[
-                { label: 'Product', href: '/#product' },
-                { label: 'Experience', href: '/#experience' },
-                { label: 'Our Story', href: '/#story' },
-                { label: 'Order', href: '/cart' },
+                { label: 'Collection', href: '/#product' },
+                { label: 'Rituals', href: '/#experience' },
+                { label: 'About', href: '/#story' },
+                { label: 'Reviews', href: '/reviews' },
+                { label: 'Cart', href: '/cart' },
               ].map((l) => (
-                <Link key={l.label} to={l.href}
-                  className="font-body text-sm text-cream/50 hover:text-gold transition-colors tracking-wide">
+                <Link key={l.href} to={l.href} className="font-body text-sm text-cream/45 hover:text-gold transition-colors">
                   {l.label}
                 </Link>
               ))}
             </div>
           </div>
-
           <div>
-            <div className="text-[10px] tracking-widest text-gold/60 uppercase font-body mb-5">Connect</div>
+            <div className="text-[10px] tracking-[0.22em] text-gold/55 uppercase font-body mb-5">Connect</div>
             <div className="flex flex-col gap-3">
-              <a href="https://instagram.com/vallivo" target="_blank" rel="noreferrer"
-                className="font-body text-sm text-cream/50 hover:text-gold transition-colors tracking-wide">
-                Instagram
-              </a>
-              <a href="https://wa.me/916304207706" target="_blank" rel="noreferrer"
-                className="font-body text-sm text-cream/50 hover:text-gold transition-colors tracking-wide">
-                WhatsApp
-              </a>
-              <a href="mailto:hello@vallivo.in"
-                className="font-body text-sm text-cream/50 hover:text-gold transition-colors tracking-wide">
-                hello@vallivo.in
-              </a>
+              <a href="https://instagram.com/vallivo" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/45 hover:text-gold transition-colors">Instagram</a>
+              <a href="https://wa.me/916304207706" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/45 hover:text-gold transition-colors">WhatsApp</a>
+              <a href="https://www.vallivo.com" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/45 hover:text-gold transition-colors">www.vallivo.com</a>
             </div>
           </div>
         </div>
-
-        <div className="gold-line mb-8" />
-
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="font-body text-xs text-cream/30 tracking-wide">
-            (c) 2026 Vallivo. All rights reserved.
-          </p>
-          <p className="font-body text-xs text-cream/20 tracking-widest uppercase">
-            Made for modern rituals
-          </p>
-        </div>
+        <div className="gold-line mb-7" />
+        <p className="font-body text-xs text-cream/25 tracking-wide">© 2026 Vallivo. All rights reserved.</p>
       </div>
     </footer>
   )

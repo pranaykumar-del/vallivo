@@ -18,9 +18,9 @@ const ITEMS = [
     ),
   },
   {
-    label: 'Secure checkout',
+    label: 'No artificial flavours',
     icon: (
-      <path d="M6 10V8a6 6 0 1 1 12 0v2m-13 0h14v10H5V10Z" />
+      <path d="M12 3c4 3 7 6.5 7 10.5A5 5 0 0 1 12 18a5 5 0 0 1-7-4.5C5 9.5 8 6 12 3Z" />
     ),
   },
 ]
@@ -33,7 +33,7 @@ export default function TrustBar({ className = '' }) {
           <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
             {item.icon}
           </svg>
-          <span className="text-[10px] tracking-wide text-cream/50 font-body leading-tight">{item.label}</span>
+          <span className="text-[10px] tracking-wide text-forest/45 font-body leading-tight">{item.label}</span>
         </div>
       ))}
     </div>

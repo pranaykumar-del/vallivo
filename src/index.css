@@ -4,68 +4,72 @@
 
 @layer base {
   :root {
-    --navy: #101814;
-    --navy-dark: #070909;
-    --cream: #F5F1EA;
-    --cream-dark: #EDE8DF;
-    --gold: #C79C53;
-    --gold-light: #E8C57F;
+    --cream: #F4F7F1;
+    --cream-soft: #FAFCF8;
+    --forest: #143024;
+    --forest-soft: #2F5A42;
+    --gold: #C9A24A;
   }
 
   * { box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Inter', sans-serif;
-    background-color: #070909;
-    color: #F5F1EA;
+    font-family: 'Outfit', sans-serif;
+    background: var(--cream);
+    color: var(--forest);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
 
   h1, h2, h3, h4 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    color: var(--forest);
   }
 
-  ::selection { background: #C79C53; color: #070909; }
-
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: #070909; }
-  ::-webkit-scrollbar-thumb { background: #C79C53; border-radius: 2px; }
+  ::selection { background: #C9A24A; color: #FAFCF8; }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: #F4F7F1; }
+  ::-webkit-scrollbar-thumb { background: #C9A24A; }
 }
 
 @layer utilities {
-  .font-display { font-family: 'Playfair Display', serif; }
-  .font-body { font-family: 'Inter', sans-serif; }
-  .text-gold { color: #C79C53; }
-  .text-navy { color: #101814; }
-  .bg-navy { background-color: #101814; }
-  .bg-ink { background-color: #101814; }
-  .bg-cream { background-color: #F5F1EA; }
-  .border-gold { border-color: #C79C53; }
-
-  .grain::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.35;
-  }
+  .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
+  .font-body { font-family: 'Outfit', sans-serif; }
 
   .gold-line {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #C79C53, transparent);
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, #C9A24A, transparent);
   }
 
-  .card-hover {
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+  .label-rule {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
   }
-  .card-hover:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 32px 64px rgba(0, 0, 0, 0.36);
+  .label-rule::before,
+  .label-rule::after {
+    content: '';
+    width: 28px;
+    height: 1.5px;
+    background: #C9A24A;
+    opacity: 0.9;
+  }
+
+  .cream-veil {
+    background:
+      radial-gradient(ellipse 80% 60% at 0% 0%, rgba(46, 107, 58, 0.1), transparent 55%),
+      radial-gradient(ellipse 70% 50% at 100% 100%, rgba(201, 162, 74, 0.12), transparent 50%),
+      #FAFCF8;
+  }
+
+  .lift {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  }
+  .lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 22px 44px rgba(20, 48, 36, 0.1);
   }
 }
 
@@ -74,41 +78,13 @@
   100% { transform: translateX(-50%); }
 }
 .marquee-track {
-  animation: marquee 28s linear infinite;
+  animation: marquee 34s linear infinite;
   width: max-content;
 }
 .marquee-track:hover { animation-play-state: paused; }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.8); opacity: 0.8; }
-  100% { transform: scale(2); opacity: 0; }
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
-.pulse-ring { animation: pulse-ring 1.8s ease-out infinite; }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
-}
-.float-anim { animation: float 4s ease-in-out infinite; }
-
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
-}
-.spin-slow {
-  animation: spin-slow 24s linear infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-@keyframes particle-float {
-  0%, 100% { opacity: 0; transform: translateY(0); }
-  50% { opacity: 0.5; transform: translateY(var(--drift, -20px)); }
-}
-.particle {
-  animation: particle-float var(--duration, 10s) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
-}
-
-.gold-text-glow {
-  text-shadow: 0 0 40px rgba(199, 156, 83, 0.25);
-}
+.float-soft { animation: float-soft 5s ease-in-out infinite; }

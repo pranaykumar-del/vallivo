@@ -1,75 +1,74 @@
 import { motion } from 'framer-motion'
 import MediaImage from './MediaImage'
 
-const STATS = [
-  { value: '3', label: 'Valleys We Source From' },
-  { value: '0', label: 'Artificial Flavors' },
-  { value: '5', label: 'Rituals For Every Hour' },
-]
+const ease = [0.22, 1, 0.36, 1]
 
 export default function Story() {
   return (
-    <section id="story" className="py-32 bg-ink relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
+    <section id="story" className="py-24 md:py-32 bg-cream-soft overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -28 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.75, ease }}
           >
-            <p className="text-xs tracking-widest2 text-gold uppercase font-body mb-6">Our Story</p>
-            <h2 className="font-display text-4xl md:text-5xl text-cream leading-[1.15] mb-8">
-              You don't stay<br />
-              <em className="text-gold not-italic">on the bike.</em>
+            <p className="text-[11px] tracking-[0.32em] uppercase text-gold-dark font-body mb-5 font-medium">Our Story</p>
+            <h2 className="font-display text-4xl md:text-5xl text-forest font-semibold leading-[1.1] mb-6">
+              Elevate your<br />everyday.
             </h2>
-            <div className="gold-line w-20 mb-8" />
-            <p className="font-body text-cream/50 text-base leading-relaxed mb-6">
-              Somewhere along the way, you upgraded. Better car. Better clothes.
-              Better everything. It wasn't about fixing what was wrong — it was
-              about choosing what fits who you've become.
+            <motion.div
+              className="gold-line w-14 mb-8 origin-left"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.55 }}
+            />
+            <p className="font-body text-forest/80 text-[15px] leading-[1.85] mb-5">
+              Vallivo is lifestyle tea — considered, botanical, and made for the quiet upgrades that shape your day.
             </p>
-            <p className="font-body text-cream/50 text-base leading-relaxed mb-10">
-              Vallivo is that same choice, in a cup. Not a remedy. Not a routine.
-              Just the version of tea that matches the version of you now.
+            <p className="font-body text-forest/75 text-[15px] leading-[1.85] mb-10">
+              Not a loud wellness promise. Just four blends in clean cream canisters, for people who want their cup to feel as intentional as everything else.
             </p>
-
-            <div className="grid grid-cols-3 gap-6 mb-10">
-              {STATS.map((s) => (
-                <div key={s.label}>
-                  <div className="font-display text-3xl md:text-4xl text-gold mb-1">{s.value}</div>
-                  <div className="text-[10px] tracking-wide text-cream/40 font-body leading-tight uppercase">{s.label}</div>
-                </div>
-              ))}
-            </div>
-
-            <a href="/#product"
-              className="inline-flex items-center gap-3 text-xs tracking-widest text-gold uppercase font-body border-b border-gold/40 pb-1 hover:border-gold transition-colors">
-              Begin Your Ritual -&gt;
-            </a>
+            <motion.a
+              href="/#product"
+              className="inline-flex text-[11px] tracking-[0.22em] uppercase font-body text-forest font-medium border-b border-gold pb-1"
+              whileHover={{ borderColor: '#C9A24A', x: 4 }}
+            >
+              Begin with a blend →
+            </motion.a>
           </motion.div>
 
           <motion.div
             className="relative"
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 28 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.15 }}
+            transition={{ duration: 0.75, delay: 0.1, ease }}
           >
-            <div className="aspect-[3/4] overflow-hidden relative bg-black">
+            <motion.div
+              className="aspect-[5/4] overflow-hidden bg-cream"
+              whileHover={{ scale: 1.015 }}
+              transition={{ duration: 0.6 }}
+            >
               <MediaImage
-                src="/images/vallivo-collection.png"
-                alt="Vallivo wellness tea collection"
+                src="/images/valleys-bg.jpg"
+                alt="Soft landscape"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-8 left-8 right-8">
-                <p className="font-display text-xl text-white italic">"Rituals are not routines."</p>
-                <div className="gold-line w-12 mt-4" />
-              </div>
-            </div>
-            <div className="absolute -top-3 -right-3 w-10 h-10 border-t-2 border-r-2 border-gold/60" />
-            <div className="absolute -bottom-3 -left-3 w-10 h-10 border-b-2 border-l-2 border-gold/60" />
+            </motion.div>
+            <motion.div
+              className="absolute -bottom-4 left-4 md:left-6 bg-cream border border-gold/25 px-5 py-4 max-w-[210px]"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.35, duration: 0.55 }}
+            >
+              <p className="font-display text-base italic text-forest leading-snug">
+                “Rituals are not routines.”
+              </p>
+            </motion.div>
           </motion.div>
         </div>
       </div>

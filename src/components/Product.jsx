@@ -1,85 +1,106 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { products, DEFAULT_BAGS } from '../lib/products'
+import { products, DEFAULT_QTY } from '../lib/products'
 import { useCart } from '../lib/CartContext'
 import MediaImage from './MediaImage'
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 48 },
-  visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.12, duration: 0.6, ease: 'easeOut' } }),
-}
+const ease = [0.22, 1, 0.36, 1]
 
 export default function Product() {
   const { addItem } = useCart()
   const [justAdded, setJustAdded] = useState(null)
 
-  const handleAddToCart = (product) => {
-    addItem(product, DEFAULT_BAGS)
+  const handleAdd = (product) => {
+    addItem(product, DEFAULT_QTY)
     setJustAdded(product.slug)
-    setTimeout(() => setJustAdded((current) => (current === product.slug ? null : current)), 1500)
+    setTimeout(() => setJustAdded((s) => (s === product.slug ? null : s)), 1400)
   }
 
   return (
-    <section id="product" className="py-28 bg-black">
+    <section id="product" className="py-24 md:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <motion.div
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 32 }}
+          className="text-center mb-14 md:mb-16"
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease }}
         >
-          <p className="text-xs tracking-widest2 text-gold uppercase font-body mb-4">The Collection</p>
-          <h2 className="font-display text-4xl md:text-5xl text-cream mb-6">Premium Wellness Teas</h2>
-          <div className="gold-line w-20 mx-auto" />
+          <p className="text-[11px] tracking-[0.32em] uppercase text-fennette font-body mb-4 font-medium">The Collection</p>
+          <h2 className="font-display text-4xl md:text-5xl text-forest font-semibold mb-4">Four blends. One ritual.</h2>
+          <p className="font-body text-sm md:text-[15px] text-forest/70 max-w-lg mx-auto leading-relaxed">
+            Four small upgrades for how you live — Fennette, Serenette, Rosette, Nightfall.
+          </p>
+          <motion.div
+            className="gold-line w-14 mx-auto mt-7 origin-center"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6, ease }}
+          />
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-7 gap-y-14">
           {products.map((p, i) => (
-            <motion.div
+            <motion.article
               key={p.slug}
-              className="card-hover group relative overflow-hidden"
-              custom={i}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={cardVariants}
+              className="group"
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ delay: i * 0.05, duration: 0.35, ease }}
             >
               <Link to={`/product/${p.slug}`} className="block">
-                <div className="relative h-80 overflow-hidden bg-ink">
+                <motion.div
+                  className="relative aspect-[3/4] overflow-hidden mb-5 bg-[#F7F9F5]"
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.4, ease }}
+                >
                   <MediaImage
                     src={p.img}
-                    alt={p.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    alt={`${p.name} tea canister`}
+                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-                  <span className="absolute top-4 right-4 text-[9px] tracking-widest px-2.5 py-1 bg-gold/90 text-navy uppercase font-body">
+                  <motion.span
+                    className="absolute top-4 left-4 text-[9px] tracking-[0.2em] px-2.5 py-1 uppercase font-body bg-white/90 text-forest"
+                    initial={{ opacity: 0, x: -8 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.25 + i * 0.1 }}
+                  >
                     {p.tag}
-                  </span>
-                  <div className="absolute bottom-0 left-0 p-5">
-                    <div className="font-display text-xl text-white font-medium">{p.name}</div>
-                    <div className="text-[10px] tracking-widest text-white/60 uppercase font-body mt-1">{p.sub}</div>
-                  </div>
-                </div>
+                  </motion.span>
+                </motion.div>
               </Link>
 
-              <div className="bg-ink p-6 border border-gold/10 border-t-0">
-                <p className="font-body text-sm text-cream/50 leading-relaxed mb-4">{p.desc}</p>
-                <div className="flex items-center justify-between">
-                  <span className="font-display text-xl text-cream">
-                    {p.price}<span className="text-cream/40 text-xs font-body"> /100 bags</span>
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => handleAddToCart(p)}
-                    className="text-[10px] tracking-widest text-gold uppercase font-body border-b border-gold/40 hover:border-gold transition-colors"
-                  >
-                    {justAdded === p.slug ? 'Added' : 'Add to cart'}
-                  </button>
-                </div>
+              <p className="label-rule text-[9px] tracking-[0.28em] uppercase font-body mb-2" style={{ color: p.accent }}>
+                Lifestyle Tea
+              </p>
+              <Link to={`/product/${p.slug}`}>
+                <h3 className="font-display text-[1.85rem] tracking-wide leading-none mb-2 group-hover:opacity-80 transition-opacity" style={{ color: p.accent }}>
+                  {p.name}
+                </h3>
+              </Link>
+              <p className="font-body text-[10px] tracking-[0.18em] uppercase text-forest/60 mb-3 font-medium">{p.sub}</p>
+              <p className="font-body text-sm text-forest/75 leading-relaxed mb-5">{p.desc}</p>
+
+              <div className="flex items-center justify-between pt-4 border-t border-forest/15">
+                <span className="font-display text-xl text-forest font-semibold">
+                  {p.price}
+                  <span className="font-body text-[10px] text-forest/50 ml-1">/ {p.unitLabel}</span>
+                </span>
+                <motion.button
+                  type="button"
+                  onClick={() => handleAdd(p)}
+                  className="text-[10px] tracking-[0.18em] uppercase font-body border-b pb-0.5"
+                  style={{ color: p.accent, borderColor: `${p.accent}55` }}
+                  whileTap={{ scale: 0.96 }}
+                >
+                  {justAdded === p.slug ? 'Added ✓' : 'Add to cart'}
+                </motion.button>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>

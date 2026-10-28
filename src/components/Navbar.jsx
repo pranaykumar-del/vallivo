@@ -5,7 +5,7 @@ import { useCart } from '../lib/CartContext'
 
 function CartIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
       <path d="M6 8h12l-1 12H7L6 8Z" strokeLinejoin="round" />
       <path d="M9 8V6a3 3 0 0 1 6 0v2" strokeLinejoin="round" />
     </svg>
@@ -18,91 +18,88 @@ export default function Navbar() {
   const { totalItems } = useCart()
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', handler)
-    return () => window.removeEventListener('scroll', handler)
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    window.addEventListener('scroll', onScroll)
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   const links = [
     { label: 'Collection', href: '/#product' },
     { label: 'Rituals', href: '/#experience' },
     { label: 'About', href: '/#story' },
-    { label: 'Reviews', href: '/#reviews' },
+    { label: 'Reviews', href: '/reviews' },
   ]
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-40 transition-all duration-500"
+      className="fixed top-0 inset-x-0 z-40 transition-all duration-500"
       style={{
-        background: scrolled ? 'rgba(7,9,9,0.92)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(14px)' : 'none',
-        borderBottom: scrolled ? '1px solid rgba(199,156,83,0.2)' : '1px solid transparent',
+        background: scrolled ? 'rgba(248,245,239,0.94)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(184,149,74,0.22)' : '1px solid transparent',
       }}
-      initial={{ y: -80 }}
+      initial={{ y: -64 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.7, ease: 'easeOut' }}
+      transition={{ duration: 0.6 }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <span className="font-display text-xl font-normal text-gold tracking-widest2">VALLIVO</span>
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 h-[4.5rem] flex items-center justify-between">
+        <Link to="/" className="font-display text-lg tracking-[0.22em] text-forest font-semibold">
+          VALLIVO
         </Link>
 
-        <nav className="hidden md:flex items-center gap-10">
+        <nav className="hidden md:flex items-center gap-9">
           {links.map((l) => (
-            <Link key={l.href} to={l.href}
-              className="text-xs tracking-widest font-body font-medium text-cream/70 hover:text-gold transition-colors duration-300 uppercase">
+            <Link
+              key={l.href}
+              to={l.href}
+              className="text-[11px] tracking-[0.2em] uppercase font-body text-forest/70 hover:text-forest transition-colors font-medium"
+            >
               {l.label}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden md:flex items-center gap-6">
-          <Link to="/cart" className="relative text-cream/70 hover:text-gold transition-colors duration-300" aria-label="Cart">
+        <div className="flex items-center gap-5">
+          <Link to="/cart" className="relative text-forest/55 hover:text-forest transition-colors" aria-label="Cart">
             <CartIcon />
             {totalItems > 0 && (
-              <span className="absolute -top-2 -right-2 min-w-[16px] h-4 px-1 flex items-center justify-center bg-gold text-navy text-[9px] font-body rounded-full">
+              <span className="absolute -top-1.5 -right-2 min-w-[15px] h-[15px] px-1 flex items-center justify-center bg-forest text-cream text-[8px] font-body rounded-full">
                 {totalItems}
               </span>
             )}
           </Link>
-          <Link to="/#product"
-            className="inline-flex px-6 py-2.5 bg-gold text-navy text-xs tracking-widest font-body uppercase hover:bg-gold-light transition-colors duration-300">
-            Shop Rituals
+          <Link
+            to="/#product"
+            className="hidden sm:inline-flex px-5 py-2 bg-forest text-cream text-[10px] tracking-[0.2em] uppercase font-body hover:bg-forest-soft transition-colors"
+          >
+            Shop
           </Link>
-        </div>
-
-        <div className="md:hidden flex items-center gap-5">
-          <Link to="/cart" className="relative text-cream/70" aria-label="Cart">
-            <CartIcon />
-            {totalItems > 0 && (
-              <span className="absolute -top-2 -right-2 min-w-[16px] h-4 px-1 flex items-center justify-center bg-gold text-navy text-[9px] font-body rounded-full">
-                {totalItems}
-              </span>
-            )}
-          </Link>
-          <button onClick={() => setMenuOpen(!menuOpen)} className="flex flex-col gap-1.5 p-2">
-            <span className={`block w-6 h-px bg-gold transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block w-6 h-px bg-gold transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-6 h-px bg-gold transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          <button
+            type="button"
+            className="md:hidden flex flex-col gap-1.5 p-1"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Menu"
+          >
+            <span className={`block w-5 h-px bg-forest transition-all ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+            <span className={`block w-5 h-px bg-forest transition-all ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-5 h-px bg-forest transition-all ${menuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
           </button>
         </div>
       </div>
 
       {menuOpen && (
-        <motion.div
-          className="md:hidden bg-ink border-t border-gold/20 px-6 py-8 flex flex-col gap-6"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-        >
+        <div className="md:hidden bg-cream-soft border-t border-gold/20 px-6 py-7 flex flex-col gap-5">
           {links.map((l) => (
-            <Link key={l.href} to={l.href} onClick={() => setMenuOpen(false)}
-              className="text-sm tracking-widest font-body text-cream uppercase">{l.label}</Link>
+            <Link
+              key={l.href}
+              to={l.href}
+              onClick={() => setMenuOpen(false)}
+              className="text-xs tracking-[0.2em] uppercase font-body text-forest"
+            >
+              {l.label}
+            </Link>
           ))}
-          <Link to="/#product" onClick={() => setMenuOpen(false)}
-            className="text-center px-6 py-3 bg-gold text-navy text-xs tracking-widest font-body uppercase">
-            Shop Rituals
-          </Link>
-        </motion.div>
+        </div>
       )}
     </motion.header>
   )
