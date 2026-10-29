@@ -18,10 +18,10 @@ export default function Product() {
   }
 
   return (
-    <section id="product" className="py-24 md:py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <section id="product" className="py-14 md:py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
         <motion.div
-          className="text-center mb-14 md:mb-16"
+          className="text-center mb-8 md:mb-10"
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -41,7 +41,7 @@ export default function Product() {
           />
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-7 gap-y-14">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
           {products.map((p, i) => (
             <motion.article
               key={p.slug}
@@ -53,7 +53,7 @@ export default function Product() {
             >
               <Link to={`/product/${p.slug}`} className="block">
                 <motion.div
-                  className="relative aspect-[3/4] overflow-hidden mb-5 bg-[#F7F9F5]"
+                  className="relative aspect-[3/4] overflow-hidden mb-4 rounded-2xl bg-[#F7F9F5]"
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.4, ease }}
                 >

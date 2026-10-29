@@ -9,7 +9,7 @@ export default function Manifesto() {
   const x = useTransform(scrollYProgress, [0, 1], ['8%', '-8%'])
 
   return (
-    <section ref={ref} className="relative py-28 md:py-40 bg-forest text-cream overflow-hidden">
+    <section ref={ref} className="relative py-16 md:py-24 bg-forest text-cream overflow-hidden">
       <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-gold/15 blur-3xl" />
       <div className="absolute -bottom-32 -right-20 w-96 h-96 rounded-full bg-cream/10 blur-3xl" />
 

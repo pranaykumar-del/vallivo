@@ -24,16 +24,16 @@ function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex border-b border-cream/20 focus-within:border-gold transition-colors">
+    <form onSubmit={handleSubmit} className="flex border-b border-cream/40 focus-within:border-gold transition-colors">
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Your email"
         required
-        className="flex-1 bg-transparent py-2.5 font-body text-sm text-cream placeholder-cream/30 focus:outline-none"
+        className="flex-1 bg-transparent py-2.5 font-body text-sm text-cream placeholder-cream/55 focus:outline-none"
       />
-      <button type="submit" disabled={status === 'loading'} className="text-[10px] tracking-[0.2em] text-gold uppercase font-body pl-3">
+      <button type="submit" disabled={status === 'loading'} className="text-[10px] tracking-[0.2em] text-gold-light uppercase font-body pl-3 font-medium">
         {status === 'loading' ? '…' : 'Join'}
       </button>
     </form>
@@ -42,18 +42,18 @@ function NewsletterForm() {
 
 export default function Footer() {
   return (
-    <footer className="bg-forest-deep py-14">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid md:grid-cols-3 gap-12 mb-12">
+    <footer className="bg-forest-deep py-12">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
+        <div className="grid md:grid-cols-3 gap-10 mb-10">
           <div>
-            <div className="font-display text-2xl tracking-[0.2em] text-cream mb-2">VALLIVO</div>
-            <p className="label-rule text-[9px] tracking-[0.28em] text-gold/60 uppercase font-body mb-5">Lifestyle Tea</p>
-            <p className="font-body text-cream/40 text-sm leading-relaxed mb-5">Elevate Your Everyday.</p>
+            <div className="font-display text-2xl tracking-[0.2em] text-cream font-semibold mb-2">VALLIVO</div>
+            <p className="label-rule text-[9px] tracking-[0.28em] text-gold uppercase font-body mb-4 font-medium">Lifestyle Tea</p>
+            <p className="font-body text-cream/85 text-sm leading-relaxed mb-5">Elevate Your Everyday.</p>
             <NewsletterForm />
           </div>
           <div>
-            <div className="text-[10px] tracking-[0.22em] text-gold/55 uppercase font-body mb-5">Navigate</div>
-            <div className="flex flex-col gap-3">
+            <div className="text-[10px] tracking-[0.22em] text-gold uppercase font-body mb-4 font-medium">Navigate</div>
+            <div className="flex flex-col gap-2.5">
               {[
                 { label: 'Collection', href: '/#product' },
                 { label: 'Rituals', href: '/#experience' },
@@ -61,23 +61,23 @@ export default function Footer() {
                 { label: 'Reviews', href: '/reviews' },
                 { label: 'Cart', href: '/cart' },
               ].map((l) => (
-                <Link key={l.href} to={l.href} className="font-body text-sm text-cream/45 hover:text-gold transition-colors">
+                <Link key={l.href} to={l.href} className="font-body text-sm text-cream/80 hover:text-gold-light transition-colors">
                   {l.label}
                 </Link>
               ))}
             </div>
           </div>
           <div>
-            <div className="text-[10px] tracking-[0.22em] text-gold/55 uppercase font-body mb-5">Connect</div>
-            <div className="flex flex-col gap-3">
-              <a href="https://instagram.com/vallivo" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/45 hover:text-gold transition-colors">Instagram</a>
-              <a href="https://wa.me/916304207706" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/45 hover:text-gold transition-colors">WhatsApp</a>
-              <a href="https://www.vallivo.com" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/45 hover:text-gold transition-colors">www.vallivo.com</a>
+            <div className="text-[10px] tracking-[0.22em] text-gold uppercase font-body mb-4 font-medium">Connect</div>
+            <div className="flex flex-col gap-2.5">
+              <a href="https://instagram.com/vallivo" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/80 hover:text-gold-light transition-colors">Instagram</a>
+              <a href="https://wa.me/916304207706" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/80 hover:text-gold-light transition-colors">WhatsApp</a>
+              <a href="https://www.vallivo.com" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/80 hover:text-gold-light transition-colors">www.vallivo.com</a>
             </div>
           </div>
         </div>
-        <div className="gold-line mb-7" />
-        <p className="font-body text-xs text-cream/25 tracking-wide">© 2026 Vallivo. All rights reserved.</p>
+        <div className="gold-line mb-6" />
+        <p className="font-body text-xs text-cream/55 tracking-wide">© 2026 Vallivo. All rights reserved.</p>
       </div>
     </footer>
   )
