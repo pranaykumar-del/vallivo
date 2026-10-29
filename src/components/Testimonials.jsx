@@ -29,7 +29,7 @@ function ReviewCard({ review }) {
   return (
     <article className="h-full bg-white border border-[#D8E6D4] rounded-2xl px-5 py-5 flex flex-col">
       <Stars value={review.rating} />
-      <p className="font-display text-[1.02rem] italic text-forest leading-relaxed flex-1">
+      <p className="font-body text-[0.95rem] sm:text-[1rem] text-forest font-medium leading-relaxed flex-1">
         “{review.text}”
       </p>
       <div className="gold-line w-8 mt-4 mb-3" />
@@ -112,7 +112,7 @@ export default function Testimonials() {
                 <motion.div
                   key={page}
                   custom={direction}
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
                   initial={{ opacity: 0, x: direction >= 0 ? 36 : -36 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: direction >= 0 ? -36 : 36 }}

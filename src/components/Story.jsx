@@ -65,7 +65,7 @@ export default function Story() {
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              <p className="font-display text-[1.05rem] italic text-forest font-semibold leading-snug">
+              <p className="font-body text-[0.95rem] sm:text-[1.05rem] text-forest font-semibold leading-snug tracking-tight antialiased">
                 “Rituals are not routines.”
               </p>
             </motion.div>

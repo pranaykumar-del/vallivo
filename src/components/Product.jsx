@@ -41,7 +41,7 @@ export default function Product() {
           />
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-5 gap-y-7 sm:gap-y-10">
           {products.map((p, i) => (
             <motion.article
               key={p.slug}
@@ -74,26 +74,26 @@ export default function Product() {
                 </motion.div>
               </Link>
 
-              <p className="label-rule text-[9px] tracking-[0.28em] uppercase font-body mb-2" style={{ color: p.accent }}>
+              <p className="hidden sm:inline-flex label-rule text-[9px] tracking-[0.28em] uppercase font-body mb-2" style={{ color: p.accent }}>
                 Lifestyle Tea
               </p>
               <Link to={`/product/${p.slug}`}>
-                <h3 className="font-display text-[1.85rem] tracking-wide leading-none mb-2 group-hover:opacity-80 transition-opacity" style={{ color: p.accent }}>
+                <h3 className="font-display text-[1.15rem] sm:text-[1.85rem] tracking-wide leading-tight sm:leading-none mb-1.5 sm:mb-2 group-hover:opacity-80 transition-opacity" style={{ color: p.accent }}>
                   {p.name}
                 </h3>
               </Link>
-              <p className="font-body text-[10px] tracking-[0.18em] uppercase text-forest/60 mb-3 font-medium">{p.sub}</p>
-              <p className="font-body text-sm text-forest/75 leading-relaxed mb-5">{p.desc}</p>
+              <p className="font-body text-[9px] sm:text-[10px] tracking-[0.16em] uppercase text-forest/60 mb-2 sm:mb-3 font-medium">{p.sub}</p>
+              <p className="hidden sm:block font-body text-sm text-forest/75 leading-relaxed mb-5">{p.desc}</p>
 
-              <div className="flex items-center justify-between pt-4 border-t border-forest/15">
-                <span className="font-display text-xl text-forest font-semibold">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-3 sm:pt-4 border-t border-forest/15">
+                <span className="font-display text-base sm:text-xl text-forest font-semibold">
                   {p.price}
-                  <span className="font-body text-[10px] text-forest/50 ml-1">/ {p.unitLabel}</span>
+                  <span className="font-body text-[9px] sm:text-[10px] text-forest/50 ml-1">/ {p.unitLabel}</span>
                 </span>
                 <motion.button
                   type="button"
                   onClick={() => handleAdd(p)}
-                  className="text-[10px] tracking-[0.18em] uppercase font-body border-b pb-0.5"
+                  className="self-start text-[9px] sm:text-[10px] tracking-[0.16em] uppercase font-body border-b pb-0.5"
                   style={{ color: p.accent, borderColor: `${p.accent}55` }}
                   whileTap={{ scale: 0.96 }}
                 >
