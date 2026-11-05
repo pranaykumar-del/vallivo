@@ -1,7 +1,3 @@
-import { motion } from 'framer-motion'
-
-const ease = [0.22, 1, 0.36, 1]
-
 export default function Hero() {
   return (
     <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-cream">
@@ -19,42 +15,24 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center pt-24 pb-20">
-        <motion.h1
-          className="font-display text-forest font-semibold leading-none tracking-[0.12em] mb-6 select-none drop-shadow-[0_2px_24px_rgba(255,255,255,0.55)] text-[clamp(3.25rem,14vw,9.5rem)] tracking-[0.08em] sm:tracking-[0.12em]"
+        <h1
+          className="hero-in font-display text-forest font-semibold leading-none mb-6 select-none drop-shadow-[0_2px_24px_rgba(255,255,255,0.55)] text-[clamp(3.25rem,14vw,9.5rem)] tracking-[0.08em] sm:tracking-[0.12em]"
           aria-label="VALLIVO"
-          initial={{ opacity: 0, y: 36, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 1.05, ease, delay: 0.08 }}
         >
           VALLIVO
-        </motion.h1>
+        </h1>
 
-        <motion.div
-          className="gold-line w-24 mx-auto mb-6"
-          initial={{ opacity: 0, scaleX: 0.4 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.7, ease, delay: 0.45 }}
-        />
+        <div className="hero-in hero-in-delay-1 gold-line w-24 mx-auto mb-6" />
 
-        <motion.p
-          className="font-display text-2xl sm:text-3xl md:text-4xl italic text-forest mb-6"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, ease, delay: 0.55 }}
-        >
+        <p className="hero-in hero-in-delay-1 font-display text-2xl sm:text-3xl md:text-4xl italic text-forest mb-6">
           Elevate Your Everyday.
-        </motion.p>
+        </p>
 
-        <motion.div
-          className="flex justify-center"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, ease, delay: 0.72 }}
-        >
+        <div className="hero-in hero-in-delay-2 flex justify-center">
           <p className="label-rule font-body text-[11px] tracking-[0.36em] uppercase text-forest/75 font-medium">
             Lifestyle Tea
           </p>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

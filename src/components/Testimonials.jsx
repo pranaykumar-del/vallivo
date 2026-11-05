@@ -11,9 +11,14 @@ const reviews = [
   { name: 'Rohan K.', city: 'Delhi', rating: 5, text: 'Rosette and Nightfall are now permanent in my kitchen. Quiet luxury in a cup.' },
   { name: 'Sneha T.', city: 'Pune', rating: 4, text: 'Premium without feeling complicated. The canisters look stunning on the shelf.' },
   { name: 'Meera L.', city: 'Hyderabad', rating: 5, text: 'Nightfall is my evening ritual now. Soft, floral, and the box feels like something you’d gift.' },
+  { name: 'Kabir V.', city: 'Chennai', rating: 5, text: 'Ordered Fennette twice. Clean taste, no bitterness — exactly the everyday cup I wanted.' },
+  { name: 'Ananya R.', city: 'Jaipur', rating: 5, text: 'Rosette is bright and floral without being sweet. Packaging alone makes it feel special.' },
+  { name: 'Dev P.', city: 'Ahmedabad', rating: 4, text: 'Serenette is a quieter kind of luxury. Steeps beautifully and looks elegant on the counter.' },
+  { name: 'Ishaan G.', city: 'Kochi', rating: 5, text: 'The whole set looks considered. Nightfall closed my evenings better than anything else I tried.' },
+  { name: 'Nisha B.', city: 'Lucknow', rating: 5, text: 'Fennette is light, fresh, and easy to repeat. The canister sits beautifully on the shelf.' },
 ]
 
-const PER_PAGE = 3
+const PER_PAGE = 5
 
 function Stars({ value }) {
   return (
@@ -112,7 +117,7 @@ export default function Testimonials() {
                 <motion.div
                   key={page}
                   custom={direction}
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4"
+                  className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3 sm:gap-4"
                   initial={{ opacity: 0, x: direction >= 0 ? 36 : -36 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: direction >= 0 ? -36 : 36 }}

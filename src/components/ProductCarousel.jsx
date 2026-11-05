@@ -103,7 +103,7 @@ function BrewSlide({ product }) {
 
 export default function ProductCarousel({ product, className = '' }) {
   const slides = [
-    { key: 'photo', render: () => <MediaImage src={product.img} alt={product.name} className="w-full h-full object-cover object-center" /> },
+    { key: 'photo', render: () => <MediaImage src={product.img} alt={product.name} className="w-full h-full object-cover object-center scale-[1.18]" /> },
     { key: 'ingredients', render: () => <IngredientsSlide product={product} /> },
     { key: 'pour', render: () => <PourSlide product={product} /> },
     { key: 'packaging', render: () => <PackagingSlide product={product} /> },
@@ -117,7 +117,7 @@ export default function ProductCarousel({ product, className = '' }) {
   const next = () => goTo((index + 1) % slides.length)
 
   return (
-    <div className={`relative h-[420px] lg:h-[560px] overflow-hidden group bg-cream-dark ${className}`}>
+    <div className={`relative h-[460px] sm:h-[560px] lg:h-[680px] overflow-hidden rounded-2xl group bg-cream-dark ${className}`}>
       <AnimatePresence initial={false} custom={direction} mode="wait">
         <motion.div key={slides[index].key} custom={direction} initial={{ opacity: 0, x: direction >= 0 ? 40 : -40 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: direction >= 0 ? -40 : 40 }} transition={{ duration: 0.4, ease: 'easeOut' }} drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.2} onDragEnd={(_, info) => { if (info.offset.x < -60) next(); else if (info.offset.x > 60) prev() }} className="absolute inset-0">
           {slides[index].render()}
