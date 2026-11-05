@@ -1,7 +1,3 @@
-import { initializeApp } from 'firebase/app'
-import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp } from 'firebase/firestore'
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
-
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -11,15 +7,28 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
-if (!firebaseConfig.projectId) {
-  console.warn('Firebase credentials missing. Copy .env.example to .env and fill in your keys.')
+let appPromise
+
+function getApp() {
+  if (!appPromise) {
+    appPromise = import('firebase/app').then(({ initializeApp }) => initializeApp(firebaseConfig))
+  }
+  return appPromise
 }
 
-const app = initializeApp(firebaseConfig)
-const db = getFirestore(app, 'default')
-const storage = getStorage(app)
+async function getDb() {
+  const [{ getFirestore }, app] = await Promise.all([import('firebase/firestore'), getApp()])
+  return getFirestore(app, 'default')
+}
+
+async function getStorageBucket() {
+  const [{ getStorage }, app] = await Promise.all([import('firebase/storage'), getApp()])
+  return getStorage(app)
+}
 
 export async function placeOrder({ name, phone, address, email, items, total }) {
+  const { collection, addDoc, serverTimestamp } = await import('firebase/firestore')
+  const db = await getDb()
   const orderId = crypto.randomUUID()
   const timeout = new Promise((_, reject) =>
     setTimeout(() => reject(new Error('Firestore timeout — database may not be set up')), 10000)
@@ -40,6 +49,8 @@ export async function placeOrder({ name, phone, address, email, items, total }) 
 }
 
 export async function subscribeNewsletter(email) {
+  const { collection, addDoc, serverTimestamp } = await import('firebase/firestore')
+  const db = await getDb()
   const docRef = await addDoc(collection(db, 'subscribers'), {
     email: email.trim().toLowerCase(),
     created_at: serverTimestamp(),
@@ -48,6 +59,8 @@ export async function subscribeNewsletter(email) {
 }
 
 export async function getReviews() {
+  const { collection, getDocs, query, where } = await import('firebase/firestore')
+  const db = await getDb()
   const approvedReviews = query(collection(db, 'reviews'), where('status', '==', 'approved'))
   const snapshot = await getDocs(approvedReviews)
 
@@ -61,6 +74,10 @@ export async function getReviews() {
 }
 
 export async function submitReview({ name, city, product, rating, text, files }) {
+  const { collection, addDoc, serverTimestamp } = await import('firebase/firestore')
+  const { ref, uploadBytes, getDownloadURL } = await import('firebase/storage')
+  const db = await getDb()
+  const storage = await getStorageBucket()
   const reviewId = crypto.randomUUID()
   const media = []
 

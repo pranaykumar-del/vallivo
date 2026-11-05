@@ -253,7 +253,7 @@ export default function ProductPage() {
                   <MediaImage
                     src={p.img}
                     alt={p.name}
-                    className="w-full h-full object-cover object-center scale-110 transition-transform duration-700 group-hover:scale-[1.16]"
+                    className="w-full h-full object-contain"
                   />
                 </div>
                 <div className="font-display text-xl sm:text-2xl" style={{ color: p.accent }}>{p.name}</div>
