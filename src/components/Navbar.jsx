@@ -38,12 +38,13 @@ export default function Navbar() {
         borderBottom: scrolled ? '1px solid rgba(184,149,74,0.22)' : '1px solid transparent',
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 h-[4.5rem] flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-6 h-[4.5rem] flex items-center justify-between">
         <Link to="/" className="flex items-center shrink-0" aria-label="Vallivo home">
           <img
-            src="/images/vallivo-logo.jpg"
+            src="/images/vallivo-monogram.png"
             alt="Vallivo"
-            className="h-11 sm:h-12 w-auto object-contain rounded-md"
+            className="h-10 sm:h-11 w-auto object-contain"
+            style={{ mixBlendMode: 'multiply' }}
           />
         </Link>
 
