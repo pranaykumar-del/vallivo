@@ -21,11 +21,11 @@ function env(name, fallback) {
   return value == null || value === '' ? fallback : value
 }
 
-exports.handler = async function handler(event) {
+export async function handler(event) {
   if (event.httpMethod === 'OPTIONS') return json(204, {})
   if (event.httpMethod !== 'GET') return json(405, { error: 'Method not allowed' })
 
-  const orderId = event.queryStringParameters && event.queryStringParameters.order_id
+  const orderId = event.queryStringParameters?.order_id
   if (!orderId) return json(400, { error: 'order_id is required.' })
 
   const appId = env('CASHFREE_APP_ID')

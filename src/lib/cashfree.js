@@ -10,7 +10,7 @@ export async function createCashfreeOrder({ customer, items, total }) {
   })
   const data = await response.json().catch(() => ({}))
   if (!response.ok) {
-    throw new Error(data.error || 'Could not start payment.')
+    throw new Error(data.error || data.errorMessage || 'Could not start payment.')
   }
   if (!data.paymentSessionId) {
     throw new Error('Cashfree did not return a payment session.')
