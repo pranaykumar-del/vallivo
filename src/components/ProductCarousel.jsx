@@ -1,58 +1,104 @@
-import { useEffect, useState } from 'react'
+﻿import { useState } from 'react'
+import './ProductCarousel.css'
 
-function slidesFor(product) {
-  return [
-    { src: product.img, alt: `${product.name} canister` },
-    { src: product.angleImg, alt: `${product.name} from the side` },
-    { src: product.pourImg, alt: `${product.name} being poured` },
-    { src: '/images/brew-step-1.jpg', alt: 'Adding loose leaf' },
-    { src: '/images/brew-step-2.jpg', alt: 'Steeping the tea' },
-    { src: '/images/brew-step-3.jpg', alt: 'Pouring the tea' },
-  ].filter((slide) => slide.src)
+// Positions in the existing photographic botanical sheet (four columns, two rows).
+const botanicalPhotos = {
+  'Fennel Seeds': [0, 0], Spearmint: [1, 0], 'Lemon Peel': [2, 0],
+  'Butterfly Pea': [3, 0], Hibiscus: [0, 1], Rose: [1, 1], Lavender: [3, 1],
+}
+
+function IngredientsSlide({ product }) {
+  const pictured = product.ingredients.filter((name) => botanicalPhotos[name])
+  return (
+    <div className="ingredients-slide" style={{ backgroundColor: product.soft }}>
+      <p className="carousel-eyebrow">{product.name} · Loose tea</p>
+      <h2>Ingredients</h2>
+      <div className="botanical-grid">
+        {pictured.map((name) => {
+          const [column, row] = botanicalPhotos[name]
+          return (
+            <figure key={name}>
+              <div className="botanical-photo" role="img" aria-label={name} style={{ backgroundPosition: `${column * 100 / 3}% ${row * 100}%` }} />
+              <figcaption>{name}</figcaption>
+            </figure>
+          )
+        })}
+      </div>
+      <div className="ingredient-list">
+        <p className="carousel-eyebrow">The complete blend</p>
+        <p>{product.ingredients.join(' · ')}</p>
+      </div>
+    </div>
+  )
+}
+
+function PourSlide({ product }) {
+  return <img src={product.pourImg} alt={`${product.name} loose tea being poured from a glass teapot into a cup`} className="carousel-photo" decoding="async" />
+}
+
+function BrewSlide({ product }) {
+  const steps = [
+    ['Add loose tea', `Place a spoon of ${product.name} loose tea in a teapot or reusable infuser.`],
+    ['Pour hot water', 'Add water at about 90°C.'],
+    ['Let it steep', 'Infuse for 3–4 minutes.'],
+    ['Strain & enjoy', 'Remove the infuser or strain into your cup. Sip slowly.'],
+  ]
+  return (
+    <div className="brew-slide" style={{ backgroundColor: product.soft }}>
+      <div className="brew-copy">
+        <p className="carousel-eyebrow">The {product.name} ritual</p>
+        <h2>How to make</h2>
+        <p className="brew-subtitle">A little loose tea. A moment for you.</p>
+        <ol>
+          {steps.map(([title, text], index) => (
+            <li key={title}>
+              <span className="brew-number">0{index + 1}</span>
+              <div><h3>{title}</h3><p>{text}</p></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <img src={product.pourImg} alt={`A freshly poured cup of ${product.name}`} className="brew-photo" decoding="async" />
+    </div>
+  )
 }
 
 export default function ProductCarousel({ product, className = '' }) {
-  const slides = slidesFor(product)
+  const slides = [
+    { key: 'photo', label: 'Product', node: <img src={product.img} alt={`${product.name} loose tea canister`} className="carousel-photo product-photo" loading="eager" decoding="async" fetchPriority="high" /> },
+    { key: 'ingredients', label: 'Ingredients', node: <IngredientsSlide product={product} /> },
+    { key: 'pour', label: 'The pour', node: <PourSlide product={product} /> },
+    { key: 'brew', label: 'How to make', node: <BrewSlide product={product} /> },
+  ]
   const [index, setIndex] = useState(0)
-
-  useEffect(() => {
-    setIndex(0)
-    slides.forEach((slide) => {
-      const image = new Image()
-      image.src = slide.src
-    })
-  }, [product.slug])
-
   const prev = () => setIndex((current) => (current - 1 + slides.length) % slides.length)
   const next = () => setIndex((current) => (current + 1) % slides.length)
 
   return (
-    <div className={`relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-[#f4efe6] ${className}`}>
-      {slides.map((slide, slideIndex) => (
-        <img
-          key={slide.src}
-          src={slide.src}
-          alt={slide.alt}
-          className={`absolute inset-0 h-full w-full object-contain ${slideIndex === index ? 'opacity-100' : 'opacity-0'}`}
-          loading="eager"
-          decoding="async"
-          fetchPriority={slideIndex === 0 ? 'high' : 'low'}
-        />
-      ))}
-      <span className="absolute top-4 right-4 text-[9px] tracking-widest px-2.5 py-1 uppercase font-body z-10 bg-white/95 text-forest rounded-md">{product.tag}</span>
-      <button type="button" onClick={prev} aria-label="Previous photo" className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center text-forest/60 hover:text-forest bg-white/90 z-10">
-        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M15 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-      </button>
-      <button type="button" onClick={next} aria-label="Next photo" className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center text-forest/60 hover:text-forest bg-white/90 z-10">
-        <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-      </button>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+    <section className={`product-carousel ${className}`} aria-label={`${product.name} product gallery`} aria-roledescription="carousel" style={{ '--blend-accent': product.accent }} onKeyDown={(event) => {
+      if (event.key === 'ArrowLeft') { event.preventDefault(); prev() }
+      if (event.key === 'ArrowRight') { event.preventDefault(); next() }
+    }}>
+      <div className="carousel-stage">
+        <div className="carousel-slide" role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${slides.length}: ${slides[index].label}`}>
+          {slides[index].node}
+        </div>
+        {index === 0 && <span className="carousel-tag">{product.tag}</span>}
+        <button type="button" onClick={prev} aria-label="Previous slide" className="carousel-arrow carousel-prev">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M15 6l-6 6 6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+        <button type="button" onClick={next} aria-label="Next slide" className="carousel-arrow carousel-next">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+      </div>
+      <div className="carousel-navigation">
         {slides.map((slide, slideIndex) => (
-          <button key={slide.src} type="button" onClick={() => setIndex(slideIndex)} aria-label={`Photo ${slideIndex + 1}`} className="p-1">
-            <span className={`block h-1.5 rounded-full ${slideIndex === index ? 'w-6 bg-forest' : 'w-1.5 bg-forest/30'}`} />
+          <button key={slide.key} type="button" onClick={() => setIndex(slideIndex)} aria-label={`Show ${slide.label.toLowerCase()}`} aria-current={slideIndex === index ? 'true' : undefined}>
+            <span className="carousel-dot" />{slide.label}
           </button>
         ))}
       </div>
-    </div>
+      <p className="sr-only" aria-live="polite" aria-atomic="true">{slides[index].label}, slide {index + 1} of {slides.length}</p>
+    </section>
   )
 }

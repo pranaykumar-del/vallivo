@@ -63,7 +63,7 @@ export default function Navbar() {
         <div className="flex items-center gap-5">
           <Link
             to="/cart"
-            className="relative text-forest/55 hover:text-forest transition-colors"
+            className="relative w-11 h-11 flex items-center justify-center text-forest/70 hover:text-forest transition-colors"
             aria-label="Cart"
           >
             <CartIcon />
@@ -81,9 +81,10 @@ export default function Navbar() {
           </Link>
           <button
             type="button"
-            className="md:hidden flex flex-col gap-1.5 p-1"
+            className="md:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5"
             onClick={() => setMenuOpen((v) => !v)}
-            aria-label="Menu"
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
           >
             <span className={`block w-5 h-px bg-forest transition-all ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
             <span className={`block w-5 h-px bg-forest transition-all ${menuOpen ? 'opacity-0' : ''}`} />
@@ -93,13 +94,13 @@ export default function Navbar() {
       </div>
 
       {menuOpen && (
-        <div className="md:hidden bg-cream-soft border-t border-gold/20 px-6 py-7 flex flex-col gap-5">
+        <div className="md:hidden bg-cream-soft border-t border-gold/20 px-6 py-4 flex flex-col">
           {links.map((l) => (
             <Link
               key={l.href}
               to={l.href}
               onClick={() => setMenuOpen(false)}
-              className="text-xs tracking-[0.2em] uppercase font-body text-forest"
+              className="min-h-12 flex items-center text-sm tracking-[0.16em] uppercase font-body text-forest"
             >
               {l.label}
             </Link>

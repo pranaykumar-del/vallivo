@@ -39,7 +39,7 @@ export default function OrderForm({ items, total, onSuccess }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 bg-cream-soft border border-forest/10 p-8 rounded-2xl">
+    <form onSubmit={handleSubmit} className="space-y-6 bg-cream-soft border border-forest/10 p-5 sm:p-8 rounded-2xl min-w-0">
       <div>
         <p className="text-[11px] tracking-[0.22em] uppercase text-gold-dark font-body mb-2 font-medium">Checkout</p>
         <h3 className="font-display text-2xl text-forest font-semibold">Pay securely</h3>
@@ -55,17 +55,18 @@ export default function OrderForm({ items, total, onSuccess }) {
         { name: 'address', label: 'Delivery Address', type: 'text', placeholder: 'Street, city, pincode', required: true },
       ].map((field) => (
         <div key={field.name}>
-          <label className="block text-[10px] tracking-widest text-forest/55 uppercase font-body mb-2 font-medium">
+          <label htmlFor={`checkout-${field.name}`} className="block text-xs tracking-wide text-forest/70 uppercase font-body mb-2 font-medium">
             {field.label}
           </label>
           <input
+            id={`checkout-${field.name}`}
             type={field.type}
             name={field.name}
             value={form[field.name]}
             onChange={handleChange}
             placeholder={field.placeholder}
             required={field.required}
-            className="w-full bg-transparent border-b border-forest/20 py-3 font-body text-sm text-forest placeholder-forest/35 focus:outline-none focus:border-gold transition-colors duration-200"
+            className="w-full min-w-0 bg-transparent border-b border-forest/20 py-3 font-body text-base text-forest placeholder-forest/35 focus:outline-none focus:border-gold transition-colors duration-200"
           />
         </div>
       ))}

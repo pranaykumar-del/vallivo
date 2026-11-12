@@ -14,9 +14,9 @@ export default function Hero() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.35)_10%,transparent_70%)]" />
       </div>
 
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-6 text-center pt-24 pb-20">
+      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 text-center pt-24 pb-20">
         <h1
-          className="hero-in font-display text-forest font-semibold leading-none mb-6 select-none drop-shadow-[0_2px_24px_rgba(255,255,255,0.55)] text-[clamp(3.25rem,14vw,9.5rem)] tracking-[0.08em] sm:tracking-[0.12em]"
+          className="hero-in font-display text-forest font-semibold leading-none mb-6 select-none drop-shadow-[0_2px_24px_rgba(255,255,255,0.55)] text-[clamp(2.75rem,13vw,9.5rem)] tracking-[0.04em] sm:tracking-[0.12em]"
           aria-label="VALLIVO"
         >
           VALLIVO

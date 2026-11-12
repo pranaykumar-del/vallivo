@@ -41,7 +41,7 @@ export default function Product() {
           />
         </motion.div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-5 gap-y-7 sm:gap-y-10">
+        <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-5 gap-y-7 sm:gap-y-10">
           {products.map((p, i) => (
             <motion.article
               key={p.slug}
@@ -93,7 +93,7 @@ export default function Product() {
                 <motion.button
                   type="button"
                   onClick={() => handleAdd(p)}
-                  className="self-start text-[9px] sm:text-[10px] tracking-[0.16em] uppercase font-body border-b pb-0.5"
+                  className="self-start min-h-11 flex items-center text-[11px] tracking-[0.12em] uppercase font-body border-b"
                   style={{ color: p.accent, borderColor: `${p.accent}55` }}
                   whileTap={{ scale: 0.96 }}
                 >

@@ -126,18 +126,18 @@ export default function ProductPage() {
               <span className="font-display text-xl text-forest">Rs.{calcPrice(product.priceValue, quantity)}</span>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className="px-7 py-3.5 border border-forest text-forest font-body text-xs tracking-widest uppercase rounded-lg hover:bg-forest hover:text-cream transition-colors duration-300"
+                className="min-h-12 px-2 sm:px-7 py-3 border border-forest text-forest font-body text-[11px] sm:text-xs tracking-wide sm:tracking-widest uppercase rounded-lg hover:bg-forest hover:text-cream transition-colors duration-300"
               >
                 {added ? 'Added to Cart' : 'Add to Cart'}
               </button>
               <button
                 type="button"
                 onClick={handleBuyNow}
-                className="px-7 py-3.5 bg-forest text-cream font-body text-xs tracking-widest uppercase rounded-lg hover:bg-forest-soft transition-colors duration-300"
+                className="min-h-12 px-2 sm:px-7 py-3 bg-forest text-cream font-body text-[11px] sm:text-xs tracking-wide sm:tracking-widest uppercase rounded-lg hover:bg-forest-soft transition-colors duration-300"
               >
                 Buy Now
               </button>
@@ -246,7 +246,7 @@ export default function ProductPage() {
             <p className="text-xs tracking-widest2 text-gold-dark uppercase font-body mb-2">More Blends</p>
             <h2 className="font-display text-3xl text-forest">You May Also Like</h2>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 gap-4">
             {others.map((p) => (
               <Link key={p.slug} to={`/product/${p.slug}`} className="group block">
                 <div className="relative aspect-[3/4] overflow-hidden mb-3 rounded-2xl" style={{ backgroundColor: p.soft }}>
