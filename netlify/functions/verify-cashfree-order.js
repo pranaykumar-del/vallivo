@@ -16,18 +16,22 @@ function json(statusCode, body) {
   }
 }
 
-export async function handler(event) {
+function env(name, fallback) {
+  const value = process.env[name]
+  return value == null || value === '' ? fallback : value
+}
+
+exports.handler = async function handler(event) {
   if (event.httpMethod === 'OPTIONS') return json(204, {})
   if (event.httpMethod !== 'GET') return json(405, { error: 'Method not allowed' })
 
-  const orderId = event.queryStringParameters?.order_id
+  const orderId = event.queryStringParameters && event.queryStringParameters.order_id
   if (!orderId) return json(400, { error: 'order_id is required.' })
 
-  // Bracket access so esbuild does not inline empty secret values at build time.
-  const appId = process.env['CASHFREE_APP_ID']
-  const secretKey = process.env['CASHFREE_SECRET_KEY']
-  const env = (process.env['CASHFREE_ENV'] || 'production').toLowerCase()
-  const host = CF_HOST[env] || CF_HOST.production
+  const appId = env('CASHFREE_APP_ID')
+  const secretKey = env('CASHFREE_SECRET_KEY')
+  const cashfreeEnv = String(env('CASHFREE_ENV', 'production')).toLowerCase()
+  const host = CF_HOST[cashfreeEnv] || CF_HOST.production
 
   if (!appId || !secretKey) {
     return json(500, { error: 'Cashfree keys are not configured on the server.' })

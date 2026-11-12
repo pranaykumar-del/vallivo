@@ -22,16 +22,20 @@ function normalizePhone(phone) {
   return digits
 }
 
-export async function handler(event) {
+function env(name, fallback) {
+  const value = process.env[name]
+  return value == null || value === '' ? fallback : value
+}
+
+exports.handler = async function handler(event) {
   if (event.httpMethod === 'OPTIONS') return json(204, {})
   if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' })
 
-  // Bracket access so esbuild does not inline empty secret values at build time.
-  const appId = process.env['CASHFREE_APP_ID']
-  const secretKey = process.env['CASHFREE_SECRET_KEY']
-  const env = (process.env['CASHFREE_ENV'] || 'production').toLowerCase()
-  const host = CF_HOST[env] || CF_HOST.production
-  const siteUrl = process.env['URL'] || process.env['DEPLOY_PRIME_URL'] || 'https://www.vallivo.com'
+  const appId = env('CASHFREE_APP_ID')
+  const secretKey = env('CASHFREE_SECRET_KEY')
+  const cashfreeEnv = String(env('CASHFREE_ENV', 'production')).toLowerCase()
+  const host = CF_HOST[cashfreeEnv] || CF_HOST.production
+  const siteUrl = env('URL') || env('DEPLOY_PRIME_URL') || 'https://www.vallivo.com'
 
   if (!appId || !secretKey) {
     return json(500, { error: 'Cashfree keys are not configured on the server.' })
