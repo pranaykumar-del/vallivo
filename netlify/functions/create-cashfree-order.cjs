@@ -27,7 +27,7 @@ function env(name, fallback) {
   return value == null || value === '' ? fallback : value
 }
 
-export async function handler(event) {
+exports.handler = async function handler(event) {
   if (event.httpMethod === 'OPTIONS') return json(204, {})
   if (event.httpMethod !== 'POST') return json(405, { error: 'Method not allowed' })
 
@@ -44,11 +44,13 @@ export async function handler(event) {
   let payload
   try {
     payload = JSON.parse(event.body || '{}')
-  } catch {
+  } catch (e) {
     return json(400, { error: 'Invalid JSON body.' })
   }
 
-  const { customer = {}, items = [], total } = payload
+  const customer = (payload && payload.customer) || {}
+  const items = (payload && payload.items) || []
+  const total = payload && payload.total
   const amount = Number(total)
   const phone = normalizePhone(customer.phone)
 
@@ -56,28 +58,30 @@ export async function handler(event) {
     return json(400, { error: 'Name, 10-digit phone, cart items, and total are required.' })
   }
 
-  const orderId = `vallivo_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
+  const orderId = 'vallivo_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8)
   const orderPayload = {
     order_id: orderId,
     order_amount: Math.round(amount * 100) / 100,
     order_currency: 'INR',
     customer_details: {
-      customer_id: `cust_${phone}`,
+      customer_id: 'cust_' + phone,
       customer_name: String(customer.name).trim().slice(0, 100),
       customer_phone: phone,
-      customer_email: customer.email ? String(customer.email).trim() : `${phone}@vallivo.customer`,
+      customer_email: customer.email ? String(customer.email).trim() : phone + '@vallivo.customer',
     },
     order_meta: {
-      return_url: `${siteUrl.replace(/\/$/, '')}/payment/status?order_id={order_id}`,
+      return_url: siteUrl.replace(/\/$/, '') + '/payment/status?order_id={order_id}',
     },
     order_note: items
-      .map((item) => `${item.name} x${item.quantity}`)
+      .map(function (item) {
+        return item.name + ' x' + item.quantity
+      })
       .join(', ')
       .slice(0, 200),
   }
 
   try {
-    const response = await fetch(`${host}/pg/orders`, {
+    const response = await fetch(host + '/pg/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -88,7 +92,9 @@ export async function handler(event) {
       body: JSON.stringify(orderPayload),
     })
 
-    const data = await response.json().catch(() => ({}))
+    const data = await response.json().catch(function () {
+      return {}
+    })
     if (!response.ok) {
       return json(response.status, {
         error: data.message || data.error || 'Could not create Cashfree order.',

@@ -21,11 +21,11 @@ function env(name, fallback) {
   return value == null || value === '' ? fallback : value
 }
 
-export async function handler(event) {
+exports.handler = async function handler(event) {
   if (event.httpMethod === 'OPTIONS') return json(204, {})
   if (event.httpMethod !== 'GET') return json(405, { error: 'Method not allowed' })
 
-  const orderId = event.queryStringParameters?.order_id
+  const orderId = event.queryStringParameters && event.queryStringParameters.order_id
   if (!orderId) return json(400, { error: 'order_id is required.' })
 
   const appId = env('CASHFREE_APP_ID')
@@ -38,7 +38,7 @@ export async function handler(event) {
   }
 
   try {
-    const response = await fetch(`${host}/pg/orders/${encodeURIComponent(orderId)}`, {
+    const response = await fetch(host + '/pg/orders/' + encodeURIComponent(orderId), {
       method: 'GET',
       headers: {
         'x-api-version': '2025-01-01',
@@ -46,7 +46,9 @@ export async function handler(event) {
         'x-client-secret': secretKey,
       },
     })
-    const data = await response.json().catch(() => ({}))
+    const data = await response.json().catch(function () {
+      return {}
+    })
     if (!response.ok) {
       return json(response.status, { error: data.message || 'Could not verify order.', details: data })
     }
