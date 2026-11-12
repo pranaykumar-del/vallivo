@@ -23,9 +23,10 @@ export async function handler(event) {
   const orderId = event.queryStringParameters?.order_id
   if (!orderId) return json(400, { error: 'order_id is required.' })
 
-  const appId = process.env.CASHFREE_APP_ID
-  const secretKey = process.env.CASHFREE_SECRET_KEY
-  const env = (process.env.CASHFREE_ENV || 'production').toLowerCase()
+  // Bracket access so esbuild does not inline empty secret values at build time.
+  const appId = process.env['CASHFREE_APP_ID']
+  const secretKey = process.env['CASHFREE_SECRET_KEY']
+  const env = (process.env['CASHFREE_ENV'] || 'production').toLowerCase()
   const host = CF_HOST[env] || CF_HOST.production
 
   if (!appId || !secretKey) {
