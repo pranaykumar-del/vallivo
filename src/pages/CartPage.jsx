@@ -39,7 +39,7 @@ export default function CartPage() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-12">
           <p className="text-xs tracking-widest2 text-gold-dark uppercase font-body mb-4">Your Cart</p>
-          <h2 className="font-display text-4xl md:text-5xl text-forest mb-6">Cart &amp; WhatsApp Order</h2>
+          <h2 className="font-display text-4xl md:text-5xl text-forest mb-6">Cart &amp; Checkout</h2>
           <div className="gold-line w-16" />
         </div>
 
