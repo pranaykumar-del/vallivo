@@ -60,6 +60,7 @@ export default function Footer() {
                 { label: 'About', href: '/#story' },
                 { label: 'Reviews', href: '/reviews' },
                 { label: 'Cart', href: '/cart' },
+                { label: 'Track order', href: '/track' },
               ].map((l) => (
                 <Link key={l.href} to={l.href} className="font-body text-sm text-cream/80 hover:text-gold-light transition-colors">
                   {l.label}

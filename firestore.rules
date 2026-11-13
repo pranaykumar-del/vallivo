@@ -35,6 +35,11 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
+    // Tracking is served only by the Netlify function after Cashfree phone verification.
+    match /orderTracking/{orderId} {
+      allow read, write: if false;
+    }
+
     match /subscribers/{subscriberId} {
       allow create: if request.resource.data.email is string
         && request.resource.data.email.size() >= 5

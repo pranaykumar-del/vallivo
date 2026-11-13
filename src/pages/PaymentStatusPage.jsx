@@ -54,6 +54,8 @@ export default function PaymentStatusPage() {
               Payment received{details?.orderAmount ? ` for Rs.${details.orderAmount}` : ''}.
             </p>
             <p className="font-body text-xs text-forest/45 mb-8">Order ID: {orderId}</p>
+            <Link to={`/track?order_id=${encodeURIComponent(orderId)}`} className="inline-flex px-7 py-3 border border-forest text-forest text-[10px] tracking-[0.2em] uppercase font-body rounded-lg mb-3">Track order</Link>
+            <br />
             <Link to="/#product" className="inline-flex px-7 py-3 bg-forest text-cream text-[10px] tracking-[0.2em] uppercase font-body rounded-lg">
               Continue shopping
             </Link>
