@@ -38,7 +38,7 @@ export default function Experience() {
           <p className="text-[11px] tracking-[0.32em] uppercase text-serenette font-body mb-3 font-medium">The Ritual</p>
           <h2 className="font-display text-3xl md:text-5xl text-forest font-semibold mb-2">How to make it</h2>
           <p className="font-body text-sm md:text-[15px] text-forest/70 max-w-md mx-auto">
-            Three simple steps with loose leaf.
+            Three simple steps with loose leaf. Use a teapot or infuser, follow the blend's brewing notes, and adjust the strength until the cup tastes right to you.
           </p>
           <div className="gold-line w-14 mx-auto mt-5" />
         </motion.div>

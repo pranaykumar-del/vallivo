@@ -11,3 +11,5 @@ Enable Firestore in that Firebase project and deploy `firestore.rules`. The `ord
 To update fulfillment, edit that document in the Firebase console. Set `status` to one of `confirmed`, `packing`, `shipped`, `out_for_delivery`, `delivered`, or `cancelled`. Set `updatedAt` to the current timestamp when changing status. Optional string fields: `carrier`, `trackingNumber`, and `trackingUrl` (an HTTPS courier tracking page). The customer page reflects these updates within 30 seconds while open.
 
 This tracks the fulfillment status you enter in Firebase. Courier scan events and live location need an integration with the courier's API; they are not available from Cashfree.
+
+Cash on delivery is available at checkout for addresses with a `110xxx` Delhi PIN code. COD orders are saved in the same `orderTracking` collection with `paymentMethod: "COD"` and `paymentStatus: "DUE"`. The server calculates the amount from its own product price list and only confirms the order after Firestore saves it. Check the delivery address and actual serviceability before dispatch; no courier booking or cash collection is automated.

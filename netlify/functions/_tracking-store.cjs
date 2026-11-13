@@ -72,3 +72,30 @@ async function listOrders(phone) {
 
 module.exports.saveOrder = saveOrder
 module.exports.listOrders = listOrders
+
+async function createCodOrder({ orderId, phone, name, address, pincode, items, amount }) {
+  const { projectId, token } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents/orderTracking/${encodeURIComponent(orderId)}`
+  const now = new Date().toISOString()
+  const response = await fetch(url, { method: 'PATCH', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: {
+    phone: { stringValue: phone }, name: { stringValue: name }, address: { stringValue: address }, pincode: { stringValue: pincode },
+    items: { arrayValue: { values: items.map((item) => ({ mapValue: { fields: { slug: { stringValue: item.slug }, quantity: { integerValue: item.quantity } } } })) } },
+    amount: { doubleValue: amount }, paymentMethod: { stringValue: 'COD' }, paymentStatus: { stringValue: 'DUE' },
+    status: { stringValue: 'confirmed' }, createdAt: { timestampValue: now }, updatedAt: { timestampValue: now },
+  } }) })
+  if (!response.ok) throw new Error('Could not save cash on delivery order.')
+}
+
+async function getCodOrder(orderId, phone) {
+  const { projectId, token } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents/orderTracking/${encodeURIComponent(orderId)}`
+  const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+  if (response.status === 404) return null
+  if (!response.ok) throw new Error('Could not load order.')
+  const document = await response.json()
+  if (document.fields?.paymentMethod?.stringValue !== 'COD' || document.fields?.phone?.stringValue !== phone) return null
+  return { paymentStatus: document.fields?.paymentStatus?.stringValue || 'DUE', tracking: await getTracking(orderId, true) }
+}
+
+module.exports.createCodOrder = createCodOrder
+module.exports.getCodOrder = getCodOrder

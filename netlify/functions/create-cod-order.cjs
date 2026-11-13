@@ -1,0 +1,28 @@
+const { randomBytes } = require('node:crypto')
+const { createCodOrder } = require('./_tracking-store.cjs')
+
+// Keep these server-side prices in sync with src/lib/products.js; never trust a client total.
+const prices = { fennette: 345, serenette: 345, rosette: 345, nightfall: 345 }
+const reply = (statusCode, body) => ({ statusCode, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }, body: JSON.stringify(body) })
+
+exports.handler = async function handler(event) {
+  if (event.httpMethod !== 'POST') return reply(405, { error: 'Method not allowed.' })
+  let input
+  try { input = JSON.parse(event.body || '{}') } catch { return reply(400, { error: 'Invalid request.' }) }
+  const customer = input.customer || {}
+  const phone = String(customer.phone || '').replace(/\D/g, '').slice(-10)
+  const name = String(customer.name || '').trim()
+  const address = String(customer.address || '').trim()
+  const pincode = String(customer.pincode || '').trim()
+  const items = input.items
+  if (name.length < 2 || name.length > 100 || phone.length !== 10 || address.length < 10 || address.length > 500 || !/^110\d{3}$/.test(pincode)) return reply(400, { error: 'COD is available only for Delhi delivery PIN codes. Check your name, phone, and address.' })
+  if (!Array.isArray(items) || !items.length || items.length > 20 || items.some((item) => !Object.hasOwn(prices, item.slug) || !Number.isInteger(item.quantity) || item.quantity < 1 || item.quantity > 20)) return reply(400, { error: 'Invalid cart items.' })
+  const amount = items.reduce((sum, item) => sum + prices[item.slug] * item.quantity, 0)
+  const orderId = `vallivo_cod_${Date.now()}_${randomBytes(4).toString('hex')}`
+  try {
+    await createCodOrder({ orderId, phone, name, address, pincode, items, amount })
+    return reply(201, { orderId, amount, paymentMethod: 'COD' })
+  } catch {
+    return reply(503, { error: 'COD ordering is temporarily unavailable. Please choose online payment.' })
+  }
+}

@@ -29,8 +29,8 @@ export default function Product() {
         >
           <p className="text-[11px] tracking-[0.32em] uppercase text-fennette font-body mb-4 font-medium">The Collection</p>
           <h2 className="font-display text-4xl md:text-5xl text-forest font-semibold mb-4">Four blends. One ritual.</h2>
-          <p className="font-body text-sm md:text-[15px] text-forest/70 max-w-lg mx-auto leading-relaxed">
-            Four small upgrades for how you live — Fennette, Serenette, Rosette, Nightfall.
+          <p className="font-body text-sm md:text-[15px] text-forest/70 max-w-2xl mx-auto leading-relaxed">
+            Meet four loose-leaf blends with distinct flavours and moods. Fennette brings fennel and mint to the everyday cup; Serenette layers lavender with bright botanicals; Rosette leans into rose and hibiscus; and Nightfall is a softer, floral finish to the day. Choose by flavour, by moment, or simply by curiosity.
           </p>
           <motion.div
             className="gold-line w-14 mx-auto mt-7 origin-center"
@@ -83,7 +83,7 @@ export default function Product() {
                 </h3>
               </Link>
               <p className="font-body text-[9px] sm:text-[10px] tracking-[0.16em] uppercase text-forest/60 mb-2 sm:mb-3 font-medium">{p.sub}</p>
-              <p className="hidden sm:block font-body text-sm text-forest/75 leading-relaxed mb-5">{p.desc}</p>
+              <p className="font-body text-sm text-forest/75 leading-relaxed mb-5">{p.desc}</p>
 
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-3 sm:pt-4 border-t border-forest/15">
                 <span className="font-display text-base sm:text-xl text-forest font-semibold">

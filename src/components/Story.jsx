@@ -31,6 +31,12 @@ export default function Story() {
             <p className="font-body text-forest/75 text-[15px] leading-[1.75] mb-7">
               Not a loud wellness promise. Just four blends in clean cream canisters, for people who want their cup to feel as intentional as everything else.
             </p>
+            <p className="font-body text-forest/75 text-[15px] leading-[1.75] mb-4">
+              We believe the best part of tea begins before the first sip: choosing a blend, warming the water, and giving yourself a few minutes to slow down. Vallivo brings that small ritual into ordinary mornings, working afternoons, and evenings at home.
+            </p>
+            <p className="font-body text-forest/75 text-[15px] leading-[1.75] mb-7">
+              Each blend has its own character, from fresh fennel and mint to floral rose and lavender. Explore the ingredients, find the cup that suits the moment, and make the ritual your own.
+            </p>
             <motion.a
               href="/#product"
               className="inline-flex text-[11px] tracking-[0.22em] uppercase font-body text-forest font-medium border-b border-gold pb-1"

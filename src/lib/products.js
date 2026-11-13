@@ -13,9 +13,9 @@ export const products = [
     img: '/images/fennette.jpg',
     angleImg: '/images/fennette-angle-v2.png',
     pourImg: '/images/fennette-pour.png',
-    desc: 'Clean, light, and quietly clarifying — an everyday upgrade for your cup.',
+    desc: 'Fresh fennel and spearmint meet Assam tea and tulsi. A light, balanced cup for a familiar daily ritual.',
     longDesc:
-      'Fennette is the everyday lift — fresh fennel and spearmint meeting Assam tea, tulsi, and butterfly pea. Light enough for any moment, balanced enough to become your default cup.',
+      'Fennette starts with the familiar warmth of Assam tea, then opens into fennel, spearmint, tulsi, lemon peel, rosemary, and butterfly pea. The result is a fresh, layered cup with a gentle herbal finish. Brew it when you want something easy to return to, whether you are beginning the day or taking a pause between plans.',
     ingredients: [
       'Assam Tea',
       'Fennel Seeds',
@@ -41,9 +41,9 @@ export const products = [
     img: '/images/serenette.jpg',
     angleImg: '/images/serenette-angle-v2.png',
     pourImg: '/images/serenette-pour.png',
-    desc: 'Soft lavender and butterfly pea for a calmer, clearer pause.',
+    desc: 'Lavender, lemongrass, and butterfly pea make a soft floral cup with a bright citrus edge.',
     longDesc:
-      'Serenette is calm without heaviness — lemongrass, ashwagandha, lavender, and butterfly pea. A cup for clear minds and softer edges.',
+      'Serenette brings together lemongrass, spearmint, tulsi, lemon peel, ashwagandha, butterfly pea, and lavender. Citrus and mint brighten the first sip while the florals give the blend its gentle finish. Make it part of a slower afternoon, or take a few minutes with it whenever the day feels full.',
     ingredients: [
       'Lemongrass',
       'Spearmint',
@@ -69,9 +69,9 @@ export const products = [
     img: '/images/rosette.jpg',
     angleImg: '/images/rosette-angle.png',
     pourImg: '/images/rosette-pour.png',
-    desc: 'Rose and hibiscus — floral, bright, and made to be savoured.',
+    desc: 'Hibiscus and rose lead this vivid blend, with apple and amla adding a lively, tart note.',
     longDesc:
-      'Rosette is the indulgent bloom — hibiscus, rose, amla, and Assam green tea with apple and lavender. Soften the day. Uplift the mood. Sip something beautiful.',
+      'Rosette is a colourful meeting of hibiscus, rose, amla, Assam green tea, apple, and lavender. Floral aroma meets a lively tartness, making it a distinctive cup to share with a friend or keep for your own afternoon break. Enjoy it hot and take a moment to notice how the ingredients unfold as it steeps.',
     ingredients: [
       'Hibiscus',
       'Rose',
@@ -96,9 +96,9 @@ export const products = [
     img: '/images/nightfall.jpg',
     angleImg: '/images/nightfall-angle.png',
     pourImg: '/images/nightfall-pour.png',
-    desc: 'Lavender and soft botanicals for a quieter, slower close.',
+    desc: 'A gentle blend of lavender, tulsi, and lemongrass for the quieter moments of the day.',
     longDesc:
-      'Nightfall is a softer landing — lemongrass, tulsi, ashwagandha, and lavender. Unwind gently. Soothe the edges. Rest well.',
+      'Nightfall layers lemongrass, spearmint, tulsi, ashwagandha, and lavender into a soft herbal cup. Its floral notes and fresh finish make it an inviting choice when the pace of the day begins to ease. Brew a pot, put your phone aside for a few minutes, and let the evening have its own rhythm.',
     ingredients: [
       'Lemongrass',
       'Spearmint',

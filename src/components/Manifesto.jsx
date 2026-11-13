@@ -56,6 +56,9 @@ export default function Manifesto() {
         >
           Vallivo is a lifestyle choice — quiet, considered, and made for the moments that return you to yourself.
         </motion.p>
+        <p className="font-body text-cream/75 text-sm md:text-base leading-[1.9] max-w-2xl mx-auto mt-5">
+          Make a cup before the day begins, between calls, or after dinner. The ingredients and the pace are simple; the moment is yours. Good tea can be part of a beautiful day without asking you to change everything else.
+        </p>
       </div>
     </section>
   )

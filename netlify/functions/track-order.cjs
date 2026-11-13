@@ -1,4 +1,4 @@
-const { getTracking } = require('./_tracking-store.cjs')
+const { getTracking, getCodOrder } = require('./_tracking-store.cjs')
 
 function reply(statusCode, body) {
   return { statusCode, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }, body: JSON.stringify(body) }
@@ -11,6 +11,13 @@ exports.handler = async function handler(event) {
   const orderId = String(input.orderId || '').trim()
   const phone = String(input.phone || '').replace(/\D/g, '').slice(-10)
   if (!/^vallivo_[a-zA-Z0-9_]{10,60}$/.test(orderId) || phone.length !== 10) return reply(400, { error: 'Enter a valid order ID and 10-digit phone number.' })
+
+  if (orderId.startsWith('vallivo_cod_')) {
+    try {
+      const cod = await getCodOrder(orderId, phone)
+      return cod ? reply(200, { orderId, ...cod }) : reply(404, { error: 'Order not found for that phone number.' })
+    } catch { return reply(503, { error: 'Order lookup is temporarily unavailable.' }) }
+  }
 
   const appId = process.env.CASHFREE_APP_ID
   const secret = process.env.CASHFREE_SECRET_KEY
