@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useCart } from '../lib/CartContext'
@@ -9,9 +8,7 @@ import TrustBar from '../components/TrustBar'
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, totalPrice } = useCart()
-  const [orderPlaced, setOrderPlaced] = useState(false)
-
-  if (items.length === 0 && !orderPlaced) {
+  if (items.length === 0) {
     return (
       <section className="min-h-[70vh] flex items-center justify-center bg-cream px-6 pt-32 pb-24">
         <motion.div
@@ -45,7 +42,6 @@ export default function CartPage() {
 
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           <div>
-            {items.length > 0 ? (
               <div className="space-y-6">
                 {items.map((item) => (
                   <div key={item.slug} className="grid grid-cols-[5.5rem_minmax(0,1fr)] sm:grid-cols-[6rem_minmax(0,1fr)_auto] gap-x-4 gap-y-3 border-b border-forest/10 pb-6">
@@ -102,15 +98,10 @@ export default function CartPage() {
                   <span className="font-display text-2xl text-forest">Rs.{totalPrice}</span>
                 </div>
               </div>
-            ) : (
-              <p className="font-body text-forest/50 text-sm leading-relaxed">
-                Thank you — your order has been placed successfully.
-              </p>
-            )}
           </div>
 
           <div>
-            <OrderForm items={items} total={totalPrice} onSuccess={() => setOrderPlaced(true)} />
+            <OrderForm items={items} total={totalPrice} />
             <TrustBar className="mt-10" />
           </div>
         </div>

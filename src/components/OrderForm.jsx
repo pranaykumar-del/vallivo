@@ -1,11 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useCart } from '../lib/CartContext'
 import { createCashfreeOrder, openCashfreeCheckout } from '../lib/cashfree'
 import { whatsappOrderUrl } from '../lib/whatsapp'
 
-export default function OrderForm({ items, total, onSuccess }) {
-  const { clearCart } = useCart()
+export default function OrderForm({ items, total }) {
   const [form, setForm] = useState({ name: '', phone: '', email: '', address: '' })
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
@@ -29,8 +27,6 @@ export default function OrderForm({ items, total, onSuccess }) {
         })),
         total,
       })
-      clearCart()
-      onSuccess?.()
       await openCashfreeCheckout(order.paymentSessionId)
     } catch (err) {
       setStatus('idle')
@@ -44,7 +40,10 @@ export default function OrderForm({ items, total, onSuccess }) {
         <p className="text-[11px] tracking-[0.22em] uppercase text-gold-dark font-body mb-2 font-medium">Checkout</p>
         <h3 className="font-display text-2xl text-forest font-semibold">Pay securely</h3>
         <p className="font-body text-sm text-forest/65 mt-2 leading-relaxed">
-          Enter delivery details and continue to Cashfree checkout.
+          No account needed. Enter your delivery details and continue to secure payment.
+        </p>
+        <p className="font-body text-sm text-forest/65 mt-3">
+          Want your orders in one place? <Link to="/account" className="underline text-forest">Sign in with your mobile number</Link> first, then return to your cart.
         </p>
       </div>
 

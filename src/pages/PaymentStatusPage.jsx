@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { verifyCashfreeOrder } from '../lib/cashfree'
+import { useCart } from '../lib/CartContext'
 
 export default function PaymentStatusPage() {
+  const { clearCart } = useCart()
   const [params] = useSearchParams()
   const orderId = params.get('order_id')
   const [status, setStatus] = useState('loading')
@@ -22,6 +24,7 @@ export default function PaymentStatusPage() {
         if (!active) return
         setDetails(data)
         const paid = ['PAID', 'SUCCESS'].includes(String(data.orderStatus || '').toUpperCase())
+        if (paid) clearCart()
         setStatus(paid ? 'success' : 'pending')
       })
       .catch((err) => {
@@ -54,6 +57,7 @@ export default function PaymentStatusPage() {
               Payment received{details?.orderAmount ? ` for Rs.${details.orderAmount}` : ''}.
             </p>
             <p className="font-body text-xs text-forest/45 mb-8">Order ID: {orderId}</p>
+            <p className="font-body text-sm text-forest/70 mb-5">You can track this order as a guest with its ID and your checkout number. You can also sign in later to see orders linked to that number.</p>
             <Link to={`/track?order_id=${encodeURIComponent(orderId)}`} className="inline-flex px-7 py-3 border border-forest text-forest text-[10px] tracking-[0.2em] uppercase font-body rounded-lg mb-3">Track order</Link>
             <br />
             <Link to="/#product" className="inline-flex px-7 py-3 bg-forest text-cream text-[10px] tracking-[0.2em] uppercase font-body rounded-lg">
