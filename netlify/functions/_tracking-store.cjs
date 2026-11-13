@@ -53,3 +53,22 @@ async function getTracking(orderId, paid) {
 }
 
 module.exports = { getTracking }
+
+async function saveOrder(orderId, phone, amount) {
+  const { projectId, token } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents/orderTracking/${encodeURIComponent(orderId)}`
+  const response = await fetch(url, { method: 'PATCH', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { phone: { stringValue: phone }, amount: { doubleValue: amount }, status: { stringValue: 'pending_payment' }, createdAt: { timestampValue: new Date().toISOString() }, updatedAt: { timestampValue: new Date().toISOString() } } }) })
+  if (!response.ok) throw new Error('Could not save order record.')
+}
+
+async function listOrders(phone) {
+  const { projectId, token } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents:runQuery`
+  const response = await fetch(url, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ structuredQuery: { from: [{ collectionId: 'orderTracking' }], where: { fieldFilter: { field: { fieldPath: 'phone' }, op: 'EQUAL', value: { stringValue: phone } } }, limit: 50 } }) })
+  if (!response.ok) throw new Error('Could not load orders.')
+  const rows = await response.json()
+  return rows.filter((row) => row.document).map(({ document }) => ({ orderId: document.name.split('/').pop(), status: document.fields?.status?.stringValue || 'confirmed', amount: Number(document.fields?.amount?.doubleValue || 0), createdAt: document.fields?.createdAt?.timestampValue || document.createTime })).sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
+}
+
+module.exports.saveOrder = saveOrder
+module.exports.listOrders = listOrders

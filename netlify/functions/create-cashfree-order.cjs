@@ -2,6 +2,7 @@ const CF_HOST = {
   production: 'https://api.cashfree.com',
   sandbox: 'https://sandbox.cashfree.com',
 }
+const { saveOrder } = require('./_tracking-store.cjs')
 
 function json(statusCode, body) {
   return {
@@ -100,6 +101,12 @@ exports.handler = async function handler(event) {
         error: data.message || data.error || 'Could not create Cashfree order.',
         details: data,
       })
+    }
+
+    try {
+      await saveOrder(data.order_id || orderId, phone, orderPayload.order_amount)
+    } catch (trackingError) {
+      console.error('Order record could not be saved:', trackingError.message)
     }
 
     return json(200, {

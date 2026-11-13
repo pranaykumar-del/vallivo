@@ -10,6 +10,7 @@ import CartPage from './pages/CartPage'
 import ReviewsPage from './pages/ReviewsPage'
 import PaymentStatusPage from './pages/PaymentStatusPage'
 import TrackOrderPage from './pages/TrackOrderPage'
+import AccountPage from './pages/AccountPage'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/reviews" element={<ReviewsPage />} />
           <Route path="/payment/status" element={<PaymentStatusPage />} />
           <Route path="/track" element={<TrackOrderPage />} />
+          <Route path="/account" element={<AccountPage />} />
         </Routes>
       </main>
       <Footer />

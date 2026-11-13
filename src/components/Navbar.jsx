@@ -28,6 +28,7 @@ export default function Navbar() {
     { label: 'About', href: '/#story' },
     { label: 'Reviews', href: '/reviews' },
     { label: 'Track order', href: '/track' },
+    { label: 'Account', href: '/account' },
   ]
 
   return (
@@ -49,7 +50,7 @@ export default function Navbar() {
           />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-9">
+        <nav className="hidden xl:flex items-center gap-6">
           {links.map((l) => (
             <Link
               key={l.href}
@@ -82,7 +83,7 @@ export default function Navbar() {
           </Link>
           <button
             type="button"
-            className="lg:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5"
+            className="xl:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={menuOpen}
@@ -95,7 +96,7 @@ export default function Navbar() {
       </div>
 
       {menuOpen && (
-        <div className="lg:hidden bg-cream-soft border-t border-gold/20 px-6 py-4 flex flex-col">
+        <div className="xl:hidden bg-cream-soft border-t border-gold/20 px-6 py-4 flex flex-col">
           {links.map((l) => (
             <Link
               key={l.href}

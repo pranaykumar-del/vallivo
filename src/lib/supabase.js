@@ -21,6 +21,11 @@ async function getDb() {
   return getFirestore(app, 'default')
 }
 
+export async function getAuthClient() {
+  const [{ getAuth }, app] = await Promise.all([import('firebase/auth'), getApp()])
+  return getAuth(app)
+}
+
 async function getStorageBucket() {
   const [{ getStorage }, app] = await Promise.all([import('firebase/storage'), getApp()])
   return getStorage(app)

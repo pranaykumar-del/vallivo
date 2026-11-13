@@ -61,6 +61,7 @@ export default function Footer() {
                 { label: 'Reviews', href: '/reviews' },
                 { label: 'Cart', href: '/cart' },
                 { label: 'Track order', href: '/track' },
+                { label: 'Account', href: '/account' },
               ].map((l) => (
                 <Link key={l.href} to={l.href} className="font-body text-sm text-cream/80 hover:text-gold-light transition-colors">
                   {l.label}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { getAuthClient } from '../lib/supabase'
 
 const steps = [
   ['confirmed', 'Order confirmed', 'Your payment is complete and we have your order.'],
@@ -11,12 +12,28 @@ const steps = [
 
 export default function TrackOrderPage() {
   const [params] = useSearchParams()
-  const [orderId, setOrderId] = useState(params.get('order_id') || '')
+  const orderFromUrl = params.get('order_id')
+  const [orderId, setOrderId] = useState(orderFromUrl || '')
   const [phone, setPhone] = useState('')
   const [lookup, setLookup] = useState(null)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    let unsubscribe = () => {}
+    getAuthClient().then(async (auth) => {
+      const { onAuthStateChanged } = await import('firebase/auth')
+      unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user?.phoneNumber && orderFromUrl) {
+          const verifiedPhone = user.phoneNumber.replace(/\D/g, '').slice(-10)
+          setPhone(verifiedPhone)
+          setLookup({ orderId: orderFromUrl, phone: verifiedPhone })
+        }
+      })
+    }).catch(() => {})
+    return () => unsubscribe()
+  }, [orderFromUrl])
 
   useEffect(() => {
     if (!lookup) return undefined
