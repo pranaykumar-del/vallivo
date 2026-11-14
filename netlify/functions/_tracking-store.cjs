@@ -105,10 +105,10 @@ module.exports.getCodOrder = getCodOrder
 
 async function checkTrackingStore() {
   const { projectId, token } = await accessToken()
-  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents/orderTracking/__cod_health_check__`
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)`
   const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
-  if (response.status === 404 || response.ok) return true
-  throw new Error(response.status === 403 ? 'FIRESTORE_ACCESS_DENIED' : response.status === 404 ? 'FIRESTORE_NOT_FOUND' : 'FIRESTORE_UNAVAILABLE')
+  if (response.ok) return true
+  throw new Error(response.status === 403 ? 'FIRESTORE_ACCESS_DENIED' : response.status === 404 ? 'FIRESTORE_DATABASE_MISSING' : 'FIRESTORE_UNAVAILABLE')
 }
 
 module.exports.checkTrackingStore = checkTrackingStore
