@@ -72,7 +72,7 @@ export default function Footer() {
           <div>
             <div className="text-[10px] tracking-[0.22em] text-gold uppercase font-body mb-4 font-medium">Connect</div>
             <div className="flex flex-col gap-2.5">
-              <a href="https://instagram.com/vallivo" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/80 hover:text-gold-light transition-colors">Instagram</a>
+              <a href="https://www.instagram.com/vallivo_official/" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/80 hover:text-gold-light transition-colors">Instagram · @vallivo_official</a>
               <a href="https://wa.me/916304207706" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/80 hover:text-gold-light transition-colors">WhatsApp</a>
               <a href="https://www.vallivo.com" target="_blank" rel="noreferrer" className="font-body text-sm text-cream/80 hover:text-gold-light transition-colors">www.vallivo.com</a>
             </div>

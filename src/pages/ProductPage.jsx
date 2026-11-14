@@ -234,9 +234,9 @@ export default function ProductPage() {
               <span className="block text-[10px] tracking-[0.16em] uppercase text-forest/40 mb-1">WhatsApp</span>
               +91 63042 07706
             </a>
-            <a href="https://instagram.com/vallivo" target="_blank" rel="noreferrer" className="bg-white border border-forest/10 rounded-2xl px-4 py-4 font-body text-sm text-forest hover:border-gold">
+            <a href="https://www.instagram.com/vallivo_official/" target="_blank" rel="noreferrer" className="bg-white border border-forest/10 rounded-2xl px-4 py-4 font-body text-sm text-forest hover:border-gold">
               <span className="block text-[10px] tracking-[0.16em] uppercase text-forest/40 mb-1">Instagram</span>
-              @vallivo
+              @vallivo_official
             </a>
           </div>
         </div>
