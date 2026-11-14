@@ -99,7 +99,7 @@ async function createCodOrder({ orderId, phone, name, address, pincode, items, a
     amount: { doubleValue: amount }, paymentMethod: { stringValue: 'COD' }, paymentStatus: { stringValue: 'DUE' },
     status: { stringValue: 'confirmed' }, createdAt: { timestampValue: now }, updatedAt: { timestampValue: now },
   } }) })
-  if (!response.ok) throw new Error('Could not save cash on delivery order.')
+  if (!response.ok) throw new Error(`COD_STORE_${response.status}`)
 }
 
 async function getCodOrder(orderId, phone) {
@@ -122,3 +122,22 @@ async function checkTrackingStore() {
 }
 
 module.exports.checkTrackingStore = checkTrackingStore
+
+async function checkCodWrite() {
+  const orderId = `__cod_check_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
+  const { projectId, token, databaseId } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents/orderTracking/${orderId}`
+  let created = false
+  try {
+    await createCodOrder({ orderId, phone: '0000000000', name: 'COD check', address: 'Temporary diagnostic record', pincode: '110019', items: [{ slug: 'fennette', quantity: 1 }], amount: 345 })
+    created = true
+    return true
+  } finally {
+    if (created) {
+      const response = await fetch(url, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } })
+      if (!response.ok) throw new Error(`COD_CLEANUP_${response.status}`)
+    }
+  }
+}
+
+module.exports.checkCodWrite = checkCodWrite

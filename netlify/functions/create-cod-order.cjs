@@ -1,5 +1,5 @@
 const { randomBytes } = require('node:crypto')
-const { createCodOrder, checkTrackingStore } = require('./_tracking-store.cjs')
+const { createCodOrder, checkTrackingStore, checkCodWrite } = require('./_tracking-store.cjs')
 
 // Keep these server-side prices in sync with src/lib/products.js; never trust a client total.
 const prices = { fennette: 345, serenette: 345, rosette: 345, nightfall: 345 }
@@ -9,6 +9,10 @@ exports.handler = async function handler(event) {
   if (event.httpMethod === 'GET' && event.queryStringParameters?.health === '1') {
     try { await checkTrackingStore(); return reply(200, { ready: true }) }
     catch (error) { return reply(503, { ready: false, code: /^FIREBASE_|^FIRESTORE_/.test(error.message) ? error.message : 'STORE_UNAVAILABLE' }) }
+  }
+  if (event.httpMethod === 'GET' && event.queryStringParameters?.health === 'write') {
+    try { await checkCodWrite(); return reply(200, { writeReady: true }) }
+    catch (error) { return reply(503, { writeReady: false, code: /^COD_|^FIREBASE_|^FIRESTORE_/.test(error.message) ? error.message : 'STORE_UNAVAILABLE' }) }
   }
   if (event.httpMethod !== 'POST') return reply(405, { error: 'Method not allowed.' })
   let input
