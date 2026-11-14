@@ -6,22 +6,25 @@ function encode(value) {
 
 async function accessToken() {
   const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON
-  if (!raw) throw new Error('Order tracking is not configured.')
-  const account = JSON.parse(raw)
-  if (!account.project_id || !account.client_email || !account.private_key) throw new Error('Invalid Firebase service account.')
+  if (!raw) throw new Error('FIREBASE_CONFIG_MISSING')
+  let account
+  try { account = JSON.parse(raw) } catch { throw new Error('FIREBASE_CONFIG_INVALID_JSON') }
+  if (!account.project_id || !account.client_email || !account.private_key) throw new Error('FIREBASE_CONFIG_INCOMPLETE')
   const now = Math.floor(Date.now() / 1000)
   const claim = encode({ iss: account.client_email, scope: 'https://www.googleapis.com/auth/datastore', aud: 'https://oauth2.googleapis.com/token', iat: now, exp: now + 3600 })
   const unsigned = `${encode({ alg: 'RS256', typ: 'JWT' })}.${claim}`
   const signer = createSign('RSA-SHA256')
   signer.update(unsigned)
-  const assertion = `${unsigned}.${signer.sign(account.private_key).toString('base64url')}`
+  let signature
+  try { signature = signer.sign(account.private_key).toString('base64url') } catch { throw new Error('FIREBASE_PRIVATE_KEY_INVALID') }
+  const assertion = `${unsigned}.${signature}`
   const response = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({ grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion }),
   })
   const data = await response.json()
-  if (!response.ok || !data.access_token) throw new Error('Could not connect to order tracking.')
+  if (!response.ok || !data.access_token) throw new Error('FIREBASE_AUTH_FAILED')
   return { projectId: account.project_id, token: data.access_token }
 }
 
@@ -99,3 +102,13 @@ async function getCodOrder(orderId, phone) {
 
 module.exports.createCodOrder = createCodOrder
 module.exports.getCodOrder = getCodOrder
+
+async function checkTrackingStore() {
+  const { projectId, token } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents/orderTracking/__cod_health_check__`
+  const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+  if (response.status === 404 || response.ok) return true
+  throw new Error(response.status === 403 ? 'FIRESTORE_ACCESS_DENIED' : response.status === 404 ? 'FIRESTORE_NOT_FOUND' : 'FIRESTORE_UNAVAILABLE')
+}
+
+module.exports.checkTrackingStore = checkTrackingStore

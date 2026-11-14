@@ -1,11 +1,15 @@
 const { randomBytes } = require('node:crypto')
-const { createCodOrder } = require('./_tracking-store.cjs')
+const { createCodOrder, checkTrackingStore } = require('./_tracking-store.cjs')
 
 // Keep these server-side prices in sync with src/lib/products.js; never trust a client total.
 const prices = { fennette: 345, serenette: 345, rosette: 345, nightfall: 345 }
 const reply = (statusCode, body) => ({ statusCode, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }, body: JSON.stringify(body) })
 
 exports.handler = async function handler(event) {
+  if (event.httpMethod === 'GET' && event.queryStringParameters?.health === '1') {
+    try { await checkTrackingStore(); return reply(200, { ready: true }) }
+    catch (error) { return reply(503, { ready: false, code: /^FIREBASE_|^FIRESTORE_/.test(error.message) ? error.message : 'STORE_UNAVAILABLE' }) }
+  }
   if (event.httpMethod !== 'POST') return reply(405, { error: 'Method not allowed.' })
   let input
   try { input = JSON.parse(event.body || '{}') } catch { return reply(400, { error: 'Invalid request.' }) }
@@ -22,7 +26,9 @@ exports.handler = async function handler(event) {
   try {
     await createCodOrder({ orderId, phone, name, address, pincode, items, amount })
     return reply(201, { orderId, amount, paymentMethod: 'COD' })
-  } catch {
-    return reply(503, { error: 'COD ordering is temporarily unavailable. Please choose online payment.' })
+  } catch (error) {
+    console.error('COD order save failed:', error.message)
+    const configProblem = /^FIREBASE_/.test(error.message)
+    return reply(503, { error: configProblem ? 'COD setup is incomplete. Please contact Vallivo support or choose online payment.' : 'COD ordering is temporarily unavailable. Please choose online payment.' })
   }
 }
