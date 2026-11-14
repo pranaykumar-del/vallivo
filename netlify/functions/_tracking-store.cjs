@@ -108,7 +108,7 @@ async function getCodOrder(orderId, phone) {
   if (!response.ok) throw new Error('Could not load order.')
   const document = await response.json()
   if (document.fields?.paymentMethod?.stringValue !== 'COD' || document.fields?.phone?.stringValue !== phone) return null
-  return { paymentStatus: document.fields?.paymentStatus?.stringValue || 'DUE', tracking: await getTracking(orderId, true) }
+  return { paymentMethod: 'COD', paymentStatus: document.fields?.paymentStatus?.stringValue || 'DUE', tracking: await getTracking(orderId, true) }
 }
 
 module.exports.createCodOrder = createCodOrder

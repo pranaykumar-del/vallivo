@@ -60,6 +60,12 @@ export default function TrackOrderPage() {
   }, [lookup])
 
   const current = steps.findIndex(([key]) => key === result?.tracking?.status)
+  const isCod = result?.paymentMethod === 'COD' || result?.orderId?.startsWith('vallivo_cod_')
+  const currentTitle = result?.tracking?.status === 'cancelled'
+    ? 'Order cancelled'
+    : current === 0 && isCod
+      ? 'Order received'
+      : steps[current]?.[1] || 'Order confirmed'
   const onSubmit = (event) => {
     event.preventDefault()
     setResult(null)
@@ -87,12 +93,12 @@ export default function TrackOrderPage() {
         {error && <p role="alert" className="mt-5 text-red-700 font-body text-sm">{error}</p>}
         {result && <div className="mt-8 bg-white border border-forest/10 rounded-2xl p-5 sm:p-8" aria-live="polite">
           <div className="flex flex-wrap items-start justify-between gap-3 mb-7">
-            <div><p className="font-body text-xs uppercase tracking-wide text-forest/50">Order {result.orderId}</p><h2 className="font-display text-3xl mt-2">{result.tracking ? steps[current]?.[1] || 'Order confirmed' : 'Payment pending'}</h2></div>
-            <span className="font-body text-xs uppercase tracking-wide bg-cream px-3 py-2 rounded-full">Payment: {result.paymentStatus}</span>
+            <div><p className="font-body text-xs uppercase tracking-wide text-forest/50">Order {result.orderId}</p><h2 className="font-display text-3xl mt-2">{result.tracking ? currentTitle : 'Payment pending'}</h2></div>
+            <span className="font-body text-xs uppercase tracking-wide bg-cream px-3 py-2 rounded-full">{isCod ? result.paymentStatus === 'PAID' ? 'COD paid' : 'Cash on delivery · payment due' : `Payment: ${result.paymentStatus}`}</span>
           </div>
           {result.tracking ? <>
             {result.tracking.status === 'cancelled' ? <p className="font-body text-sm text-forest/70">This order was cancelled. Please contact us if you need help.</p> : <ol className="space-y-5 border-l border-gold/40 ml-2 pl-6">
-              {steps.map(([key, title, description], index) => <li key={key} className={index <= current ? 'text-forest' : 'text-forest/40'}><h3 className="font-body font-medium text-base">{title}</h3><p className="font-body text-sm mt-1">{description}</p></li>)}
+              {steps.map(([key, title, description], index) => <li key={key} className={index <= current ? 'text-forest' : 'text-forest/40'}><h3 className="font-body font-medium text-base">{isCod && index === 0 ? 'Order received' : title}</h3><p className="font-body text-sm mt-1">{isCod && index === 0 ? 'We have your order. Pay when it is delivered; we will confirm delivery availability before dispatch.' : description}</p></li>)}
             </ol>}
             {result.tracking.updatedAt && <p className="font-body text-xs text-forest/50 mt-7">Last updated: {new Date(result.tracking.updatedAt).toLocaleString()}</p>}
             {result.tracking.carrier && <p className="font-body text-sm text-forest mt-4">Courier: {result.tracking.carrier}</p>}

@@ -32,7 +32,7 @@ exports.handler = async function handler(event) {
     if (String(order.customer_details?.customer_phone || '').replace(/\D/g, '').slice(-10) !== phone) return reply(404, { error: 'Order not found for that phone number.' })
     const paid = order.order_status === 'PAID'
     const tracking = await getTracking(orderId, paid)
-    return reply(200, { orderId, paymentStatus: order.order_status, tracking: paid ? tracking : null })
+    return reply(200, { orderId, paymentMethod: 'PREPAID', paymentStatus: order.order_status, tracking: paid ? tracking : null })
   } catch (error) {
     return reply(503, { error: error.message === 'Order tracking is not configured.' ? error.message : 'Order lookup is temporarily unavailable.' })
   }
