@@ -106,6 +106,11 @@ export default function OrderForm({ items, total }) {
       >
         {status === 'loading' ? 'Placing order…' : paymentMethod === 'cod' ? `Place COD order · Rs.${total}` : `Pay Rs.${total} online`}
       </button>
+      {status === 'loading' && paymentMethod === 'cod' && (
+        <p role="status" className="font-body text-sm text-forest/70 text-center">
+          Saving your order securely. Please keep this page open until you see your order number.
+        </p>
+      )}
 
       <a
         href={whatsappOrderUrl(items, total, form)}

@@ -1,11 +1,19 @@
 const { createSign } = require('node:crypto')
-let selectedDatabaseId
+let cachedAuth
+let pendingAuth
 
 function encode(value) {
   return Buffer.from(JSON.stringify(value)).toString('base64url')
 }
 
 async function accessToken() {
+  if (cachedAuth && cachedAuth.expiresAt > Date.now() + 60_000) return cachedAuth
+  if (pendingAuth) return pendingAuth
+  pendingAuth = createAccessToken()
+  try { return await pendingAuth } finally { pendingAuth = null }
+}
+
+async function createAccessToken() {
   const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON
   if (!raw) throw new Error('FIREBASE_CONFIG_MISSING')
   let account
@@ -26,19 +34,9 @@ async function accessToken() {
   })
   const data = await response.json()
   if (!response.ok || !data.access_token) throw new Error('FIREBASE_AUTH_FAILED')
-  return { projectId: account.project_id, token: data.access_token, databaseId: await databaseId(account.project_id, data.access_token) }
-}
-
-async function databaseId(projectId, token) {
-  if (selectedDatabaseId) return selectedDatabaseId
-  const candidates = process.env.FIREBASE_DATABASE_ID ? [process.env.FIREBASE_DATABASE_ID] : ['default', '(default)']
-  for (const candidate of candidates) {
-    const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(candidate)}`
-    const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
-    if (response.ok) { selectedDatabaseId = candidate; return candidate }
-    if (response.status !== 404) throw new Error(response.status === 403 ? 'FIRESTORE_ACCESS_DENIED' : 'FIRESTORE_UNAVAILABLE')
-  }
-  throw new Error('FIRESTORE_DATABASE_MISSING')
+  // The storefront uses the named Firestore database "default".
+  cachedAuth = { projectId: account.project_id, token: data.access_token, databaseId: process.env.FIREBASE_DATABASE_ID || 'default', expiresAt: Date.now() + Math.min(Number(data.expires_in || 3600) * 1000, 3600_000) }
+  return cachedAuth
 }
 
 const allowedStatuses = new Set(['confirmed', 'packing', 'shipped', 'out_for_delivery', 'delivered', 'cancelled'])
