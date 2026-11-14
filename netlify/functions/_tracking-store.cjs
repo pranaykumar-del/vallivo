@@ -1,4 +1,5 @@
 const { createSign } = require('node:crypto')
+let selectedDatabaseId
 
 function encode(value) {
   return Buffer.from(JSON.stringify(value)).toString('base64url')
@@ -25,14 +26,26 @@ async function accessToken() {
   })
   const data = await response.json()
   if (!response.ok || !data.access_token) throw new Error('FIREBASE_AUTH_FAILED')
-  return { projectId: account.project_id, token: data.access_token }
+  return { projectId: account.project_id, token: data.access_token, databaseId: await databaseId(account.project_id, data.access_token) }
+}
+
+async function databaseId(projectId, token) {
+  if (selectedDatabaseId) return selectedDatabaseId
+  const candidates = process.env.FIREBASE_DATABASE_ID ? [process.env.FIREBASE_DATABASE_ID] : ['default', '(default)']
+  for (const candidate of candidates) {
+    const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(candidate)}`
+    const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+    if (response.ok) { selectedDatabaseId = candidate; return candidate }
+    if (response.status !== 404) throw new Error(response.status === 403 ? 'FIRESTORE_ACCESS_DENIED' : 'FIRESTORE_UNAVAILABLE')
+  }
+  throw new Error('FIRESTORE_DATABASE_MISSING')
 }
 
 const allowedStatuses = new Set(['confirmed', 'packing', 'shipped', 'out_for_delivery', 'delivered', 'cancelled'])
 
 async function getTracking(orderId, paid) {
-  const { projectId, token } = await accessToken()
-  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents/orderTracking/${encodeURIComponent(orderId)}`
+  const { projectId, token, databaseId } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents/orderTracking/${encodeURIComponent(orderId)}`
   const headers = { Authorization: `Bearer ${token}` }
   let response = await fetch(url, { headers })
   if (response.status === 404 && paid) {
@@ -58,15 +71,15 @@ async function getTracking(orderId, paid) {
 module.exports = { getTracking }
 
 async function saveOrder(orderId, phone, amount) {
-  const { projectId, token } = await accessToken()
-  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents/orderTracking/${encodeURIComponent(orderId)}`
+  const { projectId, token, databaseId } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents/orderTracking/${encodeURIComponent(orderId)}`
   const response = await fetch(url, { method: 'PATCH', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { phone: { stringValue: phone }, amount: { doubleValue: amount }, status: { stringValue: 'pending_payment' }, createdAt: { timestampValue: new Date().toISOString() }, updatedAt: { timestampValue: new Date().toISOString() } } }) })
   if (!response.ok) throw new Error('Could not save order record.')
 }
 
 async function listOrders(phone) {
-  const { projectId, token } = await accessToken()
-  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents:runQuery`
+  const { projectId, token, databaseId } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents:runQuery`
   const response = await fetch(url, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ structuredQuery: { from: [{ collectionId: 'orderTracking' }], where: { fieldFilter: { field: { fieldPath: 'phone' }, op: 'EQUAL', value: { stringValue: phone } } }, limit: 50 } }) })
   if (!response.ok) throw new Error('Could not load orders.')
   const rows = await response.json()
@@ -77,8 +90,8 @@ module.exports.saveOrder = saveOrder
 module.exports.listOrders = listOrders
 
 async function createCodOrder({ orderId, phone, name, address, pincode, items, amount }) {
-  const { projectId, token } = await accessToken()
-  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents/orderTracking/${encodeURIComponent(orderId)}`
+  const { projectId, token, databaseId } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents/orderTracking/${encodeURIComponent(orderId)}`
   const now = new Date().toISOString()
   const response = await fetch(url, { method: 'PATCH', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: {
     phone: { stringValue: phone }, name: { stringValue: name }, address: { stringValue: address }, pincode: { stringValue: pincode },
@@ -90,8 +103,8 @@ async function createCodOrder({ orderId, phone, name, address, pincode, items, a
 }
 
 async function getCodOrder(orderId, phone) {
-  const { projectId, token } = await accessToken()
-  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents/orderTracking/${encodeURIComponent(orderId)}`
+  const { projectId, token, databaseId } = await accessToken()
+  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/${encodeURIComponent(databaseId)}/documents/orderTracking/${encodeURIComponent(orderId)}`
   const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
   if (response.status === 404) return null
   if (!response.ok) throw new Error('Could not load order.')
@@ -104,11 +117,8 @@ module.exports.createCodOrder = createCodOrder
 module.exports.getCodOrder = getCodOrder
 
 async function checkTrackingStore() {
-  const { projectId, token } = await accessToken()
-  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)`
-  const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
-  if (response.ok) return true
-  throw new Error(response.status === 403 ? 'FIRESTORE_ACCESS_DENIED' : response.status === 404 ? 'FIRESTORE_DATABASE_MISSING' : 'FIRESTORE_UNAVAILABLE')
+  await accessToken()
+  return true
 }
 
 module.exports.checkTrackingStore = checkTrackingStore
