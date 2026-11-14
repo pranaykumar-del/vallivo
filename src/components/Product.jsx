@@ -19,7 +19,7 @@ export default function Product() {
 
   return (
     <section id="product" className="py-14 md:py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         <motion.div
           className="text-center mb-8 md:mb-10"
           initial={{ opacity: 0, y: 24 }}
@@ -41,7 +41,7 @@ export default function Product() {
           />
         </motion.div>
 
-        <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-5 gap-y-7 sm:gap-y-10">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 sm:gap-x-5 gap-y-7 sm:gap-y-10">
           {products.map((p, i) => (
             <motion.article
               key={p.slug}
@@ -53,7 +53,7 @@ export default function Product() {
             >
               <Link to={`/product/${p.slug}`} className="block">
                 <motion.div
-                  className="relative aspect-[3/4] overflow-hidden mb-4 rounded-2xl bg-[#F7F9F5]"
+                  className="relative aspect-[3/4] overflow-hidden mb-3 sm:mb-4 rounded-xl sm:rounded-2xl bg-[#F7F9F5]"
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.4, ease }}
                 >
@@ -63,7 +63,7 @@ export default function Product() {
                     className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
                   />
                   <motion.span
-                    className="absolute top-4 left-4 text-[9px] tracking-[0.2em] px-2.5 py-1 uppercase font-body bg-white/90 text-forest"
+                    className="absolute top-2 left-2 sm:top-4 sm:left-4 text-[8px] sm:text-[9px] tracking-[0.1em] sm:tracking-[0.2em] px-1.5 sm:px-2.5 py-1 uppercase font-body bg-white/90 text-forest"
                     initial={{ opacity: 0, x: -8 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -83,7 +83,7 @@ export default function Product() {
                 </h3>
               </Link>
               <p className="font-body text-[9px] sm:text-[10px] tracking-[0.16em] uppercase text-forest/60 mb-2 sm:mb-3 font-medium">{p.sub}</p>
-              <p className="font-body text-sm text-forest/75 leading-relaxed mb-5">{p.desc}</p>
+              <p className="font-body text-xs sm:text-sm text-forest/75 leading-relaxed mb-3 sm:mb-5 line-clamp-3 sm:line-clamp-none">{p.desc}</p>
 
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-3 sm:pt-4 border-t border-forest/15">
                 <span className="font-display text-base sm:text-xl text-forest font-semibold">

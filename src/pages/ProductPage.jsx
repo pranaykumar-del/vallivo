@@ -246,7 +246,7 @@ export default function ProductPage() {
             <p className="text-xs tracking-widest2 text-gold-dark uppercase font-body mb-2">More Blends</p>
             <h2 className="font-display text-3xl text-forest">You May Also Like</h2>
           </div>
-          <div className="grid grid-cols-1 min-[420px]:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {others.map((p) => (
               <Link key={p.slug} to={`/product/${p.slug}`} className="group block">
                 <div className="relative aspect-[3/4] overflow-hidden mb-3 rounded-2xl" style={{ backgroundColor: p.soft }}>
@@ -256,7 +256,7 @@ export default function ProductPage() {
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <div className="font-display text-xl sm:text-2xl" style={{ color: p.accent }}>{p.name}</div>
+                <div className="font-display text-lg sm:text-2xl" style={{ color: p.accent }}>{p.name}</div>
                 <div className="text-[10px] tracking-widest text-forest/40 uppercase font-body mt-1">{p.price}</div>
               </Link>
             ))}
