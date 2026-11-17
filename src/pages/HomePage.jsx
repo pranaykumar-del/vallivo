@@ -1,5 +1,5 @@
 import Hero from '../components/Hero'
-import MarqueeBanner from '../components/MarqueeBanner'
+import HomeValues from '../components/HomeValues'
 import Product from '../components/Product'
 import Manifesto from '../components/Manifesto'
 import Story from '../components/Story'
@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-      <MarqueeBanner />
+      <HomeValues />
       <Product />
       <Manifesto />
       <Story />

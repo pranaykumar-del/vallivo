@@ -29,9 +29,6 @@ export default function Product() {
         >
           <p className="text-[11px] tracking-[0.32em] uppercase text-fennette font-body mb-4 font-medium">The Collection</p>
           <h2 className="font-display text-4xl md:text-5xl text-forest font-semibold mb-4">Four blends. One ritual.</h2>
-          <p className="font-body text-sm md:text-[15px] text-forest/70 max-w-2xl mx-auto leading-relaxed">
-            Meet four loose-leaf blends with distinct flavours and moods. Fennette brings fennel and mint to the everyday cup; Serenette layers lavender with bright botanicals; Rosette leans into rose and hibiscus; and Nightfall is a softer, floral finish to the day. Choose by flavour, by moment, or simply by curiosity.
-          </p>
           <motion.div
             className="gold-line w-14 mx-auto mt-7 origin-center"
             initial={{ scaleX: 0 }}
@@ -53,14 +50,18 @@ export default function Product() {
             >
               <Link to={`/product/${p.slug}`} className="block">
                 <motion.div
-                  className="relative aspect-[3/4] overflow-hidden mb-3 sm:mb-4 rounded-xl sm:rounded-2xl bg-[#F7F9F5]"
+                  className={`relative aspect-[3/4] overflow-hidden mb-3 sm:mb-4 rounded-xl sm:rounded-2xl bg-[#F7F9F5]${p.gallery?.length ? ' flex items-center justify-center' : ''}`}
                   whileHover={{ y: -6 }}
                   transition={{ duration: 0.4, ease }}
                 >
                   <MediaImage
                     src={p.img}
                     alt={`${p.name} tea canister`}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
+                    className={
+                      p.gallery?.length
+                        ? 'w-[86%] h-[86%] object-contain object-center transition-transform duration-700 group-hover:scale-[1.03]'
+                        : 'w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]'
+                    }
                   />
                   <motion.span
                     className="absolute top-2 left-2 sm:top-4 sm:left-4 text-[8px] sm:text-[9px] tracking-[0.1em] sm:tracking-[0.2em] px-1.5 sm:px-2.5 py-1 uppercase font-body bg-white/90 text-forest"
@@ -83,7 +84,11 @@ export default function Product() {
                 </h3>
               </Link>
               <p className="font-body text-[9px] sm:text-[10px] tracking-[0.16em] uppercase text-forest/60 mb-2 sm:mb-3 font-medium">{p.sub}</p>
-              <p className="font-body text-xs sm:text-sm text-forest/75 leading-relaxed mb-3 sm:mb-5 line-clamp-3 sm:line-clamp-none">{p.desc}</p>
+              {p.cups ? (
+                <p className="font-body text-[10px] sm:text-xs tracking-[0.14em] uppercase text-forest/55 mb-2 sm:mb-3">
+                  Loose leaf tea · {p.cups} cups
+                </p>
+              ) : null}
 
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-3 sm:pt-4 border-t border-forest/15">
                 <span className="font-display text-base sm:text-xl text-forest font-semibold">

@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import './ProductCarousel.css'
 
 // Positions in the existing photographic botanical sheet (four columns, two rows).
@@ -13,17 +13,19 @@ function IngredientsSlide({ product }) {
     <div className="ingredients-slide" style={{ backgroundColor: product.soft }}>
       <p className="carousel-eyebrow">{product.name} · Loose tea</p>
       <h2>Ingredients</h2>
-      <div className="botanical-grid">
-        {pictured.map((name) => {
-          const [column, row] = botanicalPhotos[name]
-          return (
-            <figure key={name}>
-              <div className="botanical-photo" role="img" aria-label={name} style={{ backgroundPosition: `${column * 100 / 3}% ${row * 100}%` }} />
-              <figcaption>{name}</figcaption>
-            </figure>
-          )
-        })}
-      </div>
+      {pictured.length > 0 ? (
+        <div className="botanical-grid">
+          {pictured.map((name) => {
+            const [column, row] = botanicalPhotos[name]
+            return (
+              <figure key={name}>
+                <div className="botanical-photo" role="img" aria-label={name} style={{ backgroundPosition: `${column * 100 / 3}% ${row * 100}%` }} />
+                <figcaption>{name}</figcaption>
+              </figure>
+            )
+          })}
+        </div>
+      ) : null}
       <div className="ingredient-list">
         <p className="carousel-eyebrow">The complete blend</p>
         <p>{product.ingredients.join(' · ')}</p>
@@ -32,19 +34,16 @@ function IngredientsSlide({ product }) {
   )
 }
 
-function PourSlide({ product }) {
-  return <img src={product.pourImg} alt={`${product.name} loose tea being poured from a glass teapot into a cup`} className="carousel-photo" decoding="async" />
-}
-
 function BrewSlide({ product }) {
+  const cupsNote = product.cups ? ` About ${product.cups} cups per tin.` : ''
   const steps = [
-    ['Add loose tea', `Place a spoon of ${product.name} loose tea in a teapot or reusable infuser.`],
-    ['Pour hot water', 'Add water at about 90°C.'],
-    ['Let it steep', 'Infuse for 3–4 minutes.'],
-    ['Strain & enjoy', 'Remove the infuser or strain into your cup. Sip slowly.'],
+    ['Add loose tea', `Place about 1 g (1 teaspoon) of ${product.name} loose tea in a teapot or reusable infuser.`],
+    ['Pour hot water', 'Add about 150 ml hot water.'],
+    ['Let it steep', 'Infuse for 3–5 minutes.'],
+    ['Strain & enjoy', `Remove the infuser or strain into your cup. Sip slowly.${cupsNote}`],
   ]
   return (
-    <div className="brew-slide" style={{ backgroundColor: product.soft }}>
+    <div className="brew-slide brew-slide--copy-only" style={{ backgroundColor: product.soft }}>
       <div className="brew-copy">
         <p className="carousel-eyebrow">The {product.name} ritual</p>
         <h2>How to make</h2>
@@ -58,18 +57,38 @@ function BrewSlide({ product }) {
           ))}
         </ol>
       </div>
-      <img src={product.pourImg} alt={`A freshly poured cup of ${product.name}`} className="brew-photo" decoding="async" />
     </div>
   )
 }
 
-export default function ProductCarousel({ product, className = '' }) {
-  const slides = [
-    { key: 'photo', label: 'Product', node: <img src={product.img} alt={`${product.name} loose tea canister`} className="carousel-photo product-photo" loading="eager" decoding="async" fetchPriority="high" /> },
+function buildSlides(product) {
+  const gallery = product.gallery?.length ? product.gallery : [product.img]
+  const photoSlides = gallery.map((src, index) => ({
+    key: `photo-${index}`,
+    label: index === 0 ? 'Product' : index === 1 ? 'Label' : `Photo ${index + 1}`,
+    node: (
+      <div className={`product-photo-frame${product.gallery?.length ? ' product-photo-frame--roomy' : ''}`}>
+        <img
+          src={src}
+          alt={index === 0 ? `${product.name} loose tea canister` : `${product.name} packaging detail`}
+          className="carousel-photo product-photo"
+          loading={index === 0 ? 'eager' : 'lazy'}
+          decoding="async"
+          fetchPriority={index === 0 ? 'high' : 'auto'}
+        />
+      </div>
+    ),
+  }))
+
+  return [
+    ...photoSlides,
     { key: 'ingredients', label: 'Ingredients', node: <IngredientsSlide product={product} /> },
-    { key: 'pour', label: 'The pour', node: <PourSlide product={product} /> },
     { key: 'brew', label: 'How to make', node: <BrewSlide product={product} /> },
   ]
+}
+
+export default function ProductCarousel({ product, className = '' }) {
+  const slides = buildSlides(product)
   const [index, setIndex] = useState(0)
   const prev = () => setIndex((current) => (current - 1 + slides.length) % slides.length)
   const next = () => setIndex((current) => (current + 1) % slides.length)

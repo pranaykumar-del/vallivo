@@ -98,7 +98,14 @@ export default function ProductPage() {
             <h1 className="font-display text-4xl md:text-5xl tracking-wide mb-2" style={{ color: product.accent }}>
               {product.name}
             </h1>
-            <p className="font-body text-xs tracking-widest uppercase text-forest/50 mb-5">{product.sub}</p>
+            <p className="font-body text-xs tracking-widest uppercase text-forest/50 mb-3">{product.sub}</p>
+            {product.cups ? (
+              <p className="font-body text-[11px] tracking-[0.18em] uppercase text-forest/55 mb-5">
+                Loose leaf tea · {product.cups} cups
+              </p>
+            ) : (
+              <div className="mb-5" />
+            )}
             <div className="font-display text-3xl text-forest mb-6">
               {product.price} <span className="text-forest/40 text-sm font-body">/ {product.unitLabel || `${UNIT_GRAMS}g`}</span>
             </div>
